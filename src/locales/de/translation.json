@@ -103,7 +103,7 @@
   },
   "fcan": {
     "adsHidden": "Benutzer wählt Anzeigen von Werbung aus",
-    "clickWithRewards": "Klicken mit Werbung",
+    "clickWithTracking": "Klicken mit Tracking",
     "clickWithoutTracking": "Klicken ohne Tracking",
     "hideAds": "Werbung ausblenden",
     "reserved": "Dieser Platz wird reserviert",

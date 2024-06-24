@@ -103,8 +103,8 @@
   },
   "fcan": {
     "adsHidden": "ユーザーは広告を隠すように選択しました",
-    "clickWithRewards": "クリック Rewards",
-    "clickWithoutTracking": "クリック Tracking",
+    "clickWithTracking": "クリック追跡",
+    "clickWithoutTracking": "追跡活動なし",
     "hideAds": "広告を隠す",
     "reserved": "このスペースは予約されています",
     "showAds": "広告を表示"

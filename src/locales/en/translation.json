@@ -103,7 +103,7 @@
   },
   "fcan": {
     "adsHidden": "User chooses to hide Ads",
-    "clickWithRewards": "Click w/ Rewards",
+    "clickWithTracking": "Click w/ Tracking",
     "clickWithoutTracking": "Click w/o Tracking",
     "hideAds": "Hide Ads",
     "reserved": "This space reserved",

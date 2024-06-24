@@ -31,7 +31,7 @@ export const Advert: React.FC<Advert> = (advert) => {
           <>
             {advert.fcanAd.attribUrl ? (
               <S.Btn onClick={() => openInNewTab(`https://fcan.xyz/r?id=${advert.fcanAd.id}`)} type="primary">
-                {t('fcan.clickWithRewards')}
+                {t('fcan.clickWithTracking')}
               </S.Btn>
             ) : (
               <S.Btn onClick={() => openInNewTab(advert.fcanAd.displayUrl)}>{t('fcan.clickWithoutTracking')}</S.Btn>
