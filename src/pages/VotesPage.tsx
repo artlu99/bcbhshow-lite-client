@@ -108,6 +108,7 @@ const VotesPage: React.FC = () => {
                     /poop 💩
                   </Link>
                 </BaseRow>
+                <BaseRow>hmu if ur a dev interested in free access to anonymized, composable curation data</BaseRow>
               </BaseCol>
             </S.Card>
           </BaseCol>
