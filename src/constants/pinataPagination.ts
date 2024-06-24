@@ -1,0 +1,2 @@
+export const CHANNEL_FEED_PAGESIZE = 50;
+export const FOLLOWING_FEED_PAGESIZE = 50;

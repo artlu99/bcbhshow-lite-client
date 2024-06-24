@@ -1,0 +1,105 @@
+import { httpApiMock } from '@app/api/mocks/http.api.mock';
+import { AllChannelsResponseObject } from '@app/api/warpcast-types';
+
+export const mockedAllChannelsResponse: AllChannelsResponseObject = {
+  result: {
+    channels: [
+      {
+        id: 'bcbhshow',
+        url: 'https://warpcast.com/~/channel/bcbhshow',
+        name: 'The BeavChris and BArt-Head Show',
+        description:
+          'Listen to BeavChris (@christin) and BArt-Head (@artlu) talk about Farcaster from an irreverent perspective. Streaming live TUE 8AM PT/11AM ET/3PM UTC on Unlonely with recording deployed on Base via Zora to view and/or mint! Learn more on bcbhshow.com',
+        imageUrl: 'https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/90dc6268-931b-44d7-5672-ef5a28009200/original',
+        leadFid: 15850,
+        createdAt: 1711575957,
+        followerCount: 175,
+      },
+      {
+        id: 'gmfarcaster',
+        url: 'https://warpcast.com/~/channel/gmfarcaster',
+        name: 'GM Farcaster (podcast)',
+        description:
+          'GM Farcaster: 29 minutes of Farcaster news to start your day! With hosts @adrienne & @nounishprof streaming live Mon/Wed/Fri 8:30 am ET on Unlonely with recording deployed on Base via Zora to view and/or mint (and Apple, Spotify, & YouTube) GMFarcaster.com',
+        imageUrl: 'https://i.imgur.com/8OMHbYB.jpg',
+        leadFid: 4167,
+        createdAt: 1702863134,
+        followerCount: 6824,
+      },
+      {
+        id: 'bnfarcaster',
+        url: 'https://warpcast.com/~/channel/bnfarcaster',
+        name: 'BNF | 1er podcast en español',
+        description:
+          'Bienvenidos a Buenas Noches Farcaster (BNF) | Presentado por @whatsgood-al y @cryptowenmoon.eth | Juntos traemos las últimas novedades de los proyectos más innovadores dentro de Farcaster. https://www.youtube.com/@BuenasNochesFarcaster/videos',
+        imageUrl: 'https://i.imgur.com/ycn6Kcx.png',
+        leadFid: 10174,
+        createdAt: 1708716311,
+        followerCount: 283,
+      },
+      {
+        id: 'micah',
+        url: 'https://warpcast.com/~/channel/micah',
+        name: 'Micah',
+        description: 'Share your thoughts here. https://paragraph.xyz/@micah',
+        imageUrl: 'https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/45111d96-d390-456a-7b32-9f64edfaec00/rectcrop3',
+        leadFid: 1520,
+        createdAt: 1718143521,
+        followerCount: 20,
+      },
+      {
+        id: 'greenjeff',
+        url: 'https://warpcast.com/~/channel/greenjeff',
+        name: 'greenjeff',
+        description: 'Green Jeff Capital Group Incorporated Metaverse Fund LLC Foundation Inc.',
+        imageUrl: 'https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/8f588d70-5eb5-4e04-c2c9-e9035adae400/original',
+        leadFid: 19793,
+        createdAt: 1712795836,
+        followerCount: 11,
+      },
+      {
+        id: 'indiemusic',
+        url: 'https://warpcast.com/~/channel/indiemusic',
+        name: 'sad lesbian indie',
+        description: 'all things sad lesbian indie music',
+        imageUrl: 'https://i.imgur.com/kDat2vC.jpeg',
+        leadFid: 19793,
+        createdAt: 1713376559,
+        followerCount: 15,
+        followedAt: 1718409734,
+      },
+      {
+        id: 'degen',
+        url: 'chain://eip155:7777777/erc721:0x5d6a07d07354f8793d1ca06280c4adf04767ad7e',
+        name: 'Degen',
+        description: 'Not financial advice',
+        imageUrl: 'https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/4728a50a-1669-4334-1f57-9473c04a2500/original',
+        leadFid: 528,
+        createdAt: 1691015606,
+        followerCount: 90108,
+      },
+      {
+        id: 'fc-devs',
+        url: 'https://warpcast.com/~/channel/fc-devs',
+        name: 'Farcaster Devs',
+        description: 'A channel for builders on Farcaster to ask questions and get support',
+        imageUrl: 'https://i.imgur.com/oZ6ffK5.png',
+        leadFid: 2,
+        createdAt: 1704989268,
+        followerCount: 8231,
+      },
+      {
+        id: 'privacy',
+        url: 'https://warpcast.com/~/channel/privacy',
+        name: 'Privacy',
+        description: 'A mocked channel for privacy discussions',
+        imageUrl: 'https://i.imgur.com/iH4szi3.jpg',
+        leadFid: 17672,
+        moderatorFid: 17672,
+        createdAt: 1702728000,
+        followerCount: 513,
+      },
+    ],
+  },
+};
+httpApiMock.onPost('getAllChannels').reply(200, mockedAllChannelsResponse);
