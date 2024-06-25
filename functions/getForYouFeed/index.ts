@@ -20,7 +20,10 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     },
   });
 
-  if (!res.ok) throw new Error('Failed to fetch data');
+  if (!res.ok) {
+    console.error(endpoint, res.status, JSON.stringify(res));
+    throw new Error('Failed to fetch data');
+  }
 
   const forYouFeedResponse = (await res.json()) as FeedObject;
   return new Response(JSON.stringify(forYouFeedResponse));

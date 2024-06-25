@@ -21,6 +21,6 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   });
   if (!res.ok) throw new Error('Failed to fetch data');
 
-  const reactionsResponse: ReactionsByHashResponseSchema = await res.json();
+  const reactionsResponse = (await res.json()) as ReactionsByHashResponseSchema;
   return new Response(JSON.stringify(reactionsResponse));
 };
