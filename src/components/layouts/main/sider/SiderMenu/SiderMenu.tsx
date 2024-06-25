@@ -61,7 +61,7 @@ const SiderMenu: React.FC<SiderContentProps> = ({ setCollapsed }) => {
   );
 
   const sidebarNavigation = [
-    sidebarNavigationPre[0],
+    ...sidebarNavigationPre.slice(0, 2),
     {
       ...channelsSkeleton,
       children: [
@@ -82,7 +82,7 @@ const SiderMenu: React.FC<SiderContentProps> = ({ setCollapsed }) => {
         ),
       ],
     },
-    ...sidebarNavigationPre.slice(1),
+    ...sidebarNavigationPre.slice(2),
   ];
 
   const sidebarNavFlat = sidebarNavigation.reduce(

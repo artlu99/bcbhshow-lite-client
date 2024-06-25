@@ -18,6 +18,7 @@ export const MobileHeader: React.FC<MobileHeaderProps> = ({ toggleSider, isSider
 
   const { pathname } = useLocation();
   const isHomeFeed = pathname.startsWith('/home');
+  const isForYouFeed = pathname.startsWith('/foryou');
   const isChannelFeed = pathname.startsWith('/~/channel/');
   const isVotePage = pathname.startsWith('/votes');
 
@@ -30,7 +31,7 @@ export const MobileHeader: React.FC<MobileHeaderProps> = ({ toggleSider, isSider
 
         <BaseCol>
           <BaseRow align="middle" justify="space-between">
-            {(isHomeFeed || isChannelFeed) && (
+            {(isHomeFeed || isForYouFeed || isChannelFeed) && (
               <>
                 <BaseCol>
                   <ZenModeDropdown />
@@ -44,7 +45,7 @@ export const MobileHeader: React.FC<MobileHeaderProps> = ({ toggleSider, isSider
               <BaseCol>
                 {isChannelFeed ? (
                   <ChannelLogo />
-                ) : isHomeFeed ? (
+                ) : isHomeFeed || isForYouFeed ? (
                   <S.CCAButton />
                 ) : isVotePage ? (
                   <S.CCAButton />

@@ -10,7 +10,7 @@ import { FOLLOWING_FEED_PAGESIZE } from '@app/constants/pinataPagination';
 import { listify, sift, unique } from 'radash';
 import './mocks/mockornot';
 
-const getTagsForCast = (allChannels: ChannelObject[], parent_url?: string): IHashTag[] => {
+export const getTagsForCast = (allChannels: ChannelObject[], parent_url?: string): IHashTag[] => {
   const maybeChannelObj = allChannels?.find((channel) => channel.url === parent_url);
   const tags: IHashTag[] = maybeChannelObj
     ? [{ title: maybeChannelObj.name, id: maybeChannelObj.id, bgColor: 'info' }]

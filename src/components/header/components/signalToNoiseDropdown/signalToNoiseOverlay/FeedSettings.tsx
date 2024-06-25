@@ -27,6 +27,7 @@ import styled from 'styled-components';
 export const FeedSettings: React.FC = () => {
   const { pathname } = useLocation();
   const isHomeFeed = pathname.startsWith('/home');
+  const isForYouFeed = pathname.startsWith('/foryou');
   const { t } = useTranslation();
 
   const {
@@ -83,7 +84,7 @@ export const FeedSettings: React.FC = () => {
       <br />
       {numCastsAfterFiltering} Casts after filtering
       <BaseDivider />
-      {isHomeFeed ? (
+      {isHomeFeed || isForYouFeed ? (
         <>
           <SwitchContainer>
             <span>{t('Only Curated Channels')}</span> {numCuratedChannelsCasts}

@@ -4,6 +4,7 @@ import {
   HomeOutlined,
   LayoutOutlined,
   LineChartOutlined,
+  UserOutlined,
 } from '@ant-design/icons';
 import { ThumbsUpIcon } from 'lucide-react';
 
@@ -27,6 +28,12 @@ export const sidebarNavigation: SidebarNavigationItem[] = [
     key: 'feed',
     icon: <HomeOutlined />,
     url: '/home',
+  },
+  {
+    title: 'sidebar.foryou',
+    key: 'foryou',
+    icon: <UserOutlined />,
+    url: '/foryou',
   },
   {
     title: 'sidebar.curated',
