@@ -29,6 +29,7 @@ export interface CastObject {
         mentioned_profiles?: UserProfile[];
       };
     };
+    viewer_context?: AuthorViewerContext;
   };
   text: string;
   mentioned_profiles: UserProfile[];
@@ -39,6 +40,8 @@ export interface CastObject {
   parent_url?: string;
   embeds?: EmbedObject[];
   frames?: FrameObject[];
+  channel?: ChannelObject;
+  viewer_context?: CastViewerContext;
   reactions: {
     likes: UserDetails[];
     likes_count: number;
@@ -46,6 +49,22 @@ export interface CastObject {
     recasts_count: number;
   };
   replies: { count: number };
+}
+
+interface AuthorViewerContext {
+  following: boolean;
+  followed_by: boolean;
+}
+
+interface CastViewerContext {
+  liked: false;
+  recasted: false;
+}
+interface ChannelObject {
+  object: 'channel_dehydrated';
+  id: string;
+  name: string;
+  image_url: string;
 }
 
 export interface EmbedObject {
