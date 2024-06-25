@@ -1,5 +1,7 @@
 import logo from '@app/assets/logo.png';
+import { BaseTooltip } from '@app/components/common/BaseTooltip/BaseTooltip';
 import { useAppSelector } from '@app/hooks/reduxHooks';
+import { useResponsive } from '@app/hooks/useResponsive';
 import { channelByIdQuery } from '@app/queries/queries';
 import { pinChannel, unpinChannel } from '@app/store/slices/pinnedChannelsSlice';
 import { useZustand } from '@app/store/zustand';
@@ -11,6 +13,7 @@ import * as S from './/ChannelLogo.styles';
 
 export const ChannelLogo: React.FC = () => {
   const { activeChannelId } = useZustand();
+  const { mobileOnly } = useResponsive();
 
   const chQuery = useQuery(channelByIdQuery(activeChannelId));
   const memodChData = useMemo(() => {
@@ -26,32 +29,35 @@ export const ChannelLogo: React.FC = () => {
   const img = memodChData?.result?.channel?.imageUrl ?? logo;
   const channelName = memodChData?.result?.channel?.name ?? activeChannelId;
 
-  const pinIconSize = 18;
+  const logoSize = mobileOnly ? 36 : 48;
+  const pinIconSize = mobileOnly ? 20 : 18;
   return (
     <S.ChannelLogoDiv>
-      <S.ChannelLogoLink
-        to={`https://farcaster-channels.artlu.xyz/channel-followers/${activeChannelId}.csv`}
-        target="_blank"
-      >
-        <S.BrandSpan>
-          <img src={img} alt={channelName} height={48} style={{ borderRadius: BORDER_RADIUS }} />
-        </S.BrandSpan>
-        {isPinned ? (
-          <PinIcon
-            size={pinIconSize}
-            onClick={() => {
-              unpinChannel(activeChannelId) && window.location.reload();
-            }}
-          />
-        ) : (
-          <PinOffIcon
-            size={pinIconSize}
-            onClick={() => {
-              pinChannel(activeChannelId) && window.location.reload();
-            }}
-          />
-        )}
-      </S.ChannelLogoLink>
+      <BaseTooltip title={channelName}>
+        <S.ChannelLogoLink
+          to={`https://farcaster-channels.artlu.xyz/channel-followers/${activeChannelId}.csv`}
+          target="_blank"
+        >
+          <S.BrandSpan>
+            <img src={img} alt={channelName} height={logoSize} style={{ borderRadius: BORDER_RADIUS }} />
+          </S.BrandSpan>
+          {isPinned ? (
+            <PinIcon
+              size={pinIconSize}
+              onClick={() => {
+                unpinChannel(activeChannelId) && window.location.reload();
+              }}
+            />
+          ) : (
+            <PinOffIcon
+              size={pinIconSize}
+              onClick={() => {
+                pinChannel(activeChannelId) && window.location.reload();
+              }}
+            />
+          )}
+        </S.ChannelLogoLink>
+      </BaseTooltip>
     </S.ChannelLogoDiv>
   );
 };

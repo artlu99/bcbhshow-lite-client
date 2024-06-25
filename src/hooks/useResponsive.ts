@@ -3,6 +3,7 @@ import { MediaQueryAllQueryable, MediaQueryMatchers, useMediaQuery } from 'react
 
 interface ResponsiveReturnValues {
   isMobile: boolean;
+  isLandscapeMobile: boolean;
   isTablet: boolean;
   isDesktop: boolean;
   isBigScreen: boolean;
@@ -18,6 +19,7 @@ interface ResponsiveReturnValues {
 
 export const useResponsive = (): ResponsiveReturnValues => {
   const isMobile = useMediaQuery({ query: media.xs });
+  const isLandscapeMobile = useMediaQuery({ query: media.sm });
   const isTablet = useMediaQuery({ query: media.md });
   const isDesktop = useMediaQuery({ query: media.xl });
   const isBigScreen = useMediaQuery({ query: media.xxl });
@@ -36,6 +38,7 @@ export const useResponsive = (): ResponsiveReturnValues => {
 
   return {
     isMobile,
+    isLandscapeMobile,
     isTablet,
     isDesktop,
     isBigScreen,

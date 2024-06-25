@@ -3,6 +3,8 @@ import { BaseRow } from '@app/components/common/BaseRow/BaseRow';
 import { SettingsDropdown } from '@app/components/header/components/settingsDropdown/SettingsDropdown';
 import { SignalToNoiseDropdown } from '@app/components/header/components/signalToNoiseDropdown/SignalToNoiseDropdown';
 import { ZenModeDropdown } from '@app/components/header/components/zenModeDropdown/ZenModeDropdown';
+import { ChannelLogo } from '@app/components/header/layouts/ChannelLogo';
+import { useResponsive } from '@app/hooks/useResponsive';
 import { useLocation } from 'react-router-dom';
 import * as S from '../Header.styles';
 
@@ -12,6 +14,8 @@ interface MobileHeaderProps {
 }
 
 export const MobileHeader: React.FC<MobileHeaderProps> = ({ toggleSider, isSiderOpened }) => {
+  const { isLandscapeMobile } = useResponsive();
+
   const { pathname } = useLocation();
   const isHomeFeed = pathname.startsWith('/home');
   const isChannelFeed = pathname.startsWith('/~/channel/');
@@ -25,7 +29,7 @@ export const MobileHeader: React.FC<MobileHeaderProps> = ({ toggleSider, isSider
         </BaseCol>
 
         <BaseCol>
-          <BaseRow align="middle">
+          <BaseRow align="middle" justify="space-between">
             {(isHomeFeed || isChannelFeed) && (
               <>
                 <BaseCol>
@@ -36,14 +40,19 @@ export const MobileHeader: React.FC<MobileHeaderProps> = ({ toggleSider, isSider
                 </BaseCol>
               </>
             )}
-            {isVotePage && (
-              <BaseRow justify="space-between" align="middle">
-                <BaseCol>
+            {isLandscapeMobile && (
+              <BaseCol>
+                {isChannelFeed ? (
+                  <ChannelLogo />
+                ) : isHomeFeed ? (
                   <S.CCAButton />
-                </BaseCol>
-              </BaseRow>
+                ) : isVotePage ? (
+                  <S.CCAButton />
+                ) : (
+                  <S.FCButton />
+                )}
+              </BaseCol>
             )}
-
             <BaseCol>
               <SettingsDropdown />
             </BaseCol>

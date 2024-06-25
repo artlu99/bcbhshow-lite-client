@@ -175,7 +175,7 @@ export const Cast: React.FC<CastProps> = ({
         {tags.map((tag) =>
           linkTo ? (
             <Link to={`/~/channel/${linkTo}`}>
-              <BaseHashTag key={tag.bgColor} title={tag.title} bgColor={tag.bgColor} />
+              <BaseHashTag key={`${castHash}-${tag.title}-${tag.bgColor}`} title={tag.title} bgColor={tag.bgColor} />
             </Link>
           ) : (
             <BaseHashTag key={tag.bgColor} title={tag.title} bgColor={tag.bgColor} />

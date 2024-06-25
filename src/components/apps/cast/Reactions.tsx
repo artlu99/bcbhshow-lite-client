@@ -1,6 +1,7 @@
 import { Curation, putCuration } from '@app/api/curation.api';
 import { HubReactionType, HubReactionsResponse, HubReactionsStreamItem } from '@app/api/hubble-http-types';
 import { setReactionOnHash } from '@app/api/reactionOnHash.api';
+import { getFidWithFallback } from '@app/auth/fids';
 import { ReactionsAnalytics } from '@app/components/apps/cast/ReactionsAnalytics';
 import { BaseBadge } from '@app/components/common/BaseBadge/BaseBadge';
 import { BaseDivider } from '@app/components/common/BaseDivider/BaseDivider';
@@ -20,7 +21,6 @@ import {
 } from 'lucide-react';
 import { Dispatch, SetStateAction, useMemo, useState } from 'react';
 import * as S from './Cast.styles';
-import { getFidWithFallback } from '@app/auth/fids';
 
 const hubReactionsToStreamItems = (reactions: HubReactionsResponse | undefined): HubReactionsStreamItem[] => {
   return (reactions?.messages ?? []).map((m) => {
@@ -79,8 +79,8 @@ export const Reactions: React.FC<ReactionsProps> = ({
   const shadedColor = theme === 'dark' ? BASE_COLORS.lightgrey : showPFPs ? BASE_COLORS.lightgreen : BASE_COLORS.gray;
   const highlightedColor = theme === 'dark' ? BASE_COLORS.orange : BASE_COLORS.blue;
 
-  const { isTablet, isDesktop } = useResponsive();
-  const reactionBarMarginSize = isDesktop ? 60 : isTablet ? 40 : 30;
+  const { isLandscapeMobile, isTablet, isDesktop } = useResponsive();
+  const reactionBarMarginSize = isDesktop ? 60 : isTablet ? 40 : isLandscapeMobile ? 50 : 10;
   const reactionIconSize = isDesktop ? 18 : isTablet ? 24 : 24;
 
   const { user } = useNeynarContext();
