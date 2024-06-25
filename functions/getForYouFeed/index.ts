@@ -7,7 +7,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   const { fid, limit, cursor } = js;
 
   const neynarApiKey = context.env.NEYNAR_API_KEY;
-  const provider = 'karma';
+  const provider = 'karma3';
 
   const paginationParam = cursor ? `&cursor=${cursor}` : '';
   const endpoint = `https://api.neynar.com/v2/farcaster/feed/for_you?fid=${fid}&viewer_fid=${fid}&provider=${provider}&limit=${limit}${paginationParam}`;
