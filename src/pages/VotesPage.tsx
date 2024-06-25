@@ -20,10 +20,9 @@ const VotesPage: React.FC = () => {
 
   const ffQuery = useQuery(followingByFidQuery(fid));
   const memodFollowing = useMemo(() => {
-    if (!fid) return;
     if (ffQuery.isLoading || ffQuery.error) return null;
     return (ffQuery.data?.result?.users ?? []).map((l) => Number(l.fid));
-  }, [fid, ffQuery]);
+  }, [ffQuery]);
 
   const gvQuery = useQuery(getVotesQuery());
   const memodVotes = useMemo(() => (gvQuery.data?.results ?? []).filter((v) => v.votedFid !== fid), [fid, gvQuery]);
