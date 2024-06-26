@@ -20,6 +20,7 @@ export const MobileHeader: React.FC<MobileHeaderProps> = ({ toggleSider, isSider
   const isHomeFeed = pathname.startsWith('/home');
   const isForYouFeed = pathname.startsWith('/foryou');
   const isChannelFeed = pathname.startsWith('/~/channel/');
+  const isDecentBookmarksPage = pathname.startsWith('/external/decent-bookmarks');
   const isVotePage = pathname.startsWith('/votes');
 
   return (
@@ -47,6 +48,8 @@ export const MobileHeader: React.FC<MobileHeaderProps> = ({ toggleSider, isSider
                   <ChannelLogo />
                 ) : isHomeFeed || isForYouFeed ? (
                   <S.CCAButton />
+                ) : isDecentBookmarksPage ? (
+                  <S.DBmButton />
                 ) : isVotePage ? (
                   <S.CCAButton />
                 ) : (

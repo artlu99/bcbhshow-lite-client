@@ -97,7 +97,7 @@ export const FCButton = styled(FcChannelsButton)`
 `;
 
 export const DBmButton = styled(DecentBmButton)`
-  display: none;
+  display: block;
 
   @media only screen and ${media.lg} {
     display: block;
