@@ -11,6 +11,7 @@ import { ThumbsUpIcon } from 'lucide-react';
 export interface SidebarNavigationItem {
   title: string;
   key: string;
+  info?: string;
   url?: string;
   children?: SidebarNavigationItem[];
   icon?: React.ReactNode;
@@ -27,12 +28,14 @@ export const sidebarNavigation: SidebarNavigationItem[] = [
     title: 'sidebar.feed',
     key: 'feed',
     icon: <HomeOutlined />,
+    info: '(Reverse Chron)',
     url: '/home',
   },
   {
     title: 'sidebar.foryou',
     key: 'foryou',
     icon: <UserOutlined />,
+    info: '(OpenRank)',
     url: '/foryou',
   },
   {

@@ -1,5 +1,6 @@
 import { ChannelObject } from '@app/api/warpcast-types';
 import { getFidWithFallback } from '@app/auth/fids';
+import { BaseSpace } from '@app/components/common/BaseSpace/BaseSpace';
 import {
   SidebarNavigationItem,
   channelsSkeleton,
@@ -7,6 +8,7 @@ import {
 } from '@app/components/layouts/main/sider/sidebarNavigation';
 import { useAppSelector } from '@app/hooks/reduxHooks';
 import { allChannelsQuery, userFollowingChannelsQuery } from '@app/queries/queries';
+import { FONT_SIZE } from '@app/styles/themes/constants';
 import { useNeynarContext } from '@neynar/react';
 import { useQuery } from '@tanstack/react-query';
 import { PinIcon } from 'lucide-react';
@@ -111,7 +113,13 @@ const SiderMenu: React.FC<SiderContentProps> = ({ setCollapsed }) => {
         return {
           key: nav.key,
           title: t(nav.title),
-          label: isSubMenu ? t(nav.title) : <Link to={nav.url || ''}>{t(nav.title)}</Link>,
+          label: isSubMenu ? (
+            t(nav.title)
+          ) : (
+            <Link to={nav.url || ''}>
+              {t(nav.title)} <BaseSpace style={{ fontSize: FONT_SIZE.xxs }}>{nav.info}</BaseSpace>
+            </Link>
+          ),
           icon: nav.icon,
           children:
             isSubMenu &&
