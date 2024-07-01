@@ -1,4 +1,5 @@
 import { ConfigProvider } from 'antd';
+import { posthog } from 'posthog-js';
 import { HelmetProvider } from 'react-helmet-async';
 
 import { NeynarContextProvider, Theme } from '@neynar/react';
@@ -65,10 +66,14 @@ const App: React.FC = () => {
           defaultTheme: Theme.Light,
           eventsCallbacks: {
             onAuthSuccess: () => {
-              return;
+              posthog.capture('user logged in', {
+                method: 'siwn',
+              });
             },
             onSignout() {
-              return;
+              posthog.capture('user logged out', {
+                method: 'siwn',
+              });
             },
           },
         }}

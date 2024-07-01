@@ -5864,6 +5864,7 @@ __metadata:
     lint-staged: ^11.0.0
     lucide-react: ^0.394.0
     npm: ^10.8.1
+    posthog-js: ^1.142.1
     prettier: ^3.3.1
     radash: ^12.1.0
     react: ^18.3.1
@@ -7854,6 +7855,13 @@ __metadata:
   dependencies:
     reusify: ^1.0.4
   checksum: 0170e6bfcd5d57a70412440b8ef600da6de3b2a6c5966aeaf0a852d542daff506a0ee92d6de7679d1de82e644bce69d7a574a6c93f0b03964b5337eed75ada1a
+  languageName: node
+  linkType: hard
+
+"fflate@npm:^0.4.8":
+  version: 0.4.8
+  resolution: "fflate@npm:0.4.8"
+  checksum: 29d8cbe44d5e7f53e7f5a160ac7f9cc025480c7b3bfd85c5f898cbe20dfa2dad4732daa534982664bf30b35896a90af44ea33ede5d94c5ffd1b8b0c0a0a56ca2
   languageName: node
   linkType: hard
 
@@ -11280,6 +11288,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"posthog-js@npm:^1.142.1":
+  version: 1.142.1
+  resolution: "posthog-js@npm:1.142.1"
+  dependencies:
+    fflate: ^0.4.8
+    preact: ^10.19.3
+    web-vitals: ^4.0.1
+  checksum: cb7e3f508572282563ac72b1d9ed9e3002465c4fe20b520f09faec78db2ceb268a88260e347343f43b48dfdfafc2e0150780a57102a4f8d540d71fbadfca6693
+  languageName: node
+  linkType: hard
+
+"preact@npm:^10.19.3":
+  version: 10.22.1
+  resolution: "preact@npm:10.22.1"
+  checksum: 8762645766b1c057eaf9a58ff904b6659ffa7a7d33eb94dc2b96ff1ba08743855c3ade913dfbe9e8da994777aa9f4f5e9f23d39886340f23eaebcd98f5e107e5
+  languageName: node
+  linkType: hard
+
 "prelude-ls@npm:^1.2.1":
   version: 1.2.1
   resolution: "prelude-ls@npm:1.2.1"
@@ -14499,6 +14525,13 @@ __metadata:
   dependencies:
     defaults: ^1.0.3
   checksum: 814e9d1ddcc9798f7377ffa448a5a3892232b9275ebb30a41b529607691c0491de47cba426e917a4d08ded3ee7e9ba2f3fe32e62ee3cd9c7d3bafb7754bd553c
+  languageName: node
+  linkType: hard
+
+"web-vitals@npm:^4.0.1":
+  version: 4.2.1
+  resolution: "web-vitals@npm:4.2.1"
+  checksum: 556989af90814c6a88eaeea57f778414b26e39d8857173a03e240f62e9cf732090acc97fba38f34f760bde086fef5ee90969920ff1ab3a185518176723589cb8
   languageName: node
   linkType: hard
 
