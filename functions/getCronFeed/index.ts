@@ -1,5 +1,6 @@
 import { Env } from '../common';
 import { FeedObject } from '../shared/feed-types';
+import sendPosthogEvent from '../shared/posthog';
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
   const { request } = context;
@@ -18,6 +19,8 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     },
   });
   if (!res.ok) throw new Error('Failed to fetch data');
+
+  await sendPosthogEvent(context.env, 'getCronFeed', channelId);
 
   const cronFeedResponse = (await res.json()) as FeedObject;
   return new Response(JSON.stringify(cronFeedResponse));

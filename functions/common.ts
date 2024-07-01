@@ -8,5 +8,7 @@ export interface Env {
   AIRSTACK_API_KEY: string;
   UPSTASH_REDIS_REST_URL: string;
   UPSTASH_REDIS_REST_TOKEN: string;
+  REACT_APP_PUBLIC_POSTHOG_HOST: string;
+  REACT_APP_PUBLIC_POSTHOG_KEY: string;
   D1: D1Database;
 }
