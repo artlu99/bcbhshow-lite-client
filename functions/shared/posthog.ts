@@ -13,7 +13,6 @@ const sendPosthogEvent = async (env: Env, event: string, distinct_id: string) =>
     timestamp,
   };
   // properties: { detail: 'detail' },
-  console.log('payload', JSON.stringify(payload));
 
   try {
     const response = await fetch(url, {
@@ -23,8 +22,10 @@ const sendPosthogEvent = async (env: Env, event: string, distinct_id: string) =>
     });
 
     const data = await response.json();
-    console.log(data);
-  } catch {}
+    console.log('posthog success', data);
+  } catch (e) {
+    console.error('posthog error', e);
+  }
 };
 
 export default sendPosthogEvent;
