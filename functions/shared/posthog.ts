@@ -15,6 +15,8 @@ const sendPosthogEvent = async (env: Env, event: string, distinct_id: string) =>
   // properties: { detail: 'detail' },
 
   try {
+    console.log('posthog attempt', JSON.stringify(payload));
+
     const response = await fetch(url, {
       method: 'POST',
       headers: headers,
