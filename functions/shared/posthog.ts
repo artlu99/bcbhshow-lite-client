@@ -10,7 +10,6 @@ const sendPosthogEvent = async (env: Env, event: string, distinct_id: string) =>
     api_key,
     distinct_id,
     event,
-    properties: { none: undefined },
     timestamp,
   };
 
@@ -27,4 +26,12 @@ const sendPosthogEvent = async (env: Env, event: string, distinct_id: string) =>
   }
 };
 
-export default sendPosthogEvent;
+export const sendPosthogFid = async (env: Env, event: string, fid: number) => {
+  const distinct_id = fid === env.REACT_APP_DEFAULT_FID ? 'not signed in' : 'SIWN';
+  await sendPosthogEvent(env, event, distinct_id);
+};
+
+export const sendPosthogChannelId = async (env: Env, event: string, channelId: string) => {
+  const distinct_id = channelId;
+  await sendPosthogEvent(env, event, distinct_id);
+};

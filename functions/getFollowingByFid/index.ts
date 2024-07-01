@@ -1,6 +1,6 @@
 import { Env } from '../common';
 import { FollowingByFidResponseSchema } from '../shared/farquest-types';
-import sendPosthogEvent from '../shared/posthog';
+import { sendPosthogFid } from '../shared/posthog';
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
   const { request } = context;
@@ -20,7 +20,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   });
   if (!res.ok) throw new Error('Failed to fetch data');
 
-  await sendPosthogEvent(context.env, 'getFollowingByFid', 'not_tracking_by_fid');
+  await sendPosthogFid(context.env, 'getFollowingByFid', fid);
 
   const followingResponse = (await res.json()) as FollowingByFidResponseSchema;
   return new Response(JSON.stringify(followingResponse));

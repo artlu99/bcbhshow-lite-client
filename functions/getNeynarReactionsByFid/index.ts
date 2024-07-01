@@ -1,6 +1,6 @@
 import { ReactionType, ReactionsCastResponse } from '@neynar/nodejs-sdk/build/neynar-api/v2';
 import { Env } from '../common';
-import sendPosthogEvent from '../shared/posthog';
+import { sendPosthogFid } from '../shared/posthog';
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
   const { request } = context;
@@ -27,7 +27,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
   if (!res.ok) throw new Error('Failed to fetch data');
 
-  await sendPosthogEvent(context.env, 'getNeynarReactionsByFid', 'not_tracking_by_fid');
+  await sendPosthogFid(context.env, 'getNeynarReactionsByFid', fid);
 
   const reactionsResponse = (await res.json()) as ReactionsCastResponse;
   return new Response(JSON.stringify(reactionsResponse));

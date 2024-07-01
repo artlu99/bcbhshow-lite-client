@@ -1,6 +1,6 @@
 import { Env } from '../common';
 import { FeedObject } from '../shared/feed-types';
-import sendPosthogEvent from '../shared/posthog';
+import { sendPosthogFid } from '../shared/posthog';
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
   const { request } = context;
@@ -20,7 +20,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   });
   if (!res.ok) throw new Error('Failed to fetch data');
 
-  await sendPosthogEvent(context.env, 'getCastsByFollowing', 'not_tracking_by_fid');
+  await sendPosthogFid(context.env, 'getCastsByFollowing', fid);
 
   const followingCronFeedResponse = (await res.json()) as FeedObject;
   return new Response(JSON.stringify(followingCronFeedResponse));
