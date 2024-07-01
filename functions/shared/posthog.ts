@@ -10,9 +10,9 @@ const sendPosthogEvent = async (env: Env, event: string, distinct_id: string) =>
     api_key,
     distinct_id,
     event,
+    properties: { none: undefined },
     timestamp,
   };
-  // properties: { detail: 'detail' },
 
   try {
     console.log('posthog attempt', JSON.stringify(payload));
