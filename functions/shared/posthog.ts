@@ -11,17 +11,20 @@ const sendPosthogEvent = async (env: Env, event: string, distinct_id: string) =>
     distinct_id,
     event,
     timestamp,
-    // properties: { detail: 'detail' },
   };
+  // properties: { detail: 'detail' },
+  console.log('payload', JSON.stringify(payload));
 
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: headers,
-    body: JSON.stringify(payload),
-  });
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify(payload),
+    });
 
-  const data = await response.json();
-  console.log(data);
+    const data = await response.json();
+    console.log(data);
+  } catch {}
 };
 
 export default sendPosthogEvent;
