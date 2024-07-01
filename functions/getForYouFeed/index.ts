@@ -26,7 +26,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     throw new Error('Failed to fetch data');
   }
 
-  await sendPosthogEvent(context.env, 'getForYouFeed', 'not tracking by fid');
+  await sendPosthogEvent(context.env, 'getForYouFeed', 'not_tracking_by_fid');
 
   const forYouFeedResponse = (await res.json()) as FeedObject;
   return new Response(JSON.stringify(forYouFeedResponse));

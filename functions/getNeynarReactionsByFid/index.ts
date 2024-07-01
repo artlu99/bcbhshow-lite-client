@@ -27,7 +27,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
   if (!res.ok) throw new Error('Failed to fetch data');
 
-  await sendPosthogEvent(context.env, 'getNeynarReactionsByFid', 'not tracking by fid');
+  await sendPosthogEvent(context.env, 'getNeynarReactionsByFid', 'not_tracking_by_fid');
 
   const reactionsResponse = (await res.json()) as ReactionsCastResponse;
   return new Response(JSON.stringify(reactionsResponse));

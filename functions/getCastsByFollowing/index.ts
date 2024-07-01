@@ -20,7 +20,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   });
   if (!res.ok) throw new Error('Failed to fetch data');
 
-  await sendPosthogEvent(context.env, 'getCastsByFollowing', 'not tracking by fid');
+  await sendPosthogEvent(context.env, 'getCastsByFollowing', 'not_tracking_by_fid');
 
   const followingCronFeedResponse = (await res.json()) as FeedObject;
   return new Response(JSON.stringify(followingCronFeedResponse));
