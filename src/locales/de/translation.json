@@ -125,9 +125,10 @@
   "landingPage": {
     "bottomCardTitle": "Beiträge zu FOSS",
     "leftCardTitle": "Willkommen beim BCBHShow Lite-Client 🌟",
-    "rightCardTitle": "Wir mögen die Projekte anderer Leute NFA DYOR"
+    "rightCardTitle": "Mehr Informationen..."
   },
   "sidebar": {
+    "about": "🌟 Über Lite Client",
     "bookmarks": "Dezentrale Lesezeichen",
     "channels": "Kanälen",
     "curated": "Kuratierte Kanäle",

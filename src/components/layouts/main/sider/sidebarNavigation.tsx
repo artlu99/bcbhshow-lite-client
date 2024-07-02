@@ -62,4 +62,9 @@ export const sidebarNavigation: SidebarNavigationItem[] = [
     url: '/sponsorship',
     icon: <LineChartOutlined />,
   },
+  {
+    title: 'sidebar.about',
+    key: 'about',
+    url: '/about',
+  },
 ];

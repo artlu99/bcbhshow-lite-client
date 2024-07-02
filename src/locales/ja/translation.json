@@ -125,9 +125,10 @@
   "landingPage": {
     "bottomCardTitle": "FOSSへの貢献",
     "leftCardTitle": "BCBHShow 軽量🌟クライアントへようこそ!",
-    "rightCardTitle": "私たちは他の人のプロジェクトが好きです NFA DYOR"
+    "rightCardTitle": "詳細..."
   },
   "sidebar": {
+    "about": "🌟 について",
     "bookmarks": "Decentチャンネル",
     "channels": "チャンネル",
     "curated": "厳選チャンネル",

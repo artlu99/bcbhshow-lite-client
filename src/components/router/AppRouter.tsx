@@ -32,7 +32,7 @@ export const AppRouter: React.FC = () => {
     <BrowserRouter>
       <Routes>
         <Route path={'/'} element={protectedLayout}>
-          <Route index element={<Landing />} />
+          <Route index element={<FollowingFeed />} />
           <Route path="home" element={<FollowingFeed />} />
           <Route path="foryou" element={<ForYouFeed />} />
           <Route path="~">
@@ -46,6 +46,7 @@ export const AppRouter: React.FC = () => {
           <Route path="sponsorship" element={<Sponsorship />} />
           <Route path="curated-channels" element={<CuratedChannels />} />
           <Route path="votes" element={<Votes />} />
+          <Route path="about" element={<Landing />} />
           <Route path="404" element={<Error404 />} />
         </Route>
       </Routes>

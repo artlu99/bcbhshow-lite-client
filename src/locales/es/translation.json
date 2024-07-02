@@ -125,9 +125,10 @@
   "landingPage": {
     "bottomCardTitle": "Contribuciones al software libre",
     "leftCardTitle": "¡Bienvenido a The BCBHShow Lite Client 🌟",
-    "rightCardTitle": "Nos gustan los proyectos de otras personas NFA DYOR"
+    "rightCardTitle": "Más información..."
   },
   "sidebar": {
+    "about": "🌟 Sobre Lite Client",
     "bookmarks": "Marcadores Decent",
     "channels": "Canales",
     "curated": "Canales seleccionados",

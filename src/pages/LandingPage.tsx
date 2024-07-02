@@ -2,10 +2,11 @@ import {
   BlockOutlined,
   CheckCircleOutlined,
   CompassOutlined,
+  FileImageOutlined,
   LayoutOutlined,
   MinusCircleOutlined,
   RightOutlined,
-  SettingOutlined,
+  UsergroupDeleteOutlined,
 } from '@ant-design/icons';
 import { HubReactionType } from '@app/api/hubble-http-types';
 import { getFidWithFallback } from '@app/auth/fids';
@@ -26,9 +27,10 @@ import {
   hubReactionsByFidQuery,
   userFollowingChannelsQuery,
 } from '@app/queries/queries';
+import { FONT_SIZE } from '@app/styles/themes/constants';
 import { useNeynarContext } from '@neynar/react';
 import { useQueryClient } from '@tanstack/react-query';
-import { MegaphoneIcon, PinIcon } from 'lucide-react';
+import { MegaphoneIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
@@ -55,10 +57,6 @@ const LandingPage: React.FC = () => {
         <BaseRow gutter={[30, 30]}>
           <BaseCol id="top-left" xs={24} lg={12}>
             <S.Card title={t('landingPage.leftCardTitle')}>
-              Curation cast action:{' '}
-              <Link to={'https://warpcast.com/artlu/0x4e64979b'} target="_blank">
-                https://warpcast.com/artlu/0x4e64979b
-              </Link>
               <BaseTree
                 autoExpandParent={true}
                 expandedKeys={['zen-mode', 'channels']}
@@ -67,30 +65,9 @@ const LandingPage: React.FC = () => {
                 switcherIcon={<RightOutlined />}
                 treeData={[
                   {
-                    title: <Link to="/votes">up/down community curation 👍 / 👎</Link>,
-                    key: 'cast-action',
-                    icon: <MegaphoneIcon />,
-                  },
-                  {
-                    title: <span>channel-centric UX</span>,
-                    key: 'channels',
-                    icon: <PinIcon size={14} />,
-                    children: [
-                      {
-                        title: <Link to="/curated-channels">curated cozy channels</Link>,
-                        key: 'cozy',
-                        icon: <CheckCircleOutlined />,
-                      },
-                      {
-                        title: (
-                          <span>
-                            fast channel search, incl. <i>new channels</i>
-                          </span>
-                        ),
-                        key: 'farcaster-channels',
-                        icon: <CompassOutlined />,
-                      },
-                    ],
+                    title: <Link to="/curated-channels">curated cozy channels</Link>,
+                    key: 'cozy',
+                    icon: <CheckCircleOutlined />,
                   },
                   {
                     title: <Link to="/external/decent-bookmarks">Decent Bookmarks: cross-client + portable</Link>,
@@ -98,7 +75,7 @@ const LandingPage: React.FC = () => {
                     icon: <LayoutOutlined />,
                   },
                   {
-                    title: <Link to={'/home'}>Zen mode toggles</Link>,
+                    title: <Link to={'/home'}>Zen mode</Link>,
                     key: 'zen-mode',
                     icon: <MinusCircleOutlined />,
                     children: [
@@ -109,6 +86,16 @@ const LandingPage: React.FC = () => {
                           </span>
                         ),
                         key: 'pfp',
+                        icon: <UsergroupDeleteOutlined />,
+                      },
+                      {
+                        title: (
+                          <span>
+                            images hidden <i>by default</i>
+                          </span>
+                        ),
+                        key: 'pfp',
+                        icon: <FileImageOutlined />,
                       },
                       {
                         title: (
@@ -120,33 +107,44 @@ const LandingPage: React.FC = () => {
                       },
                     ],
                   },
-                  {
-                    title: <span>native Japanese, Spanish, German 🌐</span>,
-                    key: 'i18n',
-                    icon: <SettingOutlined />,
-                  },
-                  {
-                    title: <span>FOSS 💜 + freemium model</span>,
-                    key: 'foss',
-                    icon: <BlockOutlined />,
-                  },
                 ]}
               />
             </S.Card>
           </BaseCol>
           <BaseCol id="top-right" xs={24} lg={12}>
             <S.Card title={t('landingPage.rightCardTitle')}>
-              6/11/2024
-              <br />
-              Zenigame's
-              <Link to={`https://fcshelf.zenigame.net/${fid}`} target="_blank">
-                viewer
-              </Link>
-              for other people's followed channels
-              <br />
-              <Link to={'https://warpcast.com/leeknowlton.eth/0xb965d75c'} target="_blank">
-                https://warpcast.com/leeknowlton.eth/0xb965d75c
-              </Link>
+              <BaseTree
+                autoExpandParent={true}
+                expandedKeys={['zen-mode', 'channels']}
+                showLine={true}
+                showIcon={true}
+                switcherIcon={<RightOutlined />}
+                treeData={[
+                  {
+                    title: (
+                      <span>
+                        fastest channel search, incl. <i>new channels</i>
+                      </span>
+                    ),
+                    key: 'farcaster-channels',
+                    icon: <CompassOutlined />,
+                  },
+                  {
+                    title: <Link to="/votes">up/down community curation 👍 / 👎</Link>,
+                    key: 'cast-action',
+                    icon: <MegaphoneIcon size={FONT_SIZE.lg} />,
+                  },
+                  {
+                    title: <span>🌐 native Japanese, Spanish, German</span>,
+                    key: 'i18n',
+                  },
+                  {
+                    title: <Link to={'/sponsorship'}>FOSS 💜 + freemium model</Link>,
+                    key: 'foss',
+                    icon: <BlockOutlined />,
+                  },
+                ]}
+              />
             </S.Card>
           </BaseCol>
         </BaseRow>

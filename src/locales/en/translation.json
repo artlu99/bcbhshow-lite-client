@@ -125,9 +125,10 @@
   "landingPage": {
     "bottomCardTitle": "FOSS Contributions",
     "leftCardTitle": "Welcome to The BCBHShow Lite Client 🌟",
-    "rightCardTitle": "Other people's projects that we like NFA DYOR" 
+    "rightCardTitle": "More info..."
   },
   "sidebar": {
+    "about": "🌟 About",
     "bookmarks": "Decent Bookmarks",
     "channels": "Channels",
     "curated": "Curated Channels",
