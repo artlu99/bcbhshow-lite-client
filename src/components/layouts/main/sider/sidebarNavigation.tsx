@@ -6,7 +6,7 @@ import {
   LineChartOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import { ThumbsUpIcon } from 'lucide-react';
+import { SparklesIcon, ThumbsUpIcon } from 'lucide-react';
 
 export interface SidebarNavigationItem {
   title: string;
@@ -66,5 +66,6 @@ export const sidebarNavigation: SidebarNavigationItem[] = [
     title: 'sidebar.about',
     key: 'about',
     url: '/about',
+    icon: <SparklesIcon />,
   },
 ];
