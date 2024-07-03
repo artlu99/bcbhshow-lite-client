@@ -84,8 +84,31 @@ export const FeedSettings: React.FC = () => {
       <br />
       {numCastsAfterFiltering} Casts after filtering
       <BaseDivider />
-      {isHomeFeed || isForYouFeed ? (
+      {isHomeFeed ? (
         <>
+          <SwitchContainer>
+            <span>{t('Only Curated Channels')}</span> {numCuratedChannelsCasts}
+            <BaseSwitch
+              checkedChildren={t('On')}
+              unCheckedChildren={t('Off')}
+              checked={showOnlyCuratedChannels}
+              onChange={handleChangeOnlyCuratedChannels}
+            />
+          </SwitchContainer>
+          <BaseDivider />
+        </>
+      ) : isForYouFeed ? (
+        <>
+          <SwitchContainer>
+            <span>{t('Only Following')}</span> {numFollowingCasts}
+            <BaseSwitch
+              checkedChildren={t('On')}
+              unCheckedChildren={t('Off')}
+              checked={showOnlyFollowing}
+              onChange={handleChangeOnlyFollowing}
+            />
+          </SwitchContainer>
+          <br />
           <SwitchContainer>
             <span>{t('Only Curated Channels')}</span> {numCuratedChannelsCasts}
             <BaseSwitch
