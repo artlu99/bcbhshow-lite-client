@@ -21,13 +21,14 @@ export const getNeynarOpenrankForYouFeed = (forYouFeedRequestPayload: ForYouFeed
 interface EnhancedForYouFeedRequest {
   fid: number;
   cursor?: string;
+  following: number[];
   powerBadgeUsers: number[];
   allChannels: ChannelObject[];
 }
 export const getEnhancedForYouFeed = async (
   homeFeedRequestPayload: EnhancedForYouFeedRequest,
 ): Promise<PagedCronFeed> => {
-  const { fid, cursor, powerBadgeUsers, allChannels } = homeFeedRequestPayload;
+  const { fid, cursor, following, powerBadgeUsers, allChannels } = homeFeedRequestPayload;
 
   const forYouFeed = await getNeynarOpenrankForYouFeed({ fid: fid, limit: FORYOU_FEED_PAGESIZE, cursor });
   const seenFids = sift(forYouFeed.casts.map((cast) => cast.author.fid).filter((fid) => fid !== null));
@@ -39,7 +40,7 @@ export const getEnhancedForYouFeed = async (
     ...forYouFeed,
     casts: forYouFeed.casts.map((castObject) => ({
       ...castObject,
-      amFollowing: true,
+      amFollowing: following.find((fid) => fid === castObject.author.fid) !== undefined,
 
       authorHasPowerBadge: powerBadgeUsers.find((fid) => fid === castObject.author.fid) !== undefined,
       botOrNotResult: botOrNotResponse.fids.find((fid) => fid.fid === castObject.author.fid)?.result ?? {

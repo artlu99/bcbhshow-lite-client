@@ -21,6 +21,7 @@ export const ForYouFeed: React.FC<ForYouFeedProps> = ({ fid }) => {
   const [loaded, setLoaded] = useState<boolean>(false);
   const {
     setNumCasts,
+    setNumFollowingCasts,
     setNumCuratedChannelsCasts,
     setNumFarcaptchas,
     setNumUpvotes,
@@ -33,6 +34,7 @@ export const ForYouFeed: React.FC<ForYouFeedProps> = ({ fid }) => {
   } = useZustand();
 
   const signalToNoiseState = useAppSelector((state) => state.signalToNoise);
+  const showOnlyFollowing = signalToNoiseState.showOnlyFollowing;
   const showOnlyCuratedChannels = signalToNoiseState.showOnlyCuratedChannels;
   const showOnlyFarcaptcha = signalToNoiseState.showOnlyFarcaptcha;
   const onlyShowUpvoted = signalToNoiseState.onlyShowUpvoted;
@@ -68,6 +70,7 @@ export const ForYouFeed: React.FC<ForYouFeedProps> = ({ fid }) => {
 
     getEnhancedForYouFeed({
       fid: fid,
+      following: memodFfData ?? [],
       powerBadgeUsers: allPowerBadgeUsers,
       allChannels: memodChannelData ?? [],
     })
@@ -83,6 +86,7 @@ export const ForYouFeed: React.FC<ForYouFeedProps> = ({ fid }) => {
 
   useEffect(() => {
     setNumCasts(casts.length);
+    setNumFollowingCasts(casts.filter((c) => c.amFollowing).length);
     setNumCuratedChannelsCasts(casts.filter((c) => c.tags.length > 1).length);
     setNumFarcaptchas(casts.filter((c) => c.botOrNotResult.farcaptcha).length);
     setNumUpvotes(casts.reduce((acc, c) => acc + c.curation.upvotes.length, 0));
@@ -96,6 +100,7 @@ export const ForYouFeed: React.FC<ForYouFeedProps> = ({ fid }) => {
     casts,
     ratioThreshold,
     setNumCasts,
+    setNumFollowingCasts,
     setNumCuratedChannelsCasts,
     setNumCastsAboveThreshold,
     setNumCastsWithDownvotes,
@@ -109,6 +114,7 @@ export const ForYouFeed: React.FC<ForYouFeedProps> = ({ fid }) => {
     getEnhancedForYouFeed({
       fid: fid,
       cursor: nextCursor,
+      following: memodFfData ?? [],
       powerBadgeUsers: allPowerBadgeUsers,
       allChannels: memodChannelData ?? [],
     }).then((newCasts) => {
@@ -118,6 +124,7 @@ export const ForYouFeed: React.FC<ForYouFeedProps> = ({ fid }) => {
 
   const filteredCastsList = useMemo(() => {
     const filteredCasts = casts
+      .filter((c) => !showOnlyFollowing || c.amFollowing)
       .filter((c) => !showOnlyCuratedChannels || c.tags.length > 1)
       .filter((c) => !showOnlyFarcaptcha || c.botOrNotResult.farcaptcha)
       .filter((c) => !onlyShowUpvoted || c.curation.upvotes.length > 0)
@@ -162,6 +169,7 @@ export const ForYouFeed: React.FC<ForYouFeedProps> = ({ fid }) => {
   }, [
     casts,
     setNumCastsAfterFiltering,
+    showOnlyFollowing,
     showOnlyCuratedChannels,
     showOnlyFarcaptcha,
     onlyShowUpvoted,
