@@ -1,4 +1,4 @@
-import { degencastLink, farquestLink, recasterLink, supercastLink, warpcastLink } from '@app/constants/altClients';
+import { degencastLink, farquestLink, herocastLink, recasterLink, supercastLink, warpcastLink } from '@app/constants/altClients';
 import { useResponsive } from '@app/hooks/useResponsive';
 import { Link } from 'react-router-dom';
 import * as S from './Cast.styles';
@@ -11,6 +11,7 @@ export const AltClientLinks: React.FC<AltClientLinksProps> = ({ castHash, castFi
   const { mobileOnly } = useResponsive();
   const maybeFarquestLink = farquestLink({ fid: castFid, hash: castHash });
   const maybeRecasterLink = mobileOnly ? recasterLink({ hash: castHash }) : undefined;
+  const maybeHerocastLink = mobileOnly ? undefined : herocastLink({ hash: castHash });
 
   return (
     <S.Description>
@@ -35,6 +36,12 @@ export const AltClientLinks: React.FC<AltClientLinksProps> = ({ castHash, castFi
       <Link to={degencastLink({ hash: castHash })} target="_blank">
         [Degencast]
       </Link>
+      {maybeHerocastLink && (
+        <Link to={maybeHerocastLink} target="_blank">
+          {' '}
+          [Herocast]
+        </Link>
+      )}
     </S.Description>
   );
 };
