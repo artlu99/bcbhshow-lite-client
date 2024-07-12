@@ -87,9 +87,9 @@ const seasonTwo = [
   },
   {
     episode: 5,
-    username: 'christin',
-    sponsor: '<your name here>',
-    url: 'https://warpcast.com/christin',
+    username: 'quidli',
+    sponsor: 'Quidli',
+    url: 'https://i.seadn.io/gcs/files/1195ae3206657c9b2037a35655c53875.png?w=500&auto=format',
   },
   {
     episode: 6,
