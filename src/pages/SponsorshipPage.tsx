@@ -89,7 +89,8 @@ const seasonTwo = [
     episode: 5,
     username: 'quidli',
     sponsor: 'Quidli',
-    url: 'https://i.seadn.io/gcs/files/1195ae3206657c9b2037a35655c53875.png',
+    url: 'https://quid.li',
+    pfp: 'https://i.seadn.io/gcs/files/1195ae3206657c9b2037a35655c53875.png',
   },
   {
     episode: 6,
