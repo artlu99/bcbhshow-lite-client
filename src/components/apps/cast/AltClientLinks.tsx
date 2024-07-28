@@ -20,7 +20,7 @@ export const AltClientLinks: React.FC<AltClientLinksProps> = ({ castHash, castFi
   const maybeFarquestLink = farquestLink({ fid: castFid, hash: castHash });
   const maybeRecasterLink = mobileOnly ? recasterLink({ hash: castHash }) : undefined;
   const maybeHerocastLink = mobileOnly ? undefined : herocastLink({ hash: castHash });
-  const maybeWildcardLink = mobileOnly ? undefined : wildcardLink({ hash: castHash });
+  const maybeWildcardLink = mobileOnly ? undefined : wildcardLink({ fid: castFid, hash: castHash });
 
   return (
     <S.Description>
