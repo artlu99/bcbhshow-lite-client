@@ -40,3 +40,8 @@ export const herocastLink = (props: LinkProps) => {
   const { hash } = props;
   return `https://app.herocast.xyz/conversation/${hash}`;
 };
+
+export const wildcardLink = (props: LinkProps) => {
+  const { hash } = props;
+  return `https://app.wildcard.lol/cast/${hash}`;
+};
