@@ -150,8 +150,8 @@
   },
   "votes": {
     "title": "Up/down community curation 👍 / 👎",
-    "cast-action": "install the Cast Action",
-    "instruction": "Vote in Warpcast and/or The BCBHShow Lite Client 🌟",
+    "cast-action": "Cast Action will be deprecated 15 Aug 2024.",
+    "instruction": "Please vote via $DEGEN tips in Warpcast, Wildcard, Degencast.", 
     "leftCardTitle": "Highly upvoted accounts you don't follow yet",
     "rightCardTitle": "Controversial accounts you do follow"
   }

@@ -150,8 +150,8 @@
   },
   "votes": {
     "title": "コミュニティによる賛成票と反対票👍/👎",
-    "cast-action": "Cast Actionをインストール",
-    "instruction": "WarpcastとThe BCBHShow Lite Client🌟を投票してください", 
+    "cast-action": "Cast Actionは15月8日に非推奨になります。",
+    "instruction": "Warpcast、Wildcard、Degencast で $DEGEN のヒントに投票してください。",
     "leftCardTitle": "まだフォローしていないが、高評価を得ているアカウント",
     "rightCardTitle": "あなたがフォローしている物議を醸すアカウント"
   }

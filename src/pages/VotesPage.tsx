@@ -48,6 +48,24 @@ const VotesPage: React.FC = () => {
     <>
       <PageTitle>{t('sidebar.votes')}</PageTitle>
       <BaseSpace direction="vertical" size="middle" style={{ display: 'flex' }}>
+        <BaseRow gutter={[30, 30]} justify={'center'}>
+          <BaseCol id="bottom-left" xs={24} lg={18}>
+            <S.Card title={t('votes.title')}>
+              <BaseCol>
+                <BaseRow>
+                  <Link to={'https://warpcast.com/artlu/0x4e64979b'} target="_blank">
+                    {t('votes.cast-action')}
+                  </Link>
+                </BaseRow>
+                <BaseRow>{t('votes.instruction')}</BaseRow>
+                <BaseRow>
+                  BCBHShow Lite Client 🌟 curation data will be discarded (and privacy preserved) on 31 Aug 2024.
+                </BaseRow>
+                <BaseRow>Other curation projects to investigate: Kiwi, Artcoin, and more.</BaseRow>
+              </BaseCol>
+            </S.Card>
+          </BaseCol>
+        </BaseRow>
         <BaseRow gutter={[30, 30]}>
           <BaseCol id="top-left" xs={24} lg={12}>
             <S.Card title={t('votes.leftCardTitle')}>
@@ -88,27 +106,6 @@ const VotesPage: React.FC = () => {
                       <br />
                     </BaseRow>
                   ))}
-              </BaseCol>
-            </S.Card>
-          </BaseCol>
-        </BaseRow>
-        <BaseRow gutter={[30, 30]} justify={'center'}>
-          <BaseCol id="bottom-left" xs={24} lg={18}>
-            <S.Card title={t('votes.title')}>
-              <BaseCol>
-                <BaseRow>
-                  <Link to={'https://warpcast.com/artlu/0x4e64979b'} target="_blank">
-                    {t('votes.cast-action')}
-                  </Link>
-                </BaseRow>
-                <BaseRow>{t('votes.instruction')}</BaseRow>
-                <BaseRow>
-                  h/t{' '}
-                  <Link to={'https://warpcast.com/~/channel/poop'} target="_blank">
-                    /poop 💩
-                  </Link>
-                </BaseRow>
-                <BaseRow>hmu if ur a dev interested in free access to anonymized, composable curation data</BaseRow>
               </BaseCol>
             </S.Card>
           </BaseCol>
