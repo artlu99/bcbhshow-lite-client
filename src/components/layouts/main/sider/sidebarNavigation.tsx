@@ -45,12 +45,6 @@ export const sidebarNavigation: SidebarNavigationItem[] = [
     url: '/curated-channels',
   },
   {
-    title: 'sidebar.votes',
-    key: 'votes',
-    icon: <ThumbsUpIcon />,
-    url: '/votes',
-  },
-  {
     title: 'sidebar.bookmarks',
     key: 'bookmarks',
     url: '/external/decent-bookmarks',

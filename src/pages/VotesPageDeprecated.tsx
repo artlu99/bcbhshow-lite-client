@@ -4,7 +4,7 @@ import { BaseRow } from '@app/components/common/BaseRow/BaseRow';
 import { BaseSpace } from '@app/components/common/BaseSpace/BaseSpace';
 import { PageTitle } from '@app/components/common/PageTitle/PageTitle';
 import * as S from '@app/pages/uiComponentsPages//UIComponentsPage.styles';
-import { followingByFidQuery, getVotesQuery } from '@app/queries/queries';
+import { followingByFidQuery, getVotesQueryDeprecated } from '@app/queries/queries';
 import { useNeynarContext } from '@neynar/react';
 import { useQuery } from '@tanstack/react-query';
 import { sort } from 'radash';
@@ -12,7 +12,7 @@ import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-const VotesPage: React.FC = () => {
+const VotesPageDeprecated: React.FC = () => {
   const { t } = useTranslation();
 
   const { user } = useNeynarContext();
@@ -24,7 +24,7 @@ const VotesPage: React.FC = () => {
     return (ffQuery.data?.result?.users ?? []).map((l) => Number(l.fid));
   }, [ffQuery]);
 
-  const gvQuery = useQuery(getVotesQuery());
+  const gvQuery = useQuery(getVotesQueryDeprecated());
   const memodVotes = useMemo(() => (gvQuery.data?.results ?? []).filter((v) => v.votedFid !== fid), [fid, gvQuery]);
 
   const bestAccounts = sort(
@@ -46,18 +46,18 @@ const VotesPage: React.FC = () => {
 
   return (
     <>
-      <PageTitle>{t('sidebar.votes')}</PageTitle>
+      <PageTitle>{t('sidebar.votes-deprecated')}</PageTitle>
       <BaseSpace direction="vertical" size="middle" style={{ display: 'flex' }}>
         <BaseRow gutter={[30, 30]} justify={'center'}>
           <BaseCol id="bottom-left" xs={24} lg={18}>
-            <S.Card title={t('votes.title')}>
+            <S.Card title={t('votes-deprecated.title')}>
               <BaseCol>
                 <BaseRow>
                   <Link to={'https://warpcast.com/artlu/0x4e64979b'} target="_blank">
-                    {t('votes.cast-action')}
+                    {t('votes-deprecated.cast-action')}
                   </Link>
                 </BaseRow>
-                <BaseRow>{t('votes.instruction')}</BaseRow>
+                <BaseRow>{t('votes-deprecated.instruction')}</BaseRow>
                 <BaseRow>
                   BCBHShow Lite Client 🌟 curation data will be discarded (and privacy preserved) on 31 Aug 2024.
                 </BaseRow>
@@ -68,7 +68,7 @@ const VotesPage: React.FC = () => {
         </BaseRow>
         <BaseRow gutter={[30, 30]}>
           <BaseCol id="top-left" xs={24} lg={12}>
-            <S.Card title={t('votes.leftCardTitle')}>
+            <S.Card title={t('votes-deprecated.leftCardTitle')}>
               <BaseCol>
                 {bestAccounts
                   .filter((ba) => !(memodFollowing ?? []).includes(ba.fid))
@@ -89,7 +89,7 @@ const VotesPage: React.FC = () => {
             </S.Card>
           </BaseCol>
           <BaseCol id="top-right" xs={24} lg={12}>
-            <S.Card title={t('votes.rightCardTitle')}>
+            <S.Card title={t('votes-deprecated.rightCardTitle')}>
               <BaseCol>
                 {controversialAccounts
                   .filter((ca) => (memodFollowing ?? []).includes(ca.fid))
@@ -115,4 +115,4 @@ const VotesPage: React.FC = () => {
   );
 };
 
-export default VotesPage;
+export default VotesPageDeprecated;

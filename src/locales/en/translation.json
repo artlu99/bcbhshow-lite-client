@@ -135,7 +135,7 @@
     "feed": "Feed",
     "foryou": "For You",
     "sponsorship": "Sponsorship",
-    "votes": "Community Curation"
+    "votes-deprecated": "Community Curation - deprecated"
   },
   "sponsorship": {
     "leftCardTitle": "Sponsor the BCBHShow",
@@ -148,7 +148,7 @@
     "transcripts": "Transcripts on /paragraph",
     "rightCardTitle": "Season 1 and 2 Sponsors"
   },
-  "votes": {
+  "votes-deprecated": {
     "title": "Up/down community curation 👍 / 👎",
     "cast-action": "Cast Action will be deprecated 15 Aug 2024.",
     "instruction": "Please vote via $DEGEN tips in Warpcast, Wildcard, Degencast.", 

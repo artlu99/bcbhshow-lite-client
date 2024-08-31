@@ -135,7 +135,7 @@
     "feed": "フィード",
     "foryou": "あなたのために",
     "sponsorship": "スポンサーシップ",
-    "votes": "投票"
+    "votes-deprecated": "投票"
   },
   "sponsorship": {
     "leftCardTitle": "BCBHShow のスポンサー",
@@ -148,7 +148,7 @@
     "transcripts": "/paragraphでトランスクリプトを確認",
     "rightCardTitle": "シーニズン1のスポンサー"
   },
-  "votes": {
+  "votes-deprecated": {
     "title": "コミュニティによる賛成票と反対票👍/👎",
     "cast-action": "Cast Actionは15月8日に非推奨になります。",
     "instruction": "Warpcast、Wildcard、Degencast で $DEGEN のヒントに投票してください。",

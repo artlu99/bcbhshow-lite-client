@@ -1,5 +1,4 @@
 import { BotOrNotResult } from '@app/api/botOrNot.api';
-import { Curation } from '@app/api/curation.api';
 import { EmbedObject } from '@app/api/feed-types';
 import { AltClientLinks } from '@app/components/apps/cast/AltClientLinks';
 import { Embed } from '@app/components/apps/cast/Embed';
@@ -40,7 +39,6 @@ export interface CastProps {
   recastooors: number[];
   likooors: number[];
   tags: IHashTag[];
-  curation?: { upvotes: Curation[]; downvotes: Curation[] };
   className?: string;
   url?: string;
 }
@@ -67,7 +65,6 @@ export const Cast: React.FC<CastProps> = ({
   likes,
   likooors,
   tags,
-  curation,
   className,
   url,
 }) => {
@@ -161,7 +158,6 @@ export const Cast: React.FC<CastProps> = ({
               replies={replies}
               recasts={recasts}
               likes={likes}
-              curation={curation}
               allLikooors={allLikooors}
               setAllLikooors={setAllLikooors}
               allRecastooors={allRecastooors}

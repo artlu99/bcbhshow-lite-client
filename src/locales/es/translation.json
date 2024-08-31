@@ -135,7 +135,7 @@
     "feed": "Noticias",
     "foryou": "Para Ud.",
     "sponsorship": "Patrocinio",
-    "votes": "Curación comunitaria"
+    "votes-deprecated": "Curación comunitaria"
   },
   "sponsorship": {
     "leftCardTitle": "Para patrocinar el BCBHShow",
@@ -148,7 +148,7 @@
     "transcripts": "Transcripciones en /paragraph",
     "rightCardTitle": "Patrocinadores de las temporadas 1 y 2"
   },
-  "votes": {
+  "votes-deprecated": {
     "title": "Curación comunitaria por arriba y abajo 👍 / 👎",
     "cast-action": "La acción de Cast se desaconseja 15 Agosto 2024.",
     "instruction": "Vota con propinas de$DEGEN en Warpcast, Wildcard, Degencast.", 

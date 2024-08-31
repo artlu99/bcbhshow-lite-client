@@ -23,14 +23,12 @@ import {
   botOrNotLabelsQuery,
   channelByIdQuery,
   followingByFidQuery,
-  getVotesQuery,
+  getVotesQueryDeprecated,
   hubReactionsByFidQuery,
   userFollowingChannelsQuery,
 } from '@app/queries/queries';
-import { FONT_SIZE } from '@app/styles/themes/constants';
 import { useNeynarContext } from '@neynar/react';
 import { useQueryClient } from '@tanstack/react-query';
-import { MegaphoneIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
@@ -48,7 +46,7 @@ const LandingPage: React.FC = () => {
   client.prefetchQuery(hubReactionsByFidQuery(fid, HubReactionType.LIKE));
   client.prefetchQuery(hubReactionsByFidQuery(fid, HubReactionType.RECAST));
   client.prefetchQuery(botOrNotLabelsQuery());
-  client.prefetchQuery(getVotesQuery());
+  client.prefetchQuery(getVotesQueryDeprecated());
 
   return (
     <>
@@ -64,11 +62,6 @@ const LandingPage: React.FC = () => {
                 showIcon={true}
                 switcherIcon={<RightOutlined />}
                 treeData={[
-                  {
-                    title: <Link to="/curated-channels">curated cozy channels</Link>,
-                    key: 'cozy',
-                    icon: <CheckCircleOutlined />,
-                  },
                   {
                     title: <Link to="/external/decent-bookmarks">Decent Bookmarks: cross-client + portable</Link>,
                     key: 'decent-bookmarks',
@@ -121,6 +114,11 @@ const LandingPage: React.FC = () => {
                 switcherIcon={<RightOutlined />}
                 treeData={[
                   {
+                    title: <Link to="/curated-channels">curated cozy channels</Link>,
+                    key: 'cozy',
+                    icon: <CheckCircleOutlined />,
+                  },
+                  {
                     title: (
                       <span>
                         fastest channel search, incl. <i>new channels</i>
@@ -128,11 +126,6 @@ const LandingPage: React.FC = () => {
                     ),
                     key: 'farcaster-channels',
                     icon: <CompassOutlined />,
-                  },
-                  {
-                    title: <Link to="/votes">up/down community curation 👍 / 👎</Link>,
-                    key: 'cast-action',
-                    icon: <MegaphoneIcon size={FONT_SIZE.lg} />,
                   },
                   {
                     title: <span>🌐 native Japanese, Spanish, German</span>,

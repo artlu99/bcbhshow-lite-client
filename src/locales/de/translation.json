@@ -135,7 +135,7 @@
     "feed": "Futter",
     "foryou": "Für Sie",
     "sponsorship": "Anzeige",
-    "votes": "Gemeinschaftsbewertungen"
+    "votes-deprecated": "Gemeinschaftsbewertungen"
   },
   "sponsorship": {
     "leftCardTitle": "Sponsoren Sie die BCBHShow",
@@ -148,7 +148,7 @@
     "transcripts": "Transkripte auf /paragraph",
     "rightCardTitle": "Sponsoren der 1. un 2. Staffel"
   },
-  "votes": {
+  "votes-deprecated": {
     "title": "Gemeinschaftsbewertungen hoch runter 👍 / 👎",
     "cast-action": "Die Cast Action wird 15 Aug 2024 veraltet.",
     "instruction": "Bitte stimmen Sie über $DEGEN Tipps in Warpcast, Wildcard, Degencast.",

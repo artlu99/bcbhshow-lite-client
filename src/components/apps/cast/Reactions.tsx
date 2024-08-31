@@ -1,4 +1,3 @@
-import { Curation, putCuration } from '@app/api/curation.api';
 import { HubReactionType, HubReactionsResponse, HubReactionsStreamItem } from '@app/api/hubble-http-types';
 import { setReactionOnHash } from '@app/api/reactionOnHash.api';
 import { getFidWithFallback } from '@app/auth/fids';
@@ -11,14 +10,7 @@ import { hubReactionsByFidQuery } from '@app/queries/queries';
 import { BASE_COLORS } from '@app/styles/themes/constants';
 import { useNeynarContext } from '@neynar/react';
 import { useQuery } from '@tanstack/react-query';
-import {
-  BarChartBigIcon,
-  LucideHeart,
-  LucideMessageSquare,
-  LucideRepeat2,
-  LucideThumbsDown,
-  LucideThumbsUp,
-} from 'lucide-react';
+import { BarChartBigIcon, LucideHeart, LucideMessageSquare, LucideRepeat2 } from 'lucide-react';
 import { Dispatch, SetStateAction, useMemo, useState } from 'react';
 import * as S from './Cast.styles';
 
@@ -42,7 +34,6 @@ const isStateAdded = (stream: HubReactionsStreamItem[], hash: string): boolean =
 
 export interface ReactionsProps {
   castHash: string;
-  castFid: number;
   replies: number;
   recasts: number;
   likes: number;
@@ -50,16 +41,13 @@ export interface ReactionsProps {
   setAllLikooors: Dispatch<SetStateAction<number[]>>;
   allRecastooors: number[];
   setAllRecastooors: Dispatch<SetStateAction<number[]>>;
-  curation?: { upvotes: Curation[]; downvotes: Curation[] };
 }
 
 export const Reactions: React.FC<ReactionsProps> = ({
   castHash,
-  castFid,
   replies,
   recasts,
   likes,
-  curation,
   allLikooors,
   setAllLikooors,
   allRecastooors,
@@ -68,8 +56,6 @@ export const Reactions: React.FC<ReactionsProps> = ({
   const [isAnalyticsOpen, setAnalyticsOpen] = useState(false);
   const [optimisticLikes, setOptimisticLikes] = useState(0);
   const [optimisticRecasts, setOptimisticRecasts] = useState(0);
-  const [optimisticUpvotes, setOptimisticUpvotes] = useState(0);
-  const [optimisticDownvotes, setOptimisticDownvotes] = useState(0);
 
   const zenModeState = useAppSelector((state) => state.zenMode);
   const showReactions = zenModeState.showReactions;
@@ -122,32 +108,10 @@ export const Reactions: React.FC<ReactionsProps> = ({
     }
   };
 
-  const handleUpvote = async (castHash: string, castFid: number) => {
-    if (user?.fid) {
-      setOptimisticUpvotes(optimisticUpvotes + 1);
-      await putCuration({ castHash, castFid, actionFid: user.fid, action: 'upvote' });
-    } else {
-      console.log('must be logged in to vote!');
-    }
-  };
-
-  const handleDownvote = async (castHash: string, castFid: number) => {
-    if (user?.fid) {
-      setOptimisticDownvotes(optimisticDownvotes + 1);
-      await putCuration({ castHash, castFid, actionFid: user.fid, action: 'downvote' });
-    } else {
-      console.log('must be logged in to vote!');
-    }
-  };
-
   const amLikooor =
     isStateAdded(memodLikes ?? [], castHash) || optimisticLikes || allLikooors.includes(user?.fid ?? -1);
   const amRecastooor =
     isStateAdded(memodRecasts ?? [], castHash) || optimisticRecasts || allRecastooors.includes(user?.fid ?? -1);
-  const amUpvotooor =
-    (curation?.upvotes ?? []).find((upvote) => upvote.voterFid === (user?.fid ?? -1)) || optimisticUpvotes;
-  const amDownvotooor =
-    (curation?.downvotes ?? []).find((downvote) => downvote.voterFid === (user?.fid ?? -1)) || optimisticDownvotes;
 
   return showReactions ? (
     <>
@@ -166,32 +130,6 @@ export const Reactions: React.FC<ReactionsProps> = ({
         <BaseDivider type="vertical" style={{ marginLeft: reactionBarMarginSize }} />
         <BarChartBigIcon size={reactionIconSize * 1.2} onClick={() => setAnalyticsOpen(!isAnalyticsOpen)} />
         <BaseDivider type="vertical" style={{ marginLeft: reactionBarMarginSize }} />
-        {curation ? (
-          <>
-            <BaseDivider type="vertical" style={{ marginLeft: reactionBarMarginSize }} />
-            <BaseBadge
-              count={(curation?.upvotes?.length ?? 0) + optimisticUpvotes}
-              color={amUpvotooor ? highlightedColor : shadedColor}
-            >
-              {optimisticUpvotes ? (
-                <LucideThumbsUp size={reactionIconSize} />
-              ) : (
-                <LucideThumbsUp size={reactionIconSize} onClick={() => handleUpvote(castHash, castFid)} />
-              )}
-            </BaseBadge>
-            <BaseDivider type="vertical" style={{ marginLeft: reactionBarMarginSize }} />
-            <BaseBadge
-              count={(curation?.downvotes?.length ?? 0) + optimisticDownvotes}
-              color={amDownvotooor ? highlightedColor : shadedColor}
-            >
-              {optimisticDownvotes ? (
-                <LucideThumbsDown size={reactionIconSize} />
-              ) : (
-                <LucideThumbsDown size={reactionIconSize} onClick={() => handleDownvote(castHash, castFid)} />
-              )}
-            </BaseBadge>
-          </>
-        ) : null}
       </S.Description>
       {isAnalyticsOpen && (
         <ReactionsAnalytics

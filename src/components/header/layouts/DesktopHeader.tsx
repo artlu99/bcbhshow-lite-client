@@ -18,7 +18,6 @@ export const DesktopHeader: React.FC<DesktopHeaderProps> = ({ isTwoColumnsLayout
   const isForYouFeed = pathname.startsWith('/foryou');
   const isChannelFeed = pathname.startsWith('/~/channel/');
   const isDecentBookmarksPage = pathname.startsWith('/external/decent-bookmarks');
-  const isVotePage = pathname.startsWith('/votes');
 
   const leftSide = isTwoColumnsLayout ? (
     <S.SearchColumn xl={16} xxl={17}>
@@ -56,15 +55,7 @@ export const DesktopHeader: React.FC<DesktopHeaderProps> = ({ isTwoColumnsLayout
         </BaseCol>
       )}
       <BaseCol>
-        {isChannelFeed ? (
-          <ChannelLogo />
-        ) : isHomeFeed || isForYouFeed ? (
-          <S.CCAButton />
-        ) : isVotePage ? (
-          <S.CCAButton />
-        ) : (
-          <S.FCButton />
-        )}
+        {isChannelFeed ? <ChannelLogo /> : isHomeFeed || isForYouFeed ? <S.CCAButton /> : <S.FCButton />}
       </BaseCol>
     </>
   );

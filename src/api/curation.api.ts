@@ -36,11 +36,11 @@ export interface CurationPutRequest {
   action: ActionEnumType;
 }
 
-export const getVotes = (): Promise<VotesResponse> =>
-  httpApi.get<VotesResponse>('getCuration').then(({ data }) => data);
+export const getVotesDeprecated = (): Promise<VotesResponse> =>
+  httpApi.get<VotesResponse>('getCurationDeprecated').then(({ data }) => data);
 
 export const getCuration = (curationRequestPayload: CurationRequest): Promise<CurationResponse> =>
-  httpApi.post<CurationResponse>('getCuration', { ...curationRequestPayload }).then(({ data }) => data);
+  httpApi.post<CurationResponse>('getCurationDeprecated', { ...curationRequestPayload }).then(({ data }) => data);
 
 export const putCuration = (curationPutRequestPayload: CurationPutRequest): Promise<{ message: string }> =>
-  httpApi.put<{ message: string }>('getCuration', { ...curationPutRequestPayload }).then(({ data }) => data);
+  httpApi.put<{ message: string }>('getCurationDeprecated', { ...curationPutRequestPayload }).then(({ data }) => data);
