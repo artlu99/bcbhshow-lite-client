@@ -23,7 +23,6 @@ import {
   botOrNotLabelsQuery,
   channelByIdQuery,
   followingByFidQuery,
-  getVotesQueryDeprecated,
   hubReactionsByFidQuery,
   userFollowingChannelsQuery,
 } from '@app/queries/queries';
@@ -46,7 +45,6 @@ const LandingPage: React.FC = () => {
   client.prefetchQuery(hubReactionsByFidQuery(fid, HubReactionType.LIKE));
   client.prefetchQuery(hubReactionsByFidQuery(fid, HubReactionType.RECAST));
   client.prefetchQuery(botOrNotLabelsQuery());
-  client.prefetchQuery(getVotesQueryDeprecated());
 
   return (
     <>

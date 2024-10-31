@@ -20,7 +20,6 @@
     "warningDescription": "This is a warning notice about copywriting."
   },
   "buttons": {
-    "curation-action": "Curation Action",
     "decent-bookmarks": "Decent Bookmarks",
     "farcaster-channels": "Farcaster Channels",
     "signal-to-noise": "Signal-to-Noise",
@@ -134,8 +133,7 @@
     "curated": "Curated Channels",
     "feed": "Feed",
     "foryou": "For You",
-    "sponsorship": "Sponsorship",
-    "votes-deprecated": "Community Curation - deprecated"
+    "sponsorship": "Sponsorship"
   },
   "sponsorship": {
     "leftCardTitle": "Sponsor the BCBHShow",
@@ -147,12 +145,5 @@
     "clips": "Clips on /drakula",
     "transcripts": "Transcripts on /paragraph",
     "rightCardTitle": "Season 1 and 2 Sponsors"
-  },
-  "votes-deprecated": {
-    "title": "Up/down community curation 👍 / 👎",
-    "cast-action": "Cast Action will be deprecated 15 Aug 2024.",
-    "instruction": "Please vote via $DEGEN tips in Warpcast, Wildcard, Degencast.", 
-    "leftCardTitle": "Highly upvoted accounts you don't follow yet",
-    "rightCardTitle": "Controversial accounts you do follow"
   }
 }

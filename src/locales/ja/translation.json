@@ -20,7 +20,6 @@
     "warningDescription": "これはコピーWRITINGの警告通知です。"
   },
   "buttons": {
-    "curation-action": "キュレーションAction",
     "decent-bookmarks": "Decentチャンネル",
     "farcaster-channels": "Farcaster Channels チャンネル",
     "signal-to-noise": "信号対雑音比",
@@ -134,8 +133,7 @@
     "curated": "厳選チャンネル",
     "feed": "フィード",
     "foryou": "あなたのために",
-    "sponsorship": "スポンサーシップ",
-    "votes-deprecated": "投票"
+    "sponsorship": "スポンサーシップ"
   },
   "sponsorship": {
     "leftCardTitle": "BCBHShow のスポンサー",
@@ -147,12 +145,5 @@
     "clips": "/drakulaで動画を視聴",
     "transcripts": "/paragraphでトランスクリプトを確認",
     "rightCardTitle": "シーニズン1のスポンサー"
-  },
-  "votes-deprecated": {
-    "title": "コミュニティによる賛成票と反対票👍/👎",
-    "cast-action": "Cast Actionは15月8日に非推奨になります。",
-    "instruction": "Warpcast、Wildcard、Degencast で $DEGEN のヒントに投票してください。",
-    "leftCardTitle": "まだフォローしていないが、高評価を得ているアカウント",
-    "rightCardTitle": "あなたがフォローしている物議を醸すアカウント"
   }
 }

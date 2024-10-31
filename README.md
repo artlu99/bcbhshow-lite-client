@@ -20,7 +20,6 @@
         - `Hubble` APIs via `Airstack` (designed to be swapped)
         - `Decent Bookmarks` and `FCAN` by `@artlu`
         - `bot-or-not` by `@sayangel`
-    - bindings to `Cloudflare D1` for curation 
     - bindings to `Upstash Redis` via https REST API for caching
     - the DX is unfamiliar to devs familiar with `Next.js`. study `src/api/mocks`
 - `React Query` caches many of the backend calls in the front end

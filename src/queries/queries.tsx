@@ -2,7 +2,6 @@ import { getAllChannels } from '@app/api/allChannels.api';
 import { getBotOrNotLabels } from '@app/api/botOrNot.api';
 import { getCastByHash } from '@app/api/castByHash.api';
 import { getChannelById } from '@app/api/channelById.api';
-import { getVotesDeprecated } from '@app/api/curation.api';
 import { getFollowingByFid } from '@app/api/followingByFid.api';
 import { getHubReactionsByFid } from '@app/api/hubReactionsByFid.api';
 import { HubReactionType } from '@app/api/hubble-http-types';
@@ -93,12 +92,4 @@ export const botOrNotLabelsQuery = () =>
     queryKey: ['botOrNotLabels'],
     queryFn: () => getBotOrNotLabels(),
     staleTime: 2 * 24 * 60 * 60 * 1000, // 2 days
-  });
-
-export const getVotesQueryDeprecated = () =>
-  queryOptions({
-    meta: { persist: true },
-    queryKey: ['getVotesDeprecated'],
-    queryFn: () => getVotesDeprecated(),
-    staleTime: 2 * 60 * 1000, // 2 minutes
   });

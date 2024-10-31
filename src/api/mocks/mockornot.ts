@@ -4,7 +4,6 @@
 // import './castByHash.api.mock';
 // import './channelById.api.mock';
 // import './cronFeed.api.mock';
-// import './curation.api.mock';
 // import './decent-bookmarks.api.mock';
 // import './fcan.api.mock';
 // import './followingByFid.api.mock';

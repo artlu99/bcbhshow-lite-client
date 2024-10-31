@@ -33,11 +33,6 @@ export const ChannelFeed: React.FC = () => {
     setNumMainFeedCasts,
     setNumFollowingCasts,
     setNumFarcaptchas,
-    setNumUpvotes,
-    setNumDownvotes,
-    setNumCastsWithUpvotes,
-    setNumCastsWithDownvotes,
-    setNumCastsAboveThreshold,
     setNumCastsAfterFiltering,
     selectedLabels,
   } = useZustand();
@@ -46,10 +41,6 @@ export const ChannelFeed: React.FC = () => {
   const showMainFeed = signalToNoiseState.showMainFeed;
   const showOnlyFollowing = signalToNoiseState.showOnlyFollowing;
   const showOnlyFarcaptcha = signalToNoiseState.showOnlyFarcaptcha;
-  const onlyShowUpvoted = signalToNoiseState.onlyShowUpvoted;
-  const hideDownvoted = signalToNoiseState.hideDownvoted;
-  const onlyShowRatioAboveThreshold = signalToNoiseState.onlyShowRatioAboveThreshold;
-  const ratioThreshold = signalToNoiseState.ratioThreshold;
 
   const { user } = useNeynarContext();
   const fid = getFidWithFallback(user);
@@ -100,27 +91,14 @@ export const ChannelFeed: React.FC = () => {
     setNumMainFeedCasts(casts.filter((c) => isAllowedInMainFeed(c, channelModerators)).length);
     setNumFollowingCasts(casts.filter((c) => c.amFollowing).length);
     setNumFarcaptchas(casts.filter((c) => c.botOrNotResult.farcaptcha).length);
-    setNumUpvotes(casts.reduce((acc, c) => acc + c.curation.upvotes.length, 0));
-    setNumDownvotes(casts.reduce((acc, c) => acc + c.curation.downvotes.length, 0));
-    setNumCastsWithUpvotes(casts.filter((c) => c.curation.upvotes.length > 0).length);
-    setNumCastsWithDownvotes(casts.filter((c) => c.curation.downvotes.length > 0).length);
-    setNumCastsAboveThreshold(
-      casts.filter((c) => c.curation.upvotes.length / (c.curation.downvotes.length + 0.00001) > ratioThreshold).length,
-    );
   }, [
     casts,
     channelModerators,
     memodFfData,
-    ratioThreshold,
     setNumCasts,
-    setNumCastsAboveThreshold,
-    setNumCastsWithDownvotes,
-    setNumCastsWithUpvotes,
-    setNumDownvotes,
     setNumFarcaptchas,
     setNumFollowingCasts,
     setNumMainFeedCasts,
-    setNumUpvotes,
   ]);
 
   const next = () =>
@@ -139,13 +117,6 @@ export const ChannelFeed: React.FC = () => {
       .filter((c) => !showMainFeed || isAllowedInMainFeed(c, channelModerators))
       .filter((c) => !showOnlyFollowing || c.amFollowing)
       .filter((c) => !showOnlyFarcaptcha || c.botOrNotResult.farcaptcha)
-      .filter((c) => !onlyShowUpvoted || c.curation.upvotes.length > 0)
-      .filter((c) => (hideDownvoted ? c.curation.downvotes.length < 1 : true))
-      .filter((c) =>
-        onlyShowRatioAboveThreshold
-          ? c.curation.upvotes.length / (c.curation.downvotes.length + 0.00001) > ratioThreshold
-          : true,
-      )
       .filter((c) =>
         selectedLabels.length === 0 ? true : selectedLabels.includes(c.botOrNotResult.label ?? 'missing-label'),
       )
@@ -170,7 +141,6 @@ export const ChannelFeed: React.FC = () => {
           recastooors={post.reactions.recasts.map((r) => r.fid)}
           likes={post.reactions.likes_count}
           likooors={post.reactions.likes.map((l) => l.fid)}
-          curation={post.curation}
           hasPowerBadge={post.authorHasPowerBadge}
           botOrNotResult={post.botOrNotResult}
           tags={[]}
@@ -181,10 +151,6 @@ export const ChannelFeed: React.FC = () => {
   }, [
     casts,
     channelModerators,
-    hideDownvoted,
-    onlyShowRatioAboveThreshold,
-    onlyShowUpvoted,
-    ratioThreshold,
     setNumCastsAfterFiltering,
     showMainFeed,
     showOnlyFarcaptcha,

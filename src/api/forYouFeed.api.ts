@@ -1,6 +1,5 @@
 import { getBotOrNot } from '@app/api/botOrNot.api';
 import { PagedCronFeed } from '@app/api/channelFeed.api';
-import { getCuration } from '@app/api/curation.api';
 import { FeedObject } from '@app/api/feed-types';
 import { getTagsForCast } from '@app/api/followingFeed.api';
 import { httpApi } from '@app/api/http.api';
@@ -32,9 +31,7 @@ export const getEnhancedForYouFeed = async (
 
   const forYouFeed = await getNeynarOpenrankForYouFeed({ fid: fid, limit: FORYOU_FEED_PAGESIZE, cursor });
   const seenFids = sift(forYouFeed.casts.map((cast) => cast.author.fid).filter((fid) => fid !== null));
-  const seenHashes = unique(forYouFeed.casts.map((cast) => cast.hash));
   const botOrNotResponse = await getBotOrNot({ fids: seenFids ?? [] });
-  const curation = await getCuration({ hashList: seenHashes ?? [] });
 
   return {
     ...forYouFeed,
@@ -49,18 +46,6 @@ export const getEnhancedForYouFeed = async (
         farcaptcha: false,
       },
       tags: getTagsForCast(allChannels, castObject.parent_url),
-      curation: {
-        upvotes: curation.results.filter(
-          (result) =>
-            result.votedFid === castObject.author.fid && result.hash === castObject.hash && result.action === 'upvote',
-        ),
-        downvotes: curation.results.filter(
-          (result) =>
-            result.votedFid === castObject.author.fid &&
-            result.hash === castObject.hash &&
-            result.action === 'downvote',
-        ),
-      },
     })),
   };
 };

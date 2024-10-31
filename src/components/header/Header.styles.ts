@@ -1,17 +1,16 @@
-import styled, { css } from 'styled-components';
-import { NeynarAuthButton } from '@neynar/react';
 import { BaseCol } from '@app/components/common/BaseCol/BaseCol';
 import { BaseCollapse } from '@app/components/common/BaseCollapse/BaseCollapse';
 import { BurgerIcon } from '@app/components/common/Burger/BurgerIcon';
 import {
-  CurationButton,
   DecentBmButton,
   FcChannelsButton,
   StNSettingsButton,
   ZMSettingsButton,
 } from '@app/components/header/components/HeaderButtons/HeaderButtons';
 import { LAYOUT, media } from '@app/styles/themes/constants';
+import { NeynarAuthButton } from '@neynar/react';
 import '@neynar/react/dist/style.css';
+import styled, { css } from 'styled-components';
 
 export const HeaderActionWrapper = styled.div`
   cursor: pointer;
@@ -97,14 +96,6 @@ export const FCButton = styled(FcChannelsButton)`
 `;
 
 export const DBmButton = styled(DecentBmButton)`
-  display: block;
-
-  @media only screen and ${media.lg} {
-    display: block;
-  }
-`;
-
-export const CCAButton = styled(CurationButton)`
   display: block;
 
   @media only screen and ${media.lg} {

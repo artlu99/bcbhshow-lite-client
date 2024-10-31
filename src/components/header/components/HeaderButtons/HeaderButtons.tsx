@@ -44,25 +44,6 @@ export const DecentBmButton: React.FC = (props) => {
   );
 };
 
-export const CurationButton: React.FC = (props) => {
-  const theme = useAppSelector((state) => state.theme.theme);
-  const { t } = useTranslation();
-
-  return (
-    <Button
-      type="default"
-      size="small"
-      href="https://warpcast.com/artlu/0x4e64979b"
-      icon={<CurationIcon />}
-      target="_blank"
-      $isDark={theme === 'dark'}
-      {...props}
-    >
-      {t('buttons.curation-action')}
-    </Button>
-  );
-};
-
 export const ZMSettingsButton: React.FC = (props) => {
   const theme = useAppSelector((state) => state.theme.theme);
   const { t } = useTranslation();
@@ -110,11 +91,6 @@ const FcChannelsIcon = styled(CompassOutlined)`
 `;
 
 const DecentBmIcon = styled(AppstoreOutlined)`
-  // font-size: 1.5rem;
-  vertical-align: middle;
-`;
-
-const CurationIcon = styled(AppstoreOutlined)`
   // font-size: 1.5rem;
   vertical-align: middle;
 `;

@@ -19,26 +19,12 @@ export const FollowingFeed: React.FC<FollowingFeedProps> = ({ fid }) => {
   const [nextPageToken, setNextPageToken] = useState<string | undefined>();
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [loaded, setLoaded] = useState<boolean>(false);
-  const {
-    setNumCasts,
-    setNumCuratedChannelsCasts,
-    setNumFarcaptchas,
-    setNumUpvotes,
-    setNumDownvotes,
-    setNumCastsWithUpvotes,
-    setNumCastsWithDownvotes,
-    setNumCastsAboveThreshold,
-    setNumCastsAfterFiltering,
-    selectedLabels,
-  } = useZustand();
+  const { setNumCasts, setNumCuratedChannelsCasts, setNumFarcaptchas, setNumCastsAfterFiltering, selectedLabels } =
+    useZustand();
 
   const signalToNoiseState = useAppSelector((state) => state.signalToNoise);
   const showOnlyCuratedChannels = signalToNoiseState.showOnlyCuratedChannels;
   const showOnlyFarcaptcha = signalToNoiseState.showOnlyFarcaptcha;
-  const onlyShowUpvoted = signalToNoiseState.onlyShowUpvoted;
-  const hideDownvoted = signalToNoiseState.hideDownvoted;
-  const onlyShowRatioAboveThreshold = signalToNoiseState.onlyShowRatioAboveThreshold;
-  const ratioThreshold = signalToNoiseState.ratioThreshold;
 
   const chQuery = useQuery(allChannelsQuery());
   const memodChannelData = useMemo(() => {
@@ -85,25 +71,7 @@ export const FollowingFeed: React.FC<FollowingFeedProps> = ({ fid }) => {
     setNumCasts(casts.length);
     setNumCuratedChannelsCasts(casts.filter((c) => c.tags.length > 1).length);
     setNumFarcaptchas(casts.filter((c) => c.botOrNotResult.farcaptcha).length);
-    setNumUpvotes(casts.reduce((acc, c) => acc + c.curation.upvotes.length, 0));
-    setNumDownvotes(casts.reduce((acc, c) => acc + c.curation.downvotes.length, 0));
-    setNumCastsWithUpvotes(casts.filter((c) => c.curation.upvotes.length > 0).length);
-    setNumCastsWithDownvotes(casts.filter((c) => c.curation.downvotes.length > 0).length);
-    setNumCastsAboveThreshold(
-      casts.filter((c) => c.curation.upvotes.length / (c.curation.downvotes.length + 0.00001) > ratioThreshold).length,
-    );
-  }, [
-    casts,
-    ratioThreshold,
-    setNumCasts,
-    setNumCuratedChannelsCasts,
-    setNumCastsAboveThreshold,
-    setNumCastsWithDownvotes,
-    setNumCastsWithUpvotes,
-    setNumDownvotes,
-    setNumFarcaptchas,
-    setNumUpvotes,
-  ]);
+  }, [casts, setNumCasts, setNumCuratedChannelsCasts, setNumFarcaptchas]);
 
   const next = () =>
     getEnhancedFollowingFeed({
@@ -120,13 +88,6 @@ export const FollowingFeed: React.FC<FollowingFeedProps> = ({ fid }) => {
     const filteredCasts = casts
       .filter((c) => !showOnlyCuratedChannels || c.tags.length > 1)
       .filter((c) => !showOnlyFarcaptcha || c.botOrNotResult.farcaptcha)
-      .filter((c) => !onlyShowUpvoted || c.curation.upvotes.length > 0)
-      .filter((c) => (hideDownvoted ? c.curation.downvotes.length < 1 : true))
-      .filter((c) =>
-        onlyShowRatioAboveThreshold
-          ? c.curation.upvotes.length / (c.curation.downvotes.length + 0.00001) > ratioThreshold
-          : true,
-      )
       .filter((c) =>
         selectedLabels.length === 0 ? true : selectedLabels.includes(c.botOrNotResult.label ?? 'missing-label'),
       )
@@ -152,24 +113,13 @@ export const FollowingFeed: React.FC<FollowingFeedProps> = ({ fid }) => {
           likes={post.reactions.likes_count}
           likooors={post.reactions.likes.map((l) => l.fid)}
           tags={post.tags}
-          curation={post.curation}
           hasPowerBadge={post.authorHasPowerBadge}
           botOrNotResult={post.botOrNotResult}
         />
       ));
     setNumCastsAfterFiltering(filteredCasts.length);
     return filteredCasts;
-  }, [
-    casts,
-    setNumCastsAfterFiltering,
-    showOnlyCuratedChannels,
-    showOnlyFarcaptcha,
-    onlyShowUpvoted,
-    hideDownvoted,
-    onlyShowRatioAboveThreshold,
-    ratioThreshold,
-    selectedLabels,
-  ]);
+  }, [casts, setNumCastsAfterFiltering, showOnlyCuratedChannels, showOnlyFarcaptcha, selectedLabels]);
 
   return (
     <AdvertFeed casts={casts}>

@@ -43,15 +43,7 @@ export const MobileHeader: React.FC<MobileHeaderProps> = ({ toggleSider, isSider
             )}
             {isLandscapeMobile && (
               <BaseCol>
-                {isChannelFeed ? (
-                  <ChannelLogo />
-                ) : isHomeFeed || isForYouFeed ? (
-                  <S.CCAButton />
-                ) : isDecentBookmarksPage ? (
-                  <S.DBmButton />
-                ) : (
-                  <S.FCButton />
-                )}
+                {isChannelFeed ? <ChannelLogo /> : isDecentBookmarksPage ? <S.DBmButton /> : <S.FCButton />}
               </BaseCol>
             )}
             <BaseCol>

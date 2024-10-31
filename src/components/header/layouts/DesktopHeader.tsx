@@ -54,9 +54,7 @@ export const DesktopHeader: React.FC<DesktopHeaderProps> = ({ isTwoColumnsLayout
           <S.DBmButton />
         </BaseCol>
       )}
-      <BaseCol>
-        {isChannelFeed ? <ChannelLogo /> : isHomeFeed || isForYouFeed ? <S.CCAButton /> : <S.FCButton />}
-      </BaseCol>
+      <BaseCol>{isChannelFeed ? <ChannelLogo /> : <S.FCButton />}</BaseCol>
     </>
   );
 

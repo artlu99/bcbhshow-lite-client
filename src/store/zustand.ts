@@ -17,16 +17,6 @@ interface ZustandState {
   setSelectedLabels: (labels: string[]) => void;
   numLabels: number;
   setNumLabels: (count: number) => void;
-  numUpvotes: number;
-  setNumUpvotes: (count: number) => void;
-  numDownvotes: number;
-  setNumDownvotes: (count: number) => void;
-  numCastsWithUpvotes: number;
-  setNumCastsWithUpvotes: (count: number) => void;
-  numCastsWithDownvotes: number;
-  setNumCastsWithDownvotes: (count: number) => void;
-  numCastsAboveThreshold: number;
-  setNumCastsAboveThreshold: (count: number) => void;
   numCastsAfterFiltering: number;
   setNumCastsAfterFiltering: (count: number) => void;
 }
@@ -48,16 +38,6 @@ export const useZustand = create<ZustandState>()((set) => ({
   setSelectedLabels: (labels) => set(() => ({ selectedLabels: labels })),
   numLabels: 0,
   setNumLabels: (count) => set(() => ({ numLabels: count })),
-  numUpvotes: 0,
-  setNumUpvotes: (count) => set(() => ({ numUpvotes: count })),
-  numDownvotes: 0,
-  setNumDownvotes: (count) => set(() => ({ numDownvotes: count })),
-  numCastsWithUpvotes: 0,
-  setNumCastsWithUpvotes: (count) => set(() => ({ numCastsWithUpvotes: count })),
-  numCastsWithDownvotes: 0,
-  setNumCastsWithDownvotes: (count) => set(() => ({ numCastsWithDownvotes: count })),
-  numCastsAboveThreshold: 0,
-  setNumCastsAboveThreshold: (count) => set(() => ({ numCastsAboveThreshold: count })),
   numCastsAfterFiltering: 0,
   setNumCastsAfterFiltering: (count) => set(() => ({ numCastsAfterFiltering: count })),
 }));

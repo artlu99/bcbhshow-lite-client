@@ -20,7 +20,6 @@
     "warningDescription": "This is a warning notice about copywriting."
   },
   "buttons": {
-    "curation-action": "Acción para seleccionar",
     "decent-bookmarks": "Marcadores Decent",
     "farcaster-channels": "Canales de Farcaster",
     "signal-to-noise": "Señal a ruido",
@@ -134,8 +133,7 @@
     "curated": "Canales seleccionados",
     "feed": "Noticias",
     "foryou": "Para Ud.",
-    "sponsorship": "Patrocinio",
-    "votes-deprecated": "Curación comunitaria"
+    "sponsorship": "Patrocinio"
   },
   "sponsorship": {
     "leftCardTitle": "Para patrocinar el BCBHShow",
@@ -147,12 +145,5 @@
     "clips": "Clips sobre /drakula",
     "transcripts": "Transcripciones en /paragraph",
     "rightCardTitle": "Patrocinadores de las temporadas 1 y 2"
-  },
-  "votes-deprecated": {
-    "title": "Curación comunitaria por arriba y abajo 👍 / 👎",
-    "cast-action": "La acción de Cast se desaconseja 15 Agosto 2024.",
-    "instruction": "Vota con propinas de$DEGEN en Warpcast, Wildcard, Degencast.", 
-    "leftCardTitle": "Cuentas altamente votadas que aún no sigue",
-    "rightCardTitle": "Cuentas controversas que sigue"
   }
 }

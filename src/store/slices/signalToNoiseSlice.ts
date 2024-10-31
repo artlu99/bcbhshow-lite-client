@@ -5,39 +5,23 @@ interface SignalToNoiseState {
   showOnlyFollowing: boolean;
   showOnlyCuratedChannels: boolean;
   showOnlyFarcaptcha: boolean;
-  onlyShowUpvoted: boolean;
-  hideDownvoted: boolean;
-  onlyShowRatioAboveThreshold: boolean;
-  ratioThreshold: number;
 }
 
 const showMainFeed = localStorage.getItem('showMainFeed') === 'true';
 const showOnlyFollowing = localStorage.getItem('showOnlyFollowing') === 'true';
 const showOnlyCuratedChannels = localStorage.getItem('showOnlyCuratedChannels') === 'true';
 const showOnlyFarcaptcha = localStorage.getItem('showOnlyFarcaptcha') === 'true';
-const onlyShowUpvoted = localStorage.getItem('onlyShowUpvoted') === 'true';
-const hideDownvoted = localStorage.getItem('hideDownvoted') === 'true';
-const onlyShowRatioAboveThreshold = localStorage.getItem('onlyShowRatioAboveThreshold') === 'true';
-const ratioThreshold = Number(localStorage.getItem('ratioThreshold') ?? '1');
 
 localStorage.setItem('showMainFeed', JSON.stringify(showMainFeed));
 localStorage.setItem('showOnlyFollowing', JSON.stringify(showOnlyFollowing));
 localStorage.setItem('showOnlyCuratedChannels', JSON.stringify(showOnlyCuratedChannels));
 localStorage.setItem('showOnlyFarcaptcha', JSON.stringify(showOnlyFarcaptcha));
-localStorage.setItem('onlyShowUpvoted', JSON.stringify(onlyShowUpvoted));
-localStorage.setItem('hideDownvoted', JSON.stringify(hideDownvoted));
-localStorage.setItem('onlyShowRatioAboveThreshold', JSON.stringify(onlyShowRatioAboveThreshold));
-localStorage.setItem('ratioThreshold', JSON.stringify(ratioThreshold));
 
 const initialState: SignalToNoiseState = {
   showMainFeed,
   showOnlyFollowing,
   showOnlyCuratedChannels,
   showOnlyFarcaptcha,
-  onlyShowUpvoted,
-  hideDownvoted,
-  onlyShowRatioAboveThreshold,
-  ratioThreshold,
 };
 
 export const setShowMainFeed = createAction('signalToNoise/setShowMainFeed', () => {
@@ -76,38 +60,6 @@ export const unsetShowOnlyFarcaptcha = createAction('signalToNoise/unsetShowOnly
   return { payload: false };
 });
 
-export const setOnlyShowUpvoted = createAction('signalToNoise/setOnlyShowUpvoted', () => {
-  localStorage.setItem('onlyShowUpvoted', JSON.stringify(true));
-  return { payload: true };
-});
-export const unsetOnlyShowUpvoted = createAction('signalToNoise/unsetOnlyShowUpvoted', () => {
-  localStorage.setItem('onlyShowUpvoted', JSON.stringify(false));
-  return { payload: false };
-});
-
-export const setHideDownvoted = createAction('signalToNoise/setHideDownvoted', () => {
-  localStorage.setItem('hideDownvoted', JSON.stringify(true));
-  return { payload: true };
-});
-export const unsetHideDownvoted = createAction('signalToNoise/unsetHideDownvoted', () => {
-  localStorage.setItem('hideDownvoted', JSON.stringify(false));
-  return { payload: false };
-});
-
-export const setOnlyShowRatioAboveThreshold = createAction('signalToNoise/setOnlyShowRatioAboveThreshold', () => {
-  localStorage.setItem('onlyShowRatioAboveThreshold', JSON.stringify(true));
-  return { payload: true };
-});
-export const unsetOnlyShowRatioAboveThreshold = createAction('signalToNoise/unsetOnlyShowRatioAboveThreshold', () => {
-  localStorage.setItem('onlyShowRatioAboveThreshold', JSON.stringify(false));
-  return { payload: false };
-});
-
-export const setRatioThreshold = createAction('signalToNoise/setRatioThreshold', (ratioThreshold: number) => {
-  localStorage.setItem('ratioThreshold', JSON.stringify(ratioThreshold));
-  return { payload: ratioThreshold };
-});
-
 export const signalToNoiseSlice = createSlice({
   name: 'signalToNoise',
   initialState,
@@ -138,27 +90,6 @@ export const signalToNoiseSlice = createSlice({
     // ignore Farcaptcha
     builder.addCase(unsetShowOnlyFarcaptcha, (state, action) => {
       state.showOnlyFarcaptcha = action.payload;
-    });
-    builder.addCase(setOnlyShowUpvoted, (state, action) => {
-      state.onlyShowUpvoted = action.payload;
-    });
-    builder.addCase(unsetOnlyShowUpvoted, (state, action) => {
-      state.onlyShowUpvoted = action.payload;
-    });
-    builder.addCase(setHideDownvoted, (state, action) => {
-      state.hideDownvoted = action.payload;
-    });
-    builder.addCase(unsetHideDownvoted, (state, action) => {
-      state.hideDownvoted = action.payload;
-    });
-    builder.addCase(setOnlyShowRatioAboveThreshold, (state, action) => {
-      state.onlyShowRatioAboveThreshold = action.payload;
-    });
-    builder.addCase(unsetOnlyShowRatioAboveThreshold, (state, action) => {
-      state.onlyShowRatioAboveThreshold = action.payload;
-    });
-    builder.addCase(setRatioThreshold, (state, action) => {
-      state.ratioThreshold = action.payload;
     });
   },
 });

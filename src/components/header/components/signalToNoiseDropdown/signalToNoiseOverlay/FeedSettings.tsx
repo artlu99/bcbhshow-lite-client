@@ -1,19 +1,11 @@
 import { BaseDivider } from '@app/components/common/BaseDivider/BaseDivider';
 import { BaseSwitch } from '@app/components/common/BaseSwitch/BaseSwitch';
-import { BaseInput } from '@app/components/common/inputs/BaseInput/BaseInput';
 import { useAppDispatch, useAppSelector } from '@app/hooks/reduxHooks';
 import {
-  setHideDownvoted,
-  setOnlyShowRatioAboveThreshold,
-  setOnlyShowUpvoted,
-  setRatioThreshold,
   setShowMainFeed,
   setShowOnlyCuratedChannels,
   setShowOnlyFarcaptcha,
   setShowOnlyFollowing,
-  unsetHideDownvoted,
-  unsetOnlyShowRatioAboveThreshold,
-  unsetOnlyShowUpvoted,
   unsetShowMainFeed,
   unsetShowOnlyCuratedChannels,
   unsetShowOnlyFarcaptcha,
@@ -36,9 +28,6 @@ export const FeedSettings: React.FC = () => {
     numFollowingCasts,
     numCuratedChannelsCasts,
     numFarcaptchas,
-    numCastsWithUpvotes,
-    numCastsWithDownvotes,
-    numCastsAboveThreshold,
     numCastsAfterFiltering,
   } = useZustand();
 
@@ -48,10 +37,6 @@ export const FeedSettings: React.FC = () => {
   const showOnlyFollowing = signalToNoiseState.showOnlyFollowing;
   const showOnlyCuratedChannels = signalToNoiseState.showOnlyCuratedChannels;
   const showOnlyFarcaptcha = signalToNoiseState.showOnlyFarcaptcha;
-  const onlyShowUpvoted = signalToNoiseState.onlyShowUpvoted;
-  const hideDownvoted = signalToNoiseState.hideDownvoted;
-  const onlyShowRatioAboveThreshold = signalToNoiseState.onlyShowRatioAboveThreshold;
-  const ratioThreshold = signalToNoiseState.ratioThreshold;
 
   const handleChangeMainFeed = (showMainFeed: boolean) => {
     dispatch(showMainFeed ? setShowMainFeed() : unsetShowMainFeed());
@@ -64,18 +49,6 @@ export const FeedSettings: React.FC = () => {
   };
   const handleChangeOnlyFarcaptcha = (showOnlyFarcaptcha: boolean) => {
     dispatch(showOnlyFarcaptcha ? setShowOnlyFarcaptcha() : unsetShowOnlyFarcaptcha());
-  };
-  const handleChangeOnlyUpvoted = (onlyShowUpvoted: boolean) => {
-    dispatch(onlyShowUpvoted ? setOnlyShowUpvoted() : unsetOnlyShowUpvoted());
-  };
-  const handleChangeHideDownvoted = (hideDownvoted: boolean) => {
-    dispatch(hideDownvoted ? setHideDownvoted() : unsetHideDownvoted());
-  };
-  const handleChangeOnlyShowRatioAboveThreshold = (onlyShowRatioAboveThreshold: boolean) => {
-    dispatch(onlyShowRatioAboveThreshold ? setOnlyShowRatioAboveThreshold() : unsetOnlyShowRatioAboveThreshold());
-  };
-  const handleChangeRatioThreshold = (ratioThreshold: number) => {
-    dispatch(setRatioThreshold(ratioThreshold));
   };
 
   return (
@@ -153,41 +126,6 @@ export const FeedSettings: React.FC = () => {
           onChange={handleChangeOnlyFarcaptcha}
         />
       </SwitchContainer>
-      <BaseDivider />
-      <SwitchContainer>
-        <span>{t('Only Upvoted')}</span> {numCastsWithUpvotes}
-        <BaseSwitch
-          checkedChildren={t('On')}
-          unCheckedChildren={t('Off')}
-          checked={onlyShowUpvoted}
-          onChange={handleChangeOnlyUpvoted}
-        />
-      </SwitchContainer>
-      <br />
-      <SwitchContainer>
-        <span>{t('Hide Downvoted')}</span> {numCastsWithDownvotes}
-        <BaseSwitch
-          checkedChildren={t('On')}
-          unCheckedChildren={t('Off')}
-          checked={hideDownvoted}
-          onChange={handleChangeHideDownvoted}
-        />
-      </SwitchContainer>
-      <br />
-      <SwitchContainer>
-        <span>{t('Only Show Ratio > Threshold ')}</span> {numCastsAboveThreshold}
-        <BaseSwitch
-          checkedChildren={t('On')}
-          unCheckedChildren={t('Off')}
-          checked={onlyShowRatioAboveThreshold}
-          onChange={handleChangeOnlyShowRatioAboveThreshold}
-        />
-      </SwitchContainer>
-      <BaseInput
-        type="number"
-        value={ratioThreshold}
-        onChange={(e) => handleChangeRatioThreshold(Number(e.target.value))}
-      />
     </>
   );
 };

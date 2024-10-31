@@ -1,13 +1,12 @@
 import { getBotOrNot } from '@app/api/botOrNot.api';
 import { PagedCronFeed } from '@app/api/channelFeed.api';
-import { getCuration } from '@app/api/curation.api';
 import { FeedObject } from '@app/api/feed-types';
 import { httpApi } from '@app/api/http.api';
 import { ChannelObject } from '@app/api/warpcast-types';
 import curatedChannels from '@app/assets/curated-channels.json';
 import { IHashTag } from '@app/components/common/BaseHashTag/BaseHashTag';
 import { FOLLOWING_FEED_PAGESIZE } from '@app/constants/pinataPagination';
-import { listify, sift, unique } from 'radash';
+import { listify, sift } from 'radash';
 import './mocks/mockornot';
 
 export const getTagsForCast = (allChannels: ChannelObject[], parent_url?: string): IHashTag[] => {
@@ -50,9 +49,7 @@ export const getEnhancedFollowingFeed = async (
 
   const cronFeed = await getFollowingFeed({ fid: fid, pageSize: FOLLOWING_FEED_PAGESIZE, pageToken });
   const seenFids = sift(cronFeed.casts.map((cast) => cast.author.fid).filter((fid) => fid !== null));
-  const seenHashes = unique(cronFeed.casts.map((cast) => cast.hash));
   const botOrNotResponse = await getBotOrNot({ fids: seenFids ?? [] });
-  const curation = await getCuration({ hashList: seenHashes ?? [] });
 
   return {
     ...cronFeed,
@@ -67,18 +64,6 @@ export const getEnhancedFollowingFeed = async (
         farcaptcha: false,
       },
       tags: getTagsForCast(allChannels, castObject.parent_url),
-      curation: {
-        upvotes: curation.results.filter(
-          (result) =>
-            result.votedFid === castObject.author.fid && result.hash === castObject.hash && result.action === 'upvote',
-        ),
-        downvotes: curation.results.filter(
-          (result) =>
-            result.votedFid === castObject.author.fid &&
-            result.hash === castObject.hash &&
-            result.action === 'downvote',
-        ),
-      },
     })),
   };
 };
