@@ -1,39 +1,53 @@
+import { GraphQLClient, gql } from 'graphql-request';
 import { Env } from '../common';
 
 interface SassyHash {
   castHash: string;
   text: string;
-  decryptedText?: string;
-  isDecrypted?: boolean;
+  decodedText: string | null;
+  isDecrypted: boolean;
 }
-interface SassyHashResponse {
-  data: { [label: string]: SassyHash };
+interface SassyHashGraphQLResponse {
+  data: { getTextByCastHash: SassyHash };
 }
 interface SassyHashRequest {
   fid: number;
-  hashes: string[];
+  castHash: string;
 }
 
-const fetchSassyHashExpensiveApi = async (hashes: string[], endpoint_base: string) => {
-  const endpoint = `${endpoint_base}?hashes=` + hashes.join(',');
-
-  const res = await fetch(endpoint, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+const fetchSassyHashExpensiveApi = async (fid: number, castHash: string, env: Env) => {
+  const graphQLClient = new GraphQLClient(env.SASSYHASH_API, {
+    headers: { authorization: `Bearer ${env.WHISTLES_BEARER_TOKEN}` },
   });
-  if (!res.ok) throw new Error('Failed to fetch data');
 
-  const sassyHashResponse = (await res.json()) as SassyHashResponse;
-
-  return sassyHashResponse;
+  try {
+    const res = await graphQLClient.request<SassyHashGraphQLResponse>(
+      gql`
+        query getTextByCastHash($castHash: String!, $viewerFid: Int!) {
+          getTextByCastHash(castHash: $castHash, viewerFid: $viewerFid) {
+            castHash
+            decodedText
+            isDecrypted
+            text
+          }
+        }
+      `,
+      { castHash, viewerFid: fid },
+    );
+    console.log('graphQLClient:', res);
+    return { data: res.data.getTextByCastHash };
+  } catch (e) {
+    console.error(e);
+    throw new Error('Failed to fetch Whistles data');
+  }
 };
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
   const { env, request } = context;
   const js = (await request.json()) as SassyHashRequest;
-  const { hashes } = js;
+  const { fid, castHash } = js;
 
-  const sassyHashResponses = await fetchSassyHashExpensiveApi(hashes, 'https://whistles.artlu.xyz/graphql');
+  const sassyHashResponses = await fetchSassyHashExpensiveApi(fid, castHash, env);
 
   return new Response(JSON.stringify(sassyHashResponses));
 };

@@ -7,7 +7,7 @@ import { ChannelObject } from '@app/api/warpcast-types';
 import { FORYOU_FEED_PAGESIZE } from '@app/constants/neynarPagination';
 import { sift, unique } from 'radash';
 import './mocks/mockornot';
-import { getSassyHashes, isSassy } from './sassyHash.api';
+import { getSassyHash, isSassy } from './sassyHash.api';
 
 interface ForYouFeedRequest {
   fid: number;
@@ -34,7 +34,7 @@ export const getEnhancedForYouFeed = async (
   const seenFids = sift(forYouFeed.casts.map((cast) => cast.author.fid).filter((fid) => fid !== null));
   const seenSassyHashes = unique(sift(forYouFeed.casts.map((cast) => (isSassy(cast.text) ? cast.hash : null))));
   const botOrNotResponse = await getBotOrNot({ fids: seenFids ?? [] });
-  const sassyHashResponse = await getSassyHashes({ fid, hashes: seenSassyHashes ?? [] });
+  const sassyHashResponses = await Promise.all(seenSassyHashes.map((sh) => getSassyHash({ fid, castHash: sh })));
 
   return {
     ...forYouFeed,
@@ -43,7 +43,7 @@ export const getEnhancedForYouFeed = async (
       amFollowing: following.find((fid) => fid === castObject.author.fid) !== undefined,
 
       isSassy: isSassy(castObject.text),
-      sassyHash: Object.values(sassyHashResponse.data).find((obj) => obj.castHash === castObject.hash),
+      sassyHash: sassyHashResponses.find((sh) => sh.data.castHash === castObject.hash)?.data,
 
       authorHasPowerBadge: powerBadgeUsers.find((fid) => fid === castObject.author.fid) !== undefined,
       botOrNotResult: botOrNotResponse.fids.find((fid) => fid.fid === castObject.author.fid)?.result ?? {

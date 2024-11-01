@@ -1,5 +1,4 @@
 import { httpApi } from '@app/api/http.api';
-import { unique } from 'radash';
 import './mocks/mockornot';
 
 export interface SassyHash {
@@ -9,11 +8,11 @@ export interface SassyHash {
   isDecrypted: boolean;
 }
 export interface SassyHashResponse {
-  data: { [label: string]: SassyHash };
+  data: SassyHash;
 }
 interface SassyHashRequest {
   fid: number;
-  hashes: string[];
+  castHash: string;
 }
 
 export const isSassy = (text: string): boolean => {
@@ -22,14 +21,18 @@ export const isSassy = (text: string): boolean => {
   return regexp.test(text);
 };
 
-export const getSassyHashes = (sassyHashRequestPayload: SassyHashRequest): Promise<SassyHashResponse> =>
+export const getSassyHash = (sassyHashRequestPayload: SassyHashRequest): Promise<SassyHashResponse> =>
   httpApi
-    .post<SassyHashResponse>('getSassyHashes', {
-      ...sassyHashRequestPayload,
-      hashes: unique(sassyHashRequestPayload.hashes),
-    })
+    .post<SassyHashResponse>('getSassyHashes', sassyHashRequestPayload)
     .then(({ data }) => data)
     .catch((error) => {
       console.error(error);
-      return Promise.resolve({ data: {} });
+      return Promise.resolve({
+        data: {
+          castHash: sassyHashRequestPayload.castHash,
+          text: 'error',
+          decodedText: null,
+          isDecrypted: false,
+        },
+      });
     });

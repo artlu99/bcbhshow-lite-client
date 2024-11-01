@@ -5,7 +5,7 @@ import { ChannelObject } from '@app/api/warpcast-types';
 import { IHashTag } from '@app/components/common/BaseHashTag/BaseHashTag';
 import { CHANNEL_FEED_PAGESIZE } from '@app/constants/pinataPagination';
 import { sift, unique } from 'radash';
-import { getSassyHashes, isSassy, SassyHash } from './sassyHash.api';
+import { getSassyHash, isSassy, SassyHash } from './sassyHash.api';
 
 export interface EnhancedCastObject extends CastObject {
   amFollowing: boolean;
@@ -36,7 +36,7 @@ export const getEnhancedChannelFeed = async (channelFeedRequestPayload: ChannelF
   const seenFids = sift(cronFeed.casts.map((cast) => cast.author.fid).filter((fid) => fid !== null));
   const seenSassyHashes = unique(sift(cronFeed.casts.map((cast) => (isSassy(cast.text) ? cast.hash : null))));
   const botOrNotResponse = await getBotOrNot({ fids: seenFids ?? [] });
-  const sassyHashResponse = await getSassyHashes({ fid, hashes: seenSassyHashes ?? [] });
+  const sassyHashResponses = await Promise.all(seenSassyHashes.map((sh) => getSassyHash({ fid, castHash: sh })));
 
   return {
     ...cronFeed,
@@ -45,7 +45,7 @@ export const getEnhancedChannelFeed = async (channelFeedRequestPayload: ChannelF
       amFollowing: following.find((fid) => fid === castObject.author.fid) !== undefined,
 
       isSassy: isSassy(castObject.text),
-      sassyHash: Object.values(sassyHashResponse.data).find((obj) => obj.castHash === castObject.hash),
+      sassyHash: sassyHashResponses.find((sh) => sh.data.castHash === castObject.hash)?.data,
 
       authorHasPowerBadge: powerBadgeUsers.find((fid) => fid === castObject.author.fid) !== undefined,
       botOrNotResult: botOrNotResponse.fids.find((fid) => fid.fid === castObject.author.fid)?.result ?? {

@@ -3284,6 +3284,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@graphql-typed-document-node/core@npm:^3.2.0":
+  version: 3.2.0
+  resolution: "@graphql-typed-document-node/core@npm:3.2.0"
+  peerDependencies:
+    graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
+  checksum: fa44443accd28c8cf4cb96aaaf39d144a22e8b091b13366843f4e97d19c7bfeaf609ce3c7603a4aeffe385081eaf8ea245d078633a7324c11c5ec4b2011bb76d
+  languageName: node
+  linkType: hard
+
 "@grpc/grpc-js@npm:~1.8.21":
   version: 1.8.22
   resolution: "@grpc/grpc-js@npm:1.8.22"
@@ -5856,6 +5865,7 @@ __metadata:
     eslint-plugin-react: ^7.24.0
     eslint-plugin-react-hooks: ^4.3.0
     exponential-backoff: ^3.1.1
+    graphql-request: ^7.1.1
     husky: ^9.0.11
     i18next: ^20.4.0
     idb-keyval: ^6.2.1
@@ -8315,6 +8325,17 @@ __metadata:
   version: 1.4.0
   resolution: "graphemer@npm:1.4.0"
   checksum: bab8f0be9b568857c7bec9fda95a89f87b783546d02951c40c33f84d05bb7da3fd10f863a9beb901463669b6583173a8c8cc6d6b306ea2b9b9d5d3d943c3a673
+  languageName: node
+  linkType: hard
+
+"graphql-request@npm:^7.1.1":
+  version: 7.1.1
+  resolution: "graphql-request@npm:7.1.1"
+  dependencies:
+    "@graphql-typed-document-node/core": ^3.2.0
+  peerDependencies:
+    graphql: 14 - 16
+  checksum: b47b310a3c0b701828d268621a81d71864236fc5959f6ab4f9c3b03f6955f92abdbcf444de39f08776ac498895c7d958957a261f1082d448159218ed83da3157
   languageName: node
   linkType: hard
 

@@ -5,7 +5,9 @@ export interface Env {
   FARQUEST_API_KEY: string;
   DECENTBOOKMARKS_TOKEN: string;
   BOT_OR_NOT_API: string;
+  SASSYHASH_API: string;
   AIRSTACK_API_KEY: string;
+  WHISTLES_BEARER_TOKEN: string;
   UPSTASH_REDIS_REST_URL: string;
   UPSTASH_REDIS_REST_TOKEN: string;
   REACT_APP_DEFAULT_FID: number;
