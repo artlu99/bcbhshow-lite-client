@@ -1,4 +1,5 @@
-import { GraphQLClient, gql } from 'graphql-request';
+import { Client, fetchExchange, gql } from '@urql/core';
+
 import { Env } from '../common';
 
 interface SassyHash {
@@ -8,7 +9,7 @@ interface SassyHash {
   isDecrypted: boolean;
 }
 interface SassyHashGraphQLResponse {
-  data: { getTextByCastHash: SassyHash };
+  getTextByCastHash: SassyHash;
 }
 interface SassyHashRequest {
   fid: number;
@@ -16,12 +17,14 @@ interface SassyHashRequest {
 }
 
 const fetchSassyHashExpensiveApi = async (fid: number, castHash: string, env: Env) => {
-  const graphQLClient = new GraphQLClient(env.SASSYHASH_API, {
-    headers: { authorization: `Bearer ${env.WHISTLES_BEARER_TOKEN}` },
+  const client = new Client({
+    url: env.SASSYHASH_API,
+    exchanges: [fetchExchange],
+    fetchOptions: { headers: { authorization: `Bearer ${env.WHISTLES_BEARER_TOKEN}` } },
   });
 
   try {
-    const res = await graphQLClient.request<SassyHashGraphQLResponse>(
+    const res = await client.query<SassyHashGraphQLResponse>(
       gql`
         query getTextByCastHash($castHash: String!, $viewerFid: Int!) {
           getTextByCastHash(castHash: $castHash, viewerFid: $viewerFid) {
