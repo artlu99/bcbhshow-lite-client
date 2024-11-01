@@ -7,6 +7,7 @@ import { ChannelObject } from '@app/api/warpcast-types';
 import { FORYOU_FEED_PAGESIZE } from '@app/constants/neynarPagination';
 import { sift, unique } from 'radash';
 import './mocks/mockornot';
+import { getSassyHashes, isSassy } from './sassyHash.api';
 
 interface ForYouFeedRequest {
   fid: number;
@@ -31,14 +32,18 @@ export const getEnhancedForYouFeed = async (
 
   const forYouFeed = await getNeynarOpenrankForYouFeed({ fid: fid, limit: FORYOU_FEED_PAGESIZE, cursor });
   const seenFids = sift(forYouFeed.casts.map((cast) => cast.author.fid).filter((fid) => fid !== null));
+  const seenSassyHashes = unique(sift(forYouFeed.casts.map((cast) => (isSassy(cast.text) ? cast.hash : null))));
   const botOrNotResponse = await getBotOrNot({ fids: seenFids ?? [] });
+  const sassyHashResponse = await getSassyHashes({ fid, hashes: seenSassyHashes ?? [] });
 
   return {
     ...forYouFeed,
     casts: forYouFeed.casts.map((castObject) => ({
       ...castObject,
       amFollowing: following.find((fid) => fid === castObject.author.fid) !== undefined,
-      isSassy: /[a-fA-F0-9]{64}/.test(castObject.text),
+
+      isSassy: isSassy(castObject.text),
+      sassyHash: Object.values(sassyHashResponse.data).find((obj) => obj.castHash === castObject.hash),
 
       authorHasPowerBadge: powerBadgeUsers.find((fid) => fid === castObject.author.fid) !== undefined,
       botOrNotResult: botOrNotResponse.fids.find((fid) => fid.fid === castObject.author.fid)?.result ?? {
@@ -46,7 +51,7 @@ export const getEnhancedForYouFeed = async (
         summary: '<unknown>',
         farcaptcha: false,
       },
-      tags: getTagsForCast(allChannels, castObject.parent_url),
+      tags: getTagsForCast(allChannels, castObject.parent_url ?? undefined),
     })),
   };
 };

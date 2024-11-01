@@ -15,4 +15,5 @@
 // import './powerbadge.api.mock';
 // import './reactionOnHash.api.mock';
 // import './reactionsByHash.api.mock';
+// import './sassyHash.api.mock';
 // import './userFollowingChannels.api.mock';

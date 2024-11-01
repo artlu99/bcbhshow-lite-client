@@ -32,6 +32,7 @@ export const ChannelFeed: React.FC = () => {
     setNumCasts,
     setNumMainFeedCasts,
     setNumFollowingCasts,
+    setNumSassyCasts,
     setNumFarcaptchas,
     setNumCastsAfterFiltering,
     selectedLabels,
@@ -73,6 +74,7 @@ export const ChannelFeed: React.FC = () => {
   useEffect(() => {
     setChannelModerators(unique(sift([activeChannel?.leadFid, activeChannel?.moderatorFid])));
     getEnhancedChannelFeed({
+      fid: fid,
       channel: activeChannel,
       following: memodFfData ?? [],
       powerBadgeUsers: allPowerBadgeUsers,
@@ -85,12 +87,13 @@ export const ChannelFeed: React.FC = () => {
       .finally(() => {
         setLoaded(true);
       });
-  }, [memodChData, allPowerBadgeUsers, memodFfData, activeChannel]);
+  }, [fid, memodChData, allPowerBadgeUsers, memodFfData, activeChannel]);
 
   useEffect(() => {
     setNumCasts(casts.length);
     setNumMainFeedCasts(casts.filter((c) => isAllowedInMainFeed(c, channelModerators)).length);
     setNumFollowingCasts(casts.filter((c) => c.amFollowing).length);
+    setNumSassyCasts(casts.filter((c) => c.isSassy).length);
     setNumFarcaptchas(casts.filter((c) => c.botOrNotResult.farcaptcha).length);
   }, [
     casts,
@@ -99,11 +102,13 @@ export const ChannelFeed: React.FC = () => {
     setNumCasts,
     setNumFarcaptchas,
     setNumFollowingCasts,
+    setNumSassyCasts,
     setNumMainFeedCasts,
   ]);
 
   const next = () =>
     getEnhancedChannelFeed({
+      fid: fid,
       channel: activeChannel,
       pageToken: nextPageToken,
       following: memodFfData ?? [],
@@ -145,6 +150,7 @@ export const ChannelFeed: React.FC = () => {
           likooors={post.reactions?.likes.map((l) => l.fid) ?? []}
           hasPowerBadge={post.authorHasPowerBadge}
           botOrNotResult={post.botOrNotResult}
+          sassyHash={post.sassyHash}
           tags={[]}
         />
       ));

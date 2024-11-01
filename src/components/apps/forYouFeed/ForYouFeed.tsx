@@ -22,6 +22,7 @@ export const ForYouFeed: React.FC<ForYouFeedProps> = ({ fid }) => {
   const {
     setNumCasts,
     setNumFollowingCasts,
+    setNumSassyCasts,
     setNumCuratedChannelsCasts,
     setNumFarcaptchas,
     setNumCastsAfterFiltering,
@@ -79,9 +80,10 @@ export const ForYouFeed: React.FC<ForYouFeedProps> = ({ fid }) => {
   useEffect(() => {
     setNumCasts(casts.length);
     setNumFollowingCasts(casts.filter((c) => c.amFollowing).length);
+    setNumSassyCasts(casts.filter((c) => c.isSassy).length);
     setNumCuratedChannelsCasts(casts.filter((c) => c.tags.length > 1).length);
     setNumFarcaptchas(casts.filter((c) => c.botOrNotResult.farcaptcha).length);
-  }, [casts, setNumCasts, setNumFollowingCasts, setNumCuratedChannelsCasts, setNumFarcaptchas]);
+  }, [casts, setNumCasts, setNumFollowingCasts, setNumSassyCasts, setNumCuratedChannelsCasts, setNumFarcaptchas]);
 
   const next = () =>
     getEnhancedForYouFeed({
@@ -128,6 +130,7 @@ export const ForYouFeed: React.FC<ForYouFeedProps> = ({ fid }) => {
           tags={post.tags}
           hasPowerBadge={post.authorHasPowerBadge}
           botOrNotResult={post.botOrNotResult}
+          sassyHash={post.sassyHash}
         />
       ));
     setNumCastsAfterFiltering(filteredCasts.length);

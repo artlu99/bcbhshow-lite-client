@@ -6,8 +6,9 @@ import { ChannelObject } from '@app/api/warpcast-types';
 import curatedChannels from '@app/assets/curated-channels.json';
 import { IHashTag } from '@app/components/common/BaseHashTag/BaseHashTag';
 import { FOLLOWING_FEED_PAGESIZE } from '@app/constants/pinataPagination';
-import { listify, sift } from 'radash';
+import { listify, sift, unique } from 'radash';
 import './mocks/mockornot';
+import { getSassyHashes, isSassy } from './sassyHash.api';
 
 export const getTagsForCast = (allChannels: ChannelObject[], parent_url?: string): IHashTag[] => {
   const maybeChannelObj = allChannels?.find((channel) => channel.url === parent_url);
@@ -49,7 +50,9 @@ export const getEnhancedFollowingFeed = async (
 
   const cronFeed = await getFollowingFeed({ fid: fid, pageSize: FOLLOWING_FEED_PAGESIZE, pageToken });
   const seenFids = sift(cronFeed.casts.map((cast) => cast.author.fid).filter((fid) => fid !== null));
+  const seenSassyHashes = unique(sift(cronFeed.casts.map((cast) => (isSassy(cast.text) ? cast.hash : null))));
   const botOrNotResponse = await getBotOrNot({ fids: seenFids ?? [] });
+  const sassyHashResponse = await getSassyHashes({ fid, hashes: seenSassyHashes ?? [] });
 
   return {
     ...cronFeed,
@@ -57,13 +60,16 @@ export const getEnhancedFollowingFeed = async (
       ...castObject,
       amFollowing: true,
 
+      isSassy: isSassy(castObject.text),
+      sassyHash: Object.values(sassyHashResponse.data).find((obj) => obj.castHash === castObject.hash),
+
       authorHasPowerBadge: powerBadgeUsers.find((fid) => fid === castObject.author.fid) !== undefined,
       botOrNotResult: botOrNotResponse.fids.find((fid) => fid.fid === castObject.author.fid)?.result ?? {
         label: '<unknown>',
         summary: '<unknown>',
         farcaptcha: false,
       },
-      tags: getTagsForCast(allChannels, castObject.parent_url),
+      tags: getTagsForCast(allChannels, castObject.parent_url ?? undefined),
     })),
   };
 };

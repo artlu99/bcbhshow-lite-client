@@ -19,10 +19,17 @@ export const FollowingFeed: React.FC<FollowingFeedProps> = ({ fid }) => {
   const [nextPageToken, setNextPageToken] = useState<string | undefined>();
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [loaded, setLoaded] = useState<boolean>(false);
-  const { setNumCasts, setNumCuratedChannelsCasts, setNumFarcaptchas, setNumCastsAfterFiltering, selectedLabels } =
-    useZustand();
+  const {
+    setNumCasts,
+    setNumSassyCasts,
+    setNumCuratedChannelsCasts,
+    setNumFarcaptchas,
+    setNumCastsAfterFiltering,
+    selectedLabels,
+  } = useZustand();
 
   const signalToNoiseState = useAppSelector((state) => state.signalToNoise);
+  const showOnlySassy = signalToNoiseState.showOnlySassy;
   const showOnlyCuratedChannels = signalToNoiseState.showOnlyCuratedChannels;
   const showOnlyFarcaptcha = signalToNoiseState.showOnlyFarcaptcha;
 
@@ -69,9 +76,10 @@ export const FollowingFeed: React.FC<FollowingFeedProps> = ({ fid }) => {
 
   useEffect(() => {
     setNumCasts(casts.length);
+    setNumSassyCasts(casts.filter((c) => c.isSassy).length);
     setNumCuratedChannelsCasts(casts.filter((c) => c.tags.length > 1).length);
     setNumFarcaptchas(casts.filter((c) => c.botOrNotResult.farcaptcha).length);
-  }, [casts, setNumCasts, setNumCuratedChannelsCasts, setNumFarcaptchas]);
+  }, [casts, setNumCasts, setNumSassyCasts, setNumCuratedChannelsCasts, setNumFarcaptchas]);
 
   const next = () =>
     getEnhancedFollowingFeed({
@@ -86,6 +94,7 @@ export const FollowingFeed: React.FC<FollowingFeedProps> = ({ fid }) => {
 
   const filteredCastsList = useMemo(() => {
     const filteredCasts = casts
+      .filter((c) => !showOnlySassy || c.isSassy)
       .filter((c) => !showOnlyCuratedChannels || c.tags.length > 1)
       .filter((c) => !showOnlyFarcaptcha || c.botOrNotResult.farcaptcha)
       .filter((c) =>
@@ -106,20 +115,21 @@ export const FollowingFeed: React.FC<FollowingFeedProps> = ({ fid }) => {
           avatar={post.author.pfp_url}
           parentHash={post.parent_hash}
           threadHash={post.thread_hash}
-          parentUrl={post.parent_url}
-          replies={post.replies.count}
-          recasts={post.reactions.recasts_count}
-          recastooors={post.reactions.recasts.map((r) => r.fid)}
-          likes={post.reactions.likes_count}
-          likooors={post.reactions.likes.map((l) => l.fid)}
+          parentUrl={post.parent_url ?? undefined}
+          replies={post.replies?.count ?? 0}
+          recasts={post.reactions?.recasts_count ?? 0}
+          recastooors={post.reactions?.recasts.map((r) => r.fid) ?? []}
+          likes={post.reactions?.likes_count ?? 0}
+          likooors={post.reactions?.likes.map((l) => l.fid) ?? []}
           tags={post.tags}
           hasPowerBadge={post.authorHasPowerBadge}
           botOrNotResult={post.botOrNotResult}
+          sassyHash={post.sassyHash}
         />
       ));
     setNumCastsAfterFiltering(filteredCasts.length);
     return filteredCasts;
-  }, [casts, setNumCastsAfterFiltering, showOnlyCuratedChannels, showOnlyFarcaptcha, selectedLabels]);
+  }, [casts, setNumCastsAfterFiltering, showOnlySassy, showOnlyCuratedChannels, showOnlyFarcaptcha, selectedLabels]);
 
   return (
     <AdvertFeed casts={casts}>

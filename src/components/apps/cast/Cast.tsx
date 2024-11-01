@@ -1,5 +1,6 @@
 import { BotOrNotResult } from '@app/api/botOrNot.api';
 import { EmbedObject } from '@app/api/feed-types';
+import { SassyHash } from '@app/api/sassyHash.api';
 import { AltClientLinks } from '@app/components/apps/cast/AltClientLinks';
 import { Embed } from '@app/components/apps/cast/Embed';
 import { Reactions } from '@app/components/apps/cast/Reactions';
@@ -26,6 +27,7 @@ export interface CastProps {
   embeds: EmbedObject[];
   hasPowerBadge?: boolean;
   botOrNotResult?: BotOrNotResult;
+  sassyHash?: SassyHash;
   date: number;
   title: string;
   description?: string;
@@ -55,6 +57,7 @@ export const Cast: React.FC<CastProps> = ({
   embeds,
   hasPowerBadge,
   botOrNotResult,
+  sassyHash,
   avatar,
   parentHash,
   threadHash,
@@ -70,6 +73,7 @@ export const Cast: React.FC<CastProps> = ({
 }) => {
   const [allLikooors, setAllLikooors] = useState(likooors);
   const [allRecastooors, setAllRecastooors] = useState(recastooors);
+  const [showThisSassyCast, setShowThisSassyCast] = useState(false);
 
   const zenModeState = useAppSelector((state) => state.zenMode);
   const showReactions = zenModeState.showReactions;
@@ -139,6 +143,13 @@ export const Cast: React.FC<CastProps> = ({
           ) : (
             description
           )}
+          {sassyHash?.isDecrypted ? (
+            <div id="sassy-hash-text" className="text-xl">
+              {showThisSassyCast
+                ? sassyHash.decodedText
+                : [<a onClick={() => setShowThisSassyCast(true)}>[Sassy Reveal]</a>]}
+            </div>
+          ) : null}
         </S.Description>
         {embeds && embeds.length > 0 ? (
           <>
@@ -154,7 +165,6 @@ export const Cast: React.FC<CastProps> = ({
           <S.InfoWrapper>
             <Reactions
               castHash={castHash}
-              castFid={fid}
               replies={replies}
               recasts={recasts}
               likes={likes}

@@ -122,18 +122,18 @@ export const FeedSettings: React.FC = () => {
             />
           </SwitchContainer>
           <BaseDivider />
-          <SwitchContainer>
-            <span>{t('Only Sassy')}</span> {numSassyCasts}
-            <BaseSwitch
-              checkedChildren={t('On')}
-              unCheckedChildren={t('Off')}
-              checked={showOnlySassy}
-              onChange={handleChangeOnlySassy}
-            />
-          </SwitchContainer>
-          <BaseDivider />
         </>
       )}
+      <SwitchContainer>
+        <span>{t('Only Sassy')}</span> {numSassyCasts}
+        <BaseSwitch
+          checkedChildren={t('On')}
+          unCheckedChildren={t('Off')}
+          checked={showOnlySassy}
+          onChange={handleChangeOnlySassy}
+        />
+      </SwitchContainer>
+      <BaseDivider />
       <SwitchContainer>
         <span>{t('Farcaptcha')}</span> {numFarcaptchas}
         <BaseSwitch
