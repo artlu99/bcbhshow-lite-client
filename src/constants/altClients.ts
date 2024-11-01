@@ -40,3 +40,8 @@ export const herocastLink = (props: LinkProps) => {
   const { hash } = props;
   return `https://app.herocast.xyz/conversation/${hash}`;
 };
+
+export const fireflyLink = (props: LinkProps) => {
+  const { hash } = props;
+  return `https://firefly.mask.social/${hash}`;
+};

@@ -3,23 +3,27 @@ import { createAction, createSlice } from '@reduxjs/toolkit';
 interface SignalToNoiseState {
   showMainFeed: boolean;
   showOnlyFollowing: boolean;
+  showOnlySassy: boolean;
   showOnlyCuratedChannels: boolean;
   showOnlyFarcaptcha: boolean;
 }
 
 const showMainFeed = localStorage.getItem('showMainFeed') === 'true';
 const showOnlyFollowing = localStorage.getItem('showOnlyFollowing') === 'true';
+const showOnlySassy = localStorage.getItem('showOnlySassy') === 'false';
 const showOnlyCuratedChannels = localStorage.getItem('showOnlyCuratedChannels') === 'true';
 const showOnlyFarcaptcha = localStorage.getItem('showOnlyFarcaptcha') === 'true';
 
 localStorage.setItem('showMainFeed', JSON.stringify(showMainFeed));
 localStorage.setItem('showOnlyFollowing', JSON.stringify(showOnlyFollowing));
+localStorage.setItem('showOnlySassy', JSON.stringify(showOnlySassy));
 localStorage.setItem('showOnlyCuratedChannels', JSON.stringify(showOnlyCuratedChannels));
 localStorage.setItem('showOnlyFarcaptcha', JSON.stringify(showOnlyFarcaptcha));
 
 const initialState: SignalToNoiseState = {
   showMainFeed,
   showOnlyFollowing,
+  showOnlySassy,
   showOnlyCuratedChannels,
   showOnlyFarcaptcha,
 };
@@ -39,6 +43,15 @@ export const setShowOnlyFollowing = createAction('signalToNoise/setShowOnlyFollo
 });
 export const unsetShowOnlyFollowing = createAction('signalToNoise/unsetShowOnlyFollowing', () => {
   localStorage.setItem('showOnlyFollowing', JSON.stringify(false));
+  return { payload: false };
+});
+
+export const setShowOnlySassy = createAction('signalToNoise/setShowOnlySassy', () => {
+  localStorage.setItem('showOnlySassy', JSON.stringify(true));
+  return { payload: true };
+});
+export const unsetShowOnlySassy = createAction('signalToNoise/unsetShowOnlySassy', () => {
+  localStorage.setItem('showOnlySassy', JSON.stringify(false));
   return { payload: false };
 });
 
@@ -77,6 +90,12 @@ export const signalToNoiseSlice = createSlice({
     });
     builder.addCase(unsetShowOnlyFollowing, (state, action) => {
       state.showOnlyFollowing = action.payload;
+    });
+    builder.addCase(setShowOnlySassy, (state, action) => {
+      state.showOnlySassy = action.payload;
+    });
+    builder.addCase(unsetShowOnlySassy, (state, action) => {
+      state.showOnlySassy = action.payload;
     });
     builder.addCase(setShowOnlyCuratedChannels, (state, action) => {
       state.showOnlyCuratedChannels = action.payload;

@@ -9,6 +9,8 @@ interface ZustandState {
   setNumMainFeedCasts: (count: number) => void;
   numFollowingCasts: number;
   setNumFollowingCasts: (count: number) => void;
+  numSassyCasts: number;
+  setNumSassyCasts: (count: number) => void;
   numCuratedChannelsCasts: number;
   setNumCuratedChannelsCasts: (count: number) => void;
   numFarcaptchas: number;
@@ -30,6 +32,8 @@ export const useZustand = create<ZustandState>()((set) => ({
   setNumMainFeedCasts: (count) => set(() => ({ numMainFeedCasts: count })),
   numFollowingCasts: 0,
   setNumFollowingCasts: (count) => set(() => ({ numFollowingCasts: count })),
+  numSassyCasts: 0,
+  setNumSassyCasts: (count) => set(() => ({ numSassyCasts: count })),
   numCuratedChannelsCasts: 0,
   setNumCuratedChannelsCasts: (count) => set(() => ({ numCuratedChannelsCasts: count })),
   numFarcaptchas: 0,

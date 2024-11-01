@@ -38,6 +38,7 @@ export const getEnhancedForYouFeed = async (
     casts: forYouFeed.casts.map((castObject) => ({
       ...castObject,
       amFollowing: following.find((fid) => fid === castObject.author.fid) !== undefined,
+      isSassy: /[a-fA-F0-9]{64}/.test(castObject.text),
 
       authorHasPowerBadge: powerBadgeUsers.find((fid) => fid === castObject.author.fid) !== undefined,
       botOrNotResult: botOrNotResponse.fids.find((fid) => fid.fid === castObject.author.fid)?.result ?? {

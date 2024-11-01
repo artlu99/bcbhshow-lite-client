@@ -30,6 +30,7 @@ export const ForYouFeed: React.FC<ForYouFeedProps> = ({ fid }) => {
 
   const signalToNoiseState = useAppSelector((state) => state.signalToNoise);
   const showOnlyFollowing = signalToNoiseState.showOnlyFollowing;
+  const showOnlySassy = signalToNoiseState.showOnlySassy;
   const showOnlyCuratedChannels = signalToNoiseState.showOnlyCuratedChannels;
   const showOnlyFarcaptcha = signalToNoiseState.showOnlyFarcaptcha;
 
@@ -97,6 +98,7 @@ export const ForYouFeed: React.FC<ForYouFeedProps> = ({ fid }) => {
   const filteredCastsList = useMemo(() => {
     const filteredCasts = casts
       .filter((c) => !showOnlyFollowing || c.amFollowing)
+      .filter((c) => !showOnlySassy || c.isSassy)
       .filter((c) => !showOnlyCuratedChannels || c.tags.length > 1)
       .filter((c) => !showOnlyFarcaptcha || c.botOrNotResult.farcaptcha)
       .filter((c) =>
@@ -134,6 +136,7 @@ export const ForYouFeed: React.FC<ForYouFeedProps> = ({ fid }) => {
     casts,
     setNumCastsAfterFiltering,
     showOnlyFollowing,
+    showOnlySassy,
     showOnlyCuratedChannels,
     showOnlyFarcaptcha,
     selectedLabels,

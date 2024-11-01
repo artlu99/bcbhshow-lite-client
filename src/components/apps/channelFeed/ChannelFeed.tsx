@@ -40,6 +40,7 @@ export const ChannelFeed: React.FC = () => {
   const signalToNoiseState = useAppSelector((state) => state.signalToNoise);
   const showMainFeed = signalToNoiseState.showMainFeed;
   const showOnlyFollowing = signalToNoiseState.showOnlyFollowing;
+  const showOnlySassy = signalToNoiseState.showOnlySassy;
   const showOnlyFarcaptcha = signalToNoiseState.showOnlyFarcaptcha;
 
   const { user } = useNeynarContext();
@@ -116,6 +117,7 @@ export const ChannelFeed: React.FC = () => {
     const filteredCasts = casts
       .filter((c) => !showMainFeed || isAllowedInMainFeed(c, channelModerators))
       .filter((c) => !showOnlyFollowing || c.amFollowing)
+      .filter((c) => !showOnlySassy || c.isSassy)
       .filter((c) => !showOnlyFarcaptcha || c.botOrNotResult.farcaptcha)
       .filter((c) =>
         selectedLabels.length === 0 ? true : selectedLabels.includes(c.botOrNotResult.label ?? 'missing-label'),

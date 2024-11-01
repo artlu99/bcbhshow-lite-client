@@ -6,10 +6,12 @@ import {
   setShowOnlyCuratedChannels,
   setShowOnlyFarcaptcha,
   setShowOnlyFollowing,
+  setShowOnlySassy,
   unsetShowMainFeed,
   unsetShowOnlyCuratedChannels,
   unsetShowOnlyFarcaptcha,
   unsetShowOnlyFollowing,
+  unsetShowOnlySassy,
 } from '@app/store/slices/signalToNoiseSlice';
 import { useZustand } from '@app/store/zustand';
 import { useTranslation } from 'react-i18next';
@@ -26,6 +28,7 @@ export const FeedSettings: React.FC = () => {
     numCasts,
     numMainFeedCasts,
     numFollowingCasts,
+    numSassyCasts,
     numCuratedChannelsCasts,
     numFarcaptchas,
     numCastsAfterFiltering,
@@ -35,6 +38,7 @@ export const FeedSettings: React.FC = () => {
   const signalToNoiseState = useAppSelector((state) => state.signalToNoise);
   const showMainFeed = signalToNoiseState.showMainFeed;
   const showOnlyFollowing = signalToNoiseState.showOnlyFollowing;
+  const showOnlySassy = signalToNoiseState.showOnlySassy;
   const showOnlyCuratedChannels = signalToNoiseState.showOnlyCuratedChannels;
   const showOnlyFarcaptcha = signalToNoiseState.showOnlyFarcaptcha;
 
@@ -43,6 +47,9 @@ export const FeedSettings: React.FC = () => {
   };
   const handleChangeOnlyFollowing = (showOnlyFollowing: boolean) => {
     dispatch(showOnlyFollowing ? setShowOnlyFollowing() : unsetShowOnlyFollowing());
+  };
+  const handleChangeOnlySassy = (showOnlySassy: boolean) => {
+    dispatch(showOnlySassy ? setShowOnlySassy() : unsetShowOnlySassy());
   };
   const handleChangeOnlyCuratedChannels = (showOnlyCuratedChannels: boolean) => {
     dispatch(showOnlyCuratedChannels ? setShowOnlyCuratedChannels() : unsetShowOnlyCuratedChannels());
@@ -112,6 +119,16 @@ export const FeedSettings: React.FC = () => {
               unCheckedChildren={t('Off')}
               checked={showOnlyFollowing}
               onChange={handleChangeOnlyFollowing}
+            />
+          </SwitchContainer>
+          <BaseDivider />
+          <SwitchContainer>
+            <span>{t('Only Sassy')}</span> {numSassyCasts}
+            <BaseSwitch
+              checkedChildren={t('On')}
+              unCheckedChildren={t('Off')}
+              checked={showOnlySassy}
+              onChange={handleChangeOnlySassy}
             />
           </SwitchContainer>
           <BaseDivider />
