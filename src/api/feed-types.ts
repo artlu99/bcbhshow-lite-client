@@ -6,9 +6,9 @@ export interface FeedObject {
 export interface CastObject {
   hash: string;
   timestamp: number;
-  object: 'cast';
+  object: 'cast' | 'cast_embedded';
   author: {
-    active_status: 'inactive' | 'active';
+    active_status?: 'inactive' | 'active';
     fid: number;
     display_name?: string;
     username?: string;
@@ -16,39 +16,52 @@ export interface CastObject {
     custody_address?: string;
     follower_count?: number;
     following_count?: number;
-    object: 'user' | 'group';
+    object: 'user' | 'group' | 'user_dehydrated';
     verified_addresses?: {
       eth_addresses?: string[];
       sol_addresses?: string[];
     };
     verifications?: string[];
+    verified_accounts?: { platform: string; username: string }[] | null;
     power_badge?: boolean;
     profile?: {
       bio?: {
         text?: string;
         mentioned_profiles?: UserProfile[];
       };
+      location?: {
+        address: {
+          city: string;
+          country: string;
+          country_code: string;
+          state: string;
+          state_code?: string;
+        };
+        latitude: number;
+        longitude: number;
+      };
     };
     viewer_context?: AuthorViewerContext;
   };
+  author_channel_context?: { following: boolean; role: 'moderator' | 'member' };
   text: string;
-  mentioned_profiles: UserProfile[];
+  mentioned_profiles?: UserProfile[];
   parent_author: { fid: number | null };
   parent_hash: string | null;
-  root_parent_url?: string;
+  root_parent_url?: string | null;
   thread_hash?: string;
-  parent_url?: string;
+  parent_url?: string | null;
   embeds?: EmbedObject[];
   frames?: FrameObject[];
-  channel?: ChannelObject;
+  channel?: ChannelObject | null;
   viewer_context?: CastViewerContext;
-  reactions: {
+  reactions?: {
     likes: UserDetails[];
     likes_count: number;
     recasts: UserDetails[];
     recasts_count: number;
   };
-  replies: { count: number };
+  replies?: { count: number };
 }
 
 interface AuthorViewerContext {
@@ -73,6 +86,18 @@ export interface EmbedObject {
     fid: number;
     hash: string;
   };
+  cast?: CastObject;
+  metadata?: {
+    _status: string;
+    content_length: number | null;
+    content_type: string;
+    html?: {
+      favicon: string;
+      ogDescription: string;
+      ogImage: { url: string }[];
+      ogTitle: string;
+    };
+  };
 }
 
 export interface FrameObject {
@@ -82,14 +107,16 @@ export interface FrameObject {
   input?: FrameInputObject;
   post_url?: string;
   state?: FrameStateObject;
+  image_aspect_ratio?: '1:1' | '16:9';
   title?: string;
   version?: string;
 }
 
 export interface FrameButtonObject {
-  action_type: 'post' | 'like' | 'recast' | 'comment' | 'share' | 'follow' | 'unfollow' | 'vote';
+  action_type: 'post' | 'like' | 'recast' | 'comment' | 'share' | 'follow' | 'unfollow' | 'vote' | 'link';
   index: number;
   title: string;
+  target?: string;
 }
 
 export interface FrameInputObject {

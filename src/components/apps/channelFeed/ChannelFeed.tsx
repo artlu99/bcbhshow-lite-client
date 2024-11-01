@@ -16,7 +16,7 @@ import { useEffect, useMemo, useState } from 'react';
 const isAllowedInMainFeed = (cast: CastObject, channelModerators: number[]) => {
   return (
     channelModerators.filter((m) => m === cast.author.fid).length > 0 ||
-    cast.reactions.likes.filter((l) => channelModerators.filter((m) => m === l.fid).length > 0).length > 0
+    (cast.reactions?.likes ?? []).filter((l) => channelModerators.filter((m) => m === l.fid).length > 0).length > 0
   );
 };
 
@@ -137,12 +137,12 @@ export const ChannelFeed: React.FC = () => {
           avatar={post.author.pfp_url}
           parentHash={post.parent_hash}
           threadHash={post.thread_hash}
-          parentUrl={post.parent_url}
-          replies={post.replies.count}
-          recasts={post.reactions.recasts_count}
-          recastooors={post.reactions.recasts.map((r) => r.fid)}
-          likes={post.reactions.likes_count}
-          likooors={post.reactions.likes.map((l) => l.fid)}
+          parentUrl={post.parent_url ?? undefined}
+          replies={post.replies?.count ?? 0}
+          recasts={post.reactions?.recasts_count ?? 0}
+          recastooors={post.reactions?.recasts.map((r) => r.fid) ?? []}
+          likes={post.reactions?.likes_count ?? 0}
+          likooors={post.reactions?.likes.map((l) => l.fid) ?? []}
           hasPowerBadge={post.authorHasPowerBadge}
           botOrNotResult={post.botOrNotResult}
           tags={[]}
@@ -157,6 +157,7 @@ export const ChannelFeed: React.FC = () => {
     showMainFeed,
     showOnlyFarcaptcha,
     showOnlyFollowing,
+    showOnlySassy,
     selectedLabels,
   ]);
 
