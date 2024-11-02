@@ -12,11 +12,11 @@ interface SassyHashGraphQLResponse {
   getTextByCastHash: SassyHash;
 }
 interface SassyHashRequest {
-  fid: number;
+  fid: string;
   castHash: string;
 }
 
-const fetchSassyHashExpensiveApi = async (fid: number, castHash: string, env: Env) => {
+const fetchSassyHashExpensiveApi = async (viewerFid: number, castHash: string, env: Env) => {
   const client = new Client({
     url: env.SASSYHASH_API,
     exchanges: [fetchExchange],
@@ -35,7 +35,7 @@ const fetchSassyHashExpensiveApi = async (fid: number, castHash: string, env: En
           }
         }
       `,
-      { castHash, viewerFid: fid },
+      { castHash, viewerFid },
     );
     console.log('graphQLClient:', res);
     return { data: res.data.getTextByCastHash };
@@ -50,7 +50,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   const js = (await request.json()) as SassyHashRequest;
   const { fid, castHash } = js;
 
-  const sassyHashResponses = await fetchSassyHashExpensiveApi(fid, castHash, env);
+  const sassyHashResponses = await fetchSassyHashExpensiveApi(parseInt(fid), castHash, env);
 
   return new Response(JSON.stringify(sassyHashResponses));
 };
