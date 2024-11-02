@@ -1,5 +1,5 @@
 import { httpApiMock } from '@app/api/mocks/http.api.mock';
-import { SassyHashResponse } from '../sassyHash.api';
+import { SassyHashResponse } from '@app/api/sassyHash.api';
 
 const res: SassyHashResponse = {
   // data: {

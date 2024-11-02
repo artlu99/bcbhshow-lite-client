@@ -3,11 +3,11 @@ import { PagedCronFeed } from '@app/api/channelFeed.api';
 import { FeedObject } from '@app/api/feed-types';
 import { getTagsForCast } from '@app/api/followingFeed.api';
 import { httpApi } from '@app/api/http.api';
+import { getSassyHash, isSassy } from '@app/api/sassyHash.api';
 import { ChannelObject } from '@app/api/warpcast-types';
 import { FORYOU_FEED_PAGESIZE } from '@app/constants/neynarPagination';
 import { sift, unique } from 'radash';
 import './mocks/mockornot';
-import { getSassyHash, isSassy } from './sassyHash.api';
 
 interface ForYouFeedRequest {
   fid: number;

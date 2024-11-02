@@ -37,7 +37,6 @@ const fetchSassyHashExpensiveApi = async (viewerFid: number, castHash: string, e
       `,
       { castHash, viewerFid },
     );
-    console.log('graphQLClient:', res);
     return { data: res.data.getTextByCastHash };
   } catch (e) {
     console.error(e);
