@@ -6,14 +6,12 @@ import {
   setHideDisplayNames,
   setHideEmbeds,
   setHidePFPs,
-  setHidePowerBadges,
   setHideReactions,
   setHideUserNames,
   setShowBotOrNotIndicator,
   setShowDisplayNames,
   setShowEmbeds,
   setShowPFPs,
-  setShowPowerBadges,
   setShowReactions,
   setShowUserNames,
 } from '@app/store/slices/zenModeSlice';
@@ -28,7 +26,6 @@ export const DisplaySettings: React.FC = () => {
   const showEmbeds = zenModeState.showEmbeds;
   const showReactions = zenModeState.showReactions;
   const showPFPs = zenModeState.showPFPs;
-  const showPowerBadges = zenModeState.showPowerBadges;
   const showDisplayNames = zenModeState.showDisplayNames;
   const showUserNames = zenModeState.showUserNames;
   const showBotOrNotIndicator = zenModeState.showBotOrNotIndicator;
@@ -41,9 +38,6 @@ export const DisplaySettings: React.FC = () => {
   };
   const handleChangePFPs = (showPFPs: boolean) => {
     dispatch(showPFPs ? setShowPFPs() : setHidePFPs());
-  };
-  const handleChangePowerBadges = (showPowerBadges: boolean) => {
-    dispatch(showPowerBadges ? setShowPowerBadges() : setHidePowerBadges());
   };
   const handleChangeDisplayNames = (showDisplayNames: boolean) => {
     dispatch(showDisplayNames ? setShowDisplayNames() : setHideDisplayNames());
@@ -84,16 +78,6 @@ export const DisplaySettings: React.FC = () => {
           unCheckedChildren={t('Off')}
           checked={showPFPs}
           onChange={handleChangePFPs}
-        />
-      </SwitchContainer>
-      <BaseDivider />
-      <SwitchContainer>
-        <span>{t('Power Badge')}</span>{' '}
-        <BaseSwitch
-          checkedChildren={t('On')}
-          unCheckedChildren={t('Off')}
-          checked={showPowerBadges}
-          onChange={handleChangePowerBadges}
         />
       </SwitchContainer>
       <BaseDivider />

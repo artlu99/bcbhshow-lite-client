@@ -6,7 +6,7 @@ import { AdvertFeed } from '@app/components/apps/channelFeed/AdvertFeed/AdvertFe
 import { BaseEmpty } from '@app/components/common/BaseEmpty/BaseEmpty';
 import { BaseFeed } from '@app/components/common/BaseFeed/BaseFeed';
 import { useAppSelector } from '@app/hooks/reduxHooks';
-import { allPowerBadgeUsersQuery, channelByIdQuery, followingByFidQuery } from '@app/queries/queries';
+import { channelByIdQuery, followingByFidQuery } from '@app/queries/queries';
 import { useZustand } from '@app/store/zustand';
 import { useNeynarContext } from '@neynar/react';
 import { useQuery } from '@tanstack/react-query';
@@ -21,7 +21,6 @@ const isAllowedInMainFeed = (cast: CastObject, channelModerators: number[]) => {
 };
 
 export const ChannelFeed: React.FC = () => {
-  const [allPowerBadgeUsers, setAllPowerBadgeUsers] = useState<number[]>([]);
   const [channelModerators, setChannelModerators] = useState<number[]>([]);
   const [casts, setCasts] = useState<EnhancedCastObject[]>([]);
   const [nextPageToken, setNextPageToken] = useState<string | undefined>();
@@ -47,12 +46,6 @@ export const ChannelFeed: React.FC = () => {
   const { user } = useNeynarContext();
   const fid = getFidWithFallback(user);
 
-  const pbQuery = useQuery(allPowerBadgeUsersQuery());
-  const memodPbData = useMemo(() => {
-    if (pbQuery.isLoading || pbQuery.error) return null;
-    return pbQuery.data;
-  }, [pbQuery.isLoading, pbQuery.error, pbQuery.data]);
-
   const chQuery = useQuery(channelByIdQuery(activeChannelId));
   const memodChData = useMemo(() => {
     if (chQuery.isLoading || chQuery.error) return null;
@@ -67,17 +60,11 @@ export const ChannelFeed: React.FC = () => {
   }, [ffQuery.isLoading, ffQuery.error, ffQuery.data]);
 
   useEffect(() => {
-    const allPowerBadgeUsers = memodPbData?.result.fids ?? [];
-    setAllPowerBadgeUsers(allPowerBadgeUsers);
-  }, [memodPbData]);
-
-  useEffect(() => {
     setChannelModerators(unique(sift([activeChannel?.leadFid, activeChannel?.moderatorFid])));
     getEnhancedChannelFeed({
       fid: fid,
       channel: activeChannel,
       following: memodFfData ?? [],
-      powerBadgeUsers: allPowerBadgeUsers,
     })
       .then((res) => {
         setCasts(res.casts);
@@ -87,7 +74,7 @@ export const ChannelFeed: React.FC = () => {
       .finally(() => {
         setLoaded(true);
       });
-  }, [fid, memodChData, allPowerBadgeUsers, memodFfData, activeChannel]);
+  }, [fid, memodChData, memodFfData, activeChannel]);
 
   useEffect(() => {
     setNumCasts(casts.length);
@@ -112,7 +99,6 @@ export const ChannelFeed: React.FC = () => {
       channel: activeChannel,
       pageToken: nextPageToken,
       following: memodFfData ?? [],
-      powerBadgeUsers: allPowerBadgeUsers,
     }).then((newCasts) => {
       setNextPageToken(newCasts.next?.cursor);
       setCasts(casts.concat(newCasts.casts));
@@ -148,7 +134,6 @@ export const ChannelFeed: React.FC = () => {
           recastooors={post.reactions?.recasts.map((r) => r.fid) ?? []}
           likes={post.reactions?.likes_count ?? 0}
           likooors={post.reactions?.likes.map((l) => l.fid) ?? []}
-          hasPowerBadge={post.authorHasPowerBadge}
           botOrNotResult={post.botOrNotResult}
           sassyHash={post.sassyHash}
           tags={[]}

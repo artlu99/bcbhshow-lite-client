@@ -9,7 +9,6 @@ import { getSassyHash, isSassy, SassyHash } from './sassyHash.api';
 
 export interface EnhancedCastObject extends CastObject {
   amFollowing: boolean;
-  authorHasPowerBadge: boolean;
   botOrNotResult: BotOrNotResult;
   isSassy: boolean;
   sassyHash?: SassyHash;
@@ -25,11 +24,10 @@ interface ChannelFeedRequest {
   channel?: ChannelObject;
   pageToken?: string;
   following: number[];
-  powerBadgeUsers: number[];
 }
 
 export const getEnhancedChannelFeed = async (channelFeedRequestPayload: ChannelFeedRequest): Promise<PagedCronFeed> => {
-  const { channel, fid, pageToken, following, powerBadgeUsers } = channelFeedRequestPayload;
+  const { channel, fid, pageToken, following } = channelFeedRequestPayload;
   if (!channel) return { casts: [] };
 
   const cronFeed = await getCronFeed({ channelId: channel.id, pageSize: CHANNEL_FEED_PAGESIZE, pageToken });
@@ -47,7 +45,6 @@ export const getEnhancedChannelFeed = async (channelFeedRequestPayload: ChannelF
       isSassy: isSassy(castObject.text),
       sassyHash: sassyHashResponses.find((sh) => sh.data.castHash === castObject.hash)?.data,
 
-      authorHasPowerBadge: powerBadgeUsers.find((fid) => fid === castObject.author.fid) !== undefined,
       botOrNotResult: botOrNotResponse.fids.find((fid) => fid.fid === castObject.author.fid)?.result ?? {
         label: '<unknown>',
         summary: '<unknown>',

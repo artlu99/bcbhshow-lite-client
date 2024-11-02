@@ -6,7 +6,6 @@ interface ZenModeState {
   showAltClientLinks: boolean;
   showImageOnly: boolean;
   showPFPs: boolean;
-  showPowerBadges: boolean;
   showDisplayNames: boolean;
   showUserNames: boolean;
   showBotOrNotIndicator: boolean;
@@ -19,7 +18,6 @@ const showAltClientLinks = localStorage.getItem('showAltClientLinks')
   : true;
 const showImageOnly = localStorage.getItem('showImageOnly') === 'true';
 const showPFPs = localStorage.getItem('showPFPs') === 'true';
-const showPowerBadges = localStorage.getItem('showPowerBadges') === 'true';
 const showDisplayNames = localStorage.getItem('showDisplayNames') === 'true';
 const showUserNames = localStorage.getItem('showUserNames') ? localStorage.getItem('showUserNames') === 'true' : true;
 const showBotOrNotIndicator = localStorage.getItem('showBotOrNotIndicator')
@@ -31,7 +29,6 @@ localStorage.setItem('showReactions', JSON.stringify(showReactions));
 localStorage.setItem('showAltClientLinks', JSON.stringify(showAltClientLinks));
 localStorage.setItem('showImageOnly', JSON.stringify(showImageOnly));
 localStorage.setItem('showPFPs', JSON.stringify(showPFPs));
-localStorage.setItem('showPowerBadges', JSON.stringify(showPowerBadges));
 localStorage.setItem('showDisplayNames', JSON.stringify(showDisplayNames));
 localStorage.setItem('showUserNames', JSON.stringify(showUserNames));
 localStorage.setItem('showBotOrNotIndicator', JSON.stringify(showBotOrNotIndicator));
@@ -42,7 +39,6 @@ const initialState: ZenModeState = {
   showAltClientLinks,
   showImageOnly,
   showPFPs,
-  showPowerBadges,
   showDisplayNames,
   showUserNames,
   showBotOrNotIndicator,
@@ -90,15 +86,6 @@ export const setHidePFPs = createAction('zenMode/hidePFPs', () => {
 });
 export const setShowPFPs = createAction('zenMode/showPFPs', () => {
   localStorage.setItem('showPFPs', JSON.stringify(true));
-  return { payload: true };
-});
-
-export const setHidePowerBadges = createAction('zenMode/hidePowerBadges', () => {
-  localStorage.setItem('showPowerBadges', JSON.stringify(false));
-  return { payload: false };
-});
-export const setShowPowerBadges = createAction('zenMode/showPowerBadges', () => {
-  localStorage.setItem('showPowerBadges', JSON.stringify(true));
   return { payload: true };
 });
 
@@ -163,12 +150,6 @@ export const zenModeSlice = createSlice({
     });
     builder.addCase(setHidePFPs, (state, action) => {
       state.showPFPs = action.payload;
-    });
-    builder.addCase(setShowPowerBadges, (state, action) => {
-      state.showPowerBadges = action.payload;
-    });
-    builder.addCase(setHidePowerBadges, (state, action) => {
-      state.showPowerBadges = action.payload;
     });
     builder.addCase(setShowDisplayNames, (state, action) => {
       state.showDisplayNames = action.payload;

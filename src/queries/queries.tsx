@@ -6,21 +6,12 @@ import { getFollowingByFid } from '@app/api/followingByFid.api';
 import { getHubReactionsByFid } from '@app/api/hubReactionsByFid.api';
 import { HubReactionType } from '@app/api/hubble-http-types';
 import { getMetadata } from '@app/api/metadata.api';
-import { getAllPowerBadgeUsers } from '@app/api/powerbadge.api';
 import { getReactionsByHash } from '@app/api/reactionsByHash.api';
 import { getUserFollowingChannels } from '@app/api/userFollowingChannels.api';
 import { defaultChannelId } from '@app/constants/config/config';
 import { queryOptions } from '@tanstack/react-query';
 
 const defaultFid = import.meta.env.REACT_APP_DEFAULT_FID as number;
-
-export const allPowerBadgeUsersQuery = () =>
-  queryOptions({
-    meta: { persist: true },
-    queryKey: ['allPowerBadgeUsers'],
-    queryFn: () => getAllPowerBadgeUsers({ empty: undefined }),
-    staleTime: 2 * 60 * 60 * 1000, // 2 hours
-  });
 
 export const allChannelsQuery = () =>
   queryOptions({

@@ -25,7 +25,6 @@ export interface CastProps {
   fid: number;
   fname: string;
   embeds: EmbedObject[];
-  hasPowerBadge?: boolean;
   botOrNotResult?: BotOrNotResult;
   sassyHash?: SassyHash;
   date: number;
@@ -55,7 +54,6 @@ export const Cast: React.FC<CastProps> = ({
   fid,
   fname,
   embeds,
-  hasPowerBadge,
   botOrNotResult,
   sassyHash,
   avatar,
@@ -80,7 +78,6 @@ export const Cast: React.FC<CastProps> = ({
   const showAltClientLinks = zenModeState.showAltClientLinks;
   const showImageOnly = zenModeState.showImageOnly;
   const showPFPs = zenModeState.showPFPs;
-  const showPowerBadges = zenModeState.showPowerBadges;
   const showDisplayNames = zenModeState.showDisplayNames;
   const showUserNames = zenModeState.showUserNames;
   const showBotOrNotIndicator = zenModeState.showBotOrNotIndicator;
@@ -106,7 +103,6 @@ export const Cast: React.FC<CastProps> = ({
             <BaseTooltip title={`FID: ${fid}`} placement={'topLeft'}>
               <S.Author>
                 {showDisplayNames ? displayName ?? fname : null}
-                {showPowerBadges && hasPowerBadge ? ' ⚡ ' : ' '}
                 {showUserNames ? (
                   <span>{`@${fname}`}</span>
                 ) : (

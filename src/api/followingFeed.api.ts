@@ -40,13 +40,12 @@ export const getFollowingFeed = (followingFeedRequestPayload: FollowingFeedReque
 interface EnhancedFollowingFeedRequest {
   fid: number;
   pageToken?: string;
-  powerBadgeUsers: number[];
   allChannels: ChannelObject[];
 }
 export const getEnhancedFollowingFeed = async (
   homeFeedRequestPayload: EnhancedFollowingFeedRequest,
 ): Promise<PagedCronFeed> => {
-  const { fid, pageToken, powerBadgeUsers, allChannels } = homeFeedRequestPayload;
+  const { fid, pageToken, allChannels } = homeFeedRequestPayload;
 
   const cronFeed = await getFollowingFeed({ fid: fid, pageSize: FOLLOWING_FEED_PAGESIZE, pageToken });
   const seenFids = sift(cronFeed.casts.map((cast) => cast.author.fid).filter((fid) => fid !== null));
@@ -63,7 +62,6 @@ export const getEnhancedFollowingFeed = async (
       isSassy: isSassy(castObject.text),
       sassyHash: sassyHashResponses.find((sh) => sh.data.castHash === castObject.hash)?.data,
 
-      authorHasPowerBadge: powerBadgeUsers.find((fid) => fid === castObject.author.fid) !== undefined,
       botOrNotResult: botOrNotResponse.fids.find((fid) => fid.fid === castObject.author.fid)?.result ?? {
         label: '<unknown>',
         summary: '<unknown>',

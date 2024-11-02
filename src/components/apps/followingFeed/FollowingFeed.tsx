@@ -5,7 +5,7 @@ import { AdvertFeed } from '@app/components/apps/channelFeed/AdvertFeed/AdvertFe
 import { BaseEmpty } from '@app/components/common/BaseEmpty/BaseEmpty';
 import { BaseFeed } from '@app/components/common/BaseFeed/BaseFeed';
 import { useAppSelector } from '@app/hooks/reduxHooks';
-import { allChannelsQuery, allPowerBadgeUsersQuery, followingByFidQuery } from '@app/queries/queries';
+import { allChannelsQuery, followingByFidQuery } from '@app/queries/queries';
 import { useZustand } from '@app/store/zustand';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useMemo, useState } from 'react';
@@ -14,7 +14,6 @@ interface FollowingFeedProps {
   fid: number;
 }
 export const FollowingFeed: React.FC<FollowingFeedProps> = ({ fid }) => {
-  const [allPowerBadgeUsers, setAllPowerBadgeUsers] = useState<number[]>([]);
   const [casts, setCasts] = useState<EnhancedCastObject[]>([]);
   const [nextPageToken, setNextPageToken] = useState<string | undefined>();
   const [hasMore, setHasMore] = useState<boolean>(true);
@@ -45,23 +44,11 @@ export const FollowingFeed: React.FC<FollowingFeedProps> = ({ fid }) => {
     return (ffQuery.data?.result?.users ?? []).map((u) => Number(u.fid));
   }, [ffQuery.isLoading, ffQuery.error, ffQuery.data]);
 
-  const pbQuery = useQuery(allPowerBadgeUsersQuery());
-  const memodPbData = useMemo(() => {
-    if (pbQuery.isLoading || pbQuery.error) return null;
-    return pbQuery.data;
-  }, [pbQuery.isLoading, pbQuery.error, pbQuery.data]);
-
-  useEffect(() => {
-    const allPowerBadgeUsers = memodPbData?.result.fids ?? [];
-    setAllPowerBadgeUsers(allPowerBadgeUsers);
-  }, [memodPbData]);
-
   useEffect(() => {
     setCasts([]);
 
     getEnhancedFollowingFeed({
       fid: fid,
-      powerBadgeUsers: allPowerBadgeUsers,
       allChannels: memodChannelData ?? [],
     })
       .then((res) => {
@@ -72,7 +59,7 @@ export const FollowingFeed: React.FC<FollowingFeedProps> = ({ fid }) => {
       .finally(() => {
         setLoaded(true);
       });
-  }, [fid, allPowerBadgeUsers, memodChannelData, memodFfData]);
+  }, [fid, memodChannelData, memodFfData]);
 
   useEffect(() => {
     setNumCasts(casts.length);
@@ -85,7 +72,6 @@ export const FollowingFeed: React.FC<FollowingFeedProps> = ({ fid }) => {
     getEnhancedFollowingFeed({
       fid: fid,
       pageToken: nextPageToken,
-      powerBadgeUsers: allPowerBadgeUsers,
       allChannels: memodChannelData ?? [],
     }).then((newCasts) => {
       setNextPageToken(newCasts.next?.cursor);
@@ -122,7 +108,6 @@ export const FollowingFeed: React.FC<FollowingFeedProps> = ({ fid }) => {
           likes={post.reactions?.likes_count ?? 0}
           likooors={post.reactions?.likes.map((l) => l.fid) ?? []}
           tags={post.tags}
-          hasPowerBadge={post.authorHasPowerBadge}
           botOrNotResult={post.botOrNotResult}
           sassyHash={post.sassyHash}
         />

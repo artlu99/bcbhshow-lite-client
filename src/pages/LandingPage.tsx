@@ -19,7 +19,6 @@ import { PageTitle } from '@app/components/common/PageTitle/PageTitle';
 import * as S from '@app/pages/uiComponentsPages//UIComponentsPage.styles';
 import {
   allChannelsQuery,
-  allPowerBadgeUsersQuery,
   botOrNotLabelsQuery,
   channelByIdQuery,
   followingByFidQuery,
@@ -37,7 +36,6 @@ const LandingPage: React.FC = () => {
   const fid = getFidWithFallback(user);
 
   const client = useQueryClient();
-  client.prefetchQuery(allPowerBadgeUsersQuery());
   client.prefetchQuery(channelByIdQuery());
   client.prefetchQuery(allChannelsQuery());
   client.prefetchQuery(userFollowingChannelsQuery(fid));
