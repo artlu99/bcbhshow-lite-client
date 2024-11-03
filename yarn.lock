@@ -7760,7 +7760,6 @@ __metadata:
     husky: ^9.0.11
     i18next: ^20.4.0
     idb-keyval: ^6.2.1
-    jose: ^5.9.6
     less: ^4.2.0
     less-plugin-clean-css: ^1.5.1
     lint-staged: ^11.0.0
@@ -12056,13 +12055,6 @@ __metadata:
   version: 4.15.9
   resolution: "jose@npm:4.15.9"
   checksum: 41abe1c99baa3cf8a78ebbf93da8f8e50e417b7a26754c4afa21865d87527b8ac2baf66de2c5f6accc3f7d7158658dae7364043677236ea1d07895b040097f15
-  languageName: node
-  linkType: hard
-
-"jose@npm:^5.9.6":
-  version: 5.9.6
-  resolution: "jose@npm:5.9.6"
-  checksum: 4b536da0201858ed4c4582e8bb479081f11e0c63dd0f5e473adde16fc539785e1f2f0409bc1fc7cbbb5b68026776c960b4952da3a06f6fdfff0b9764c9127ae0
   languageName: node
   linkType: hard
 
