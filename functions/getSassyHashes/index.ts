@@ -65,6 +65,9 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   const js = (await request.json()) as SassyHashRequest;
   const { privyAuthToken, castHash } = js;
 
+  const cookies: string = request.headers.get('cookie');
+  console.log('cookies:', cookies);
+
   const fid = await getFid(privyAuthToken, env);
   if (!fid) return new Response(JSON.stringify({ error: 'Failed to fetch Farcaster FID' }), { status: 500 });
 
