@@ -63,6 +63,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       const sassyHashResponses = await fetchSassyHashExpensiveApi(fid, castHash, env);
       return new Response(JSON.stringify(sassyHashResponses));
     } else {
+      console.log('Error 500: User:', JSON.stringify(user));
       return new Response(JSON.stringify({ error: 'Failed to fetch Farcaster FID' }), { status: 500 });
     }
   } catch (error) {
