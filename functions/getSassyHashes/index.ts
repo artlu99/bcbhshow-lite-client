@@ -21,9 +21,11 @@ const getFid = async (privyAuthToken: string, env: Env): Promise<number> => {
   const privy = new PrivyClient(env.REACT_APP_PRIVY_APP_ID, env.PRIVY_APP_SECRET);
 
   try {
-    const user = await privy.getUser({ idToken: privyAuthToken });
+    const verifiedClaims = await privy.verifyAuthToken(privyAuthToken);
+    const user = await privy.getUser(verifiedClaims.userId);
     console.log('Privy User:', user);
 
+    // const user2 = await privy.getUser({ idToken: IDTokenFromCookies(request) });
     return user?.farcaster?.fid;
   } catch (error) {
     console.error(`Token verification failed with error ${error}.`);
