@@ -1,5 +1,6 @@
 import { PrivyClient } from '@privy-io/server-auth';
 import { Client, fetchExchange, gql } from '@urql/core';
+import { importSPKI, jwtVerify } from 'jose';
 
 import { Env } from '../common';
 
@@ -21,9 +22,24 @@ const getFid = async (privyAuthToken: string, env: Env): Promise<number> => {
   const privy = new PrivyClient(env.REACT_APP_PRIVY_APP_ID, env.PRIVY_APP_SECRET);
 
   try {
+    // one-time bootstrap to see if we can extract the FID from the token
+    const privyVerificationKey = await privy.getVerificationKey();
+    const verificationKey = await importSPKI(privyVerificationKey, 'ES256');
+    console.log('privyVerificationKey:', privyVerificationKey);
+    console.log('verificationKey:', verificationKey);
+
+    try {
+      const payload = await jwtVerify(privyAuthToken, verificationKey, {
+        issuer: 'privy.io',
+        audience: env.REACT_APP_PRIVY_APP_ID || 'insert-your-privy-app-id',
+      });
+      console.log(payload);
+    } catch (error) {
+      console.error(error);
+    }
+
     const verifiedClaims = await privy.verifyAuthToken(privyAuthToken);
     const user = await privy.getUser(verifiedClaims.userId);
-    console.log('Privy User:', user);
 
     // const user2 = await privy.getUser({ idToken: IDTokenFromCookies(request) });
     return user?.farcaster?.fid;

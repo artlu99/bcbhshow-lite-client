@@ -32,6 +32,7 @@
     "exponential-backoff": "^3.1.1",
     "i18next": "^20.4.0",
     "idb-keyval": "^6.2.1",
+    "jose": "^5.9.6",
     "lucide-react": "^0.394.0",
     "posthog-js": "^1.142.1",
     "react": "^18.3.1",
