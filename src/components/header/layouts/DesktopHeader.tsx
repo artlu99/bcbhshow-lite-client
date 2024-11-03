@@ -77,7 +77,7 @@ export const DesktopHeader: React.FC<DesktopHeaderProps> = ({ isTwoColumnsLayout
           </BaseCol>
 
           <BaseCol>
-            <S.SIWNButton />
+            <S.SIWPButton />
           </BaseCol>
         </BaseRow>
       </S.ProfileColumn>

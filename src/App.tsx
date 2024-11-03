@@ -1,8 +1,7 @@
 import { ConfigProvider } from 'antd';
-import { posthog } from 'posthog-js';
 import { HelmetProvider } from 'react-helmet-async';
 
-import { NeynarContextProvider, Theme } from '@neynar/react';
+import { PrivyProvider } from '@privy-io/react-auth';
 import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { persistQueryClient } from '@tanstack/react-query-persist-client';
@@ -24,7 +23,7 @@ import jaJP from 'antd/lib/locale/ja_JP';
 
 import GlobalStyle from './styles/GlobalStyle';
 
-const clientId = import.meta.env.REACT_APP_NEYNAR_CLIENT_ID;
+const appId = import.meta.env.REACT_APP_PRIVY_APP_ID;
 
 const App: React.FC = () => {
   const { language } = useLanguage();
@@ -60,22 +59,11 @@ const App: React.FC = () => {
     <>
       <meta name="theme-color" content={themeObject[theme].primary} />
       <GlobalStyle />
-      <NeynarContextProvider
-        settings={{
-          clientId,
-          defaultTheme: Theme.Light,
-          eventsCallbacks: {
-            onAuthSuccess: () => {
-              posthog.capture('user logged in', {
-                method: 'siwn',
-              });
-            },
-            onSignout() {
-              posthog.capture('user logged out', {
-                method: 'siwn',
-              });
-            },
-          },
+      <PrivyProvider
+        appId={appId}
+        config={{
+          loginMethods: ['farcaster'],
+          embeddedWallets: { createOnLogin: 'users-without-wallets' },
         }}
       >
         <QueryClientProvider client={queryClient}>
@@ -87,7 +75,7 @@ const App: React.FC = () => {
             </ConfigProvider>
           </HelmetProvider>
         </QueryClientProvider>
-      </NeynarContextProvider>
+      </PrivyProvider>
     </>
   );
 };

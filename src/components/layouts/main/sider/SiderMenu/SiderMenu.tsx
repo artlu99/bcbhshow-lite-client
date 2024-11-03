@@ -9,7 +9,7 @@ import {
 import { useAppSelector } from '@app/hooks/reduxHooks';
 import { allChannelsQuery, userFollowingChannelsQuery } from '@app/queries/queries';
 import { FONT_SIZE } from '@app/styles/themes/constants';
-import { useNeynarContext } from '@neynar/react';
+import { usePrivy } from '@privy-io/react-auth';
 import { useQuery } from '@tanstack/react-query';
 import { PinIcon } from 'lucide-react';
 import { sift } from 'radash';
@@ -26,7 +26,7 @@ const SiderMenu: React.FC<SiderContentProps> = ({ setCollapsed }) => {
   const { t } = useTranslation();
   const location = useLocation();
 
-  const { user } = useNeynarContext();
+  const { user } = usePrivy();
   const fid = getFidWithFallback(user);
 
   const pinnedChannelsState = useAppSelector((state) => state.pinnedChannels);

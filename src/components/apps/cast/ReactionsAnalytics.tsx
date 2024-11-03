@@ -1,6 +1,6 @@
 import { getFidWithFallback } from '@app/auth/fids';
 import { followingByFidQuery, reactionsByHashQuery } from '@app/queries/queries';
-import { useNeynarContext } from '@neynar/react';
+import { usePrivy } from '@privy-io/react-auth';
 import { useQuery } from '@tanstack/react-query';
 import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
 import * as S from './Cast.styles';
@@ -24,7 +24,7 @@ export const ReactionsAnalytics: React.FC<ReactionsAnalyticsProps> = ({
   allRecastooors,
   setAllRecastooors,
 }) => {
-  const { user } = useNeynarContext();
+  const { user } = usePrivy();
   const fid = getFidWithFallback(user);
 
   const lqQuery = useQuery(reactionsByHashQuery(castHash, 'likes'));

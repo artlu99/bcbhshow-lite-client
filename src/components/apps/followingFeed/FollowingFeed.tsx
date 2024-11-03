@@ -7,6 +7,7 @@ import { BaseFeed } from '@app/components/common/BaseFeed/BaseFeed';
 import { useAppSelector } from '@app/hooks/reduxHooks';
 import { allChannelsQuery, followingByFidQuery } from '@app/queries/queries';
 import { useZustand } from '@app/store/zustand';
+import { usePrivy } from '@privy-io/react-auth';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useMemo, useState } from 'react';
 
@@ -44,11 +45,14 @@ export const FollowingFeed: React.FC<FollowingFeedProps> = ({ fid }) => {
     return (ffQuery.data?.result?.users ?? []).map((u) => Number(u.fid));
   }, [ffQuery.isLoading, ffQuery.error, ffQuery.data]);
 
+  const { getAccessToken } = usePrivy();
+
   useEffect(() => {
     setCasts([]);
 
     getEnhancedFollowingFeed({
       fid: fid,
+      getAccessToken,
       allChannels: memodChannelData ?? [],
     })
       .then((res) => {
@@ -59,7 +63,7 @@ export const FollowingFeed: React.FC<FollowingFeedProps> = ({ fid }) => {
       .finally(() => {
         setLoaded(true);
       });
-  }, [fid, memodChannelData, memodFfData]);
+  }, [getAccessToken, fid, memodChannelData, memodFfData]);
 
   useEffect(() => {
     setNumCasts(casts.length);
@@ -70,7 +74,8 @@ export const FollowingFeed: React.FC<FollowingFeedProps> = ({ fid }) => {
 
   const next = () =>
     getEnhancedFollowingFeed({
-      fid: fid,
+      fid,
+      getAccessToken,
       pageToken: nextPageToken,
       allChannels: memodChannelData ?? [],
     }).then((newCasts) => {

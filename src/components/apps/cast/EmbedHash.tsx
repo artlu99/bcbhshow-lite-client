@@ -17,6 +17,7 @@ export function EmbedHash({ hash, containerLevel }: { hash: string; containerLev
   return (
     <Cast
       level={containerLevel + 1}
+      key={`${cast.hash}-{containerLevel + 1}-${0}`}
       castHash={cast.hash}
       title={' '}
       date={cast.timestamp}
@@ -28,12 +29,12 @@ export function EmbedHash({ hash, containerLevel }: { hash: string; containerLev
       avatar={cast.author.pfp_url}
       parentHash={cast.parent_hash}
       threadHash={cast.thread_hash}
-      parentUrl={cast.parent_url}
-      replies={cast.replies.count}
-      recasts={cast.reactions.recasts_count}
-      likes={cast.reactions.likes_count}
-      recastooors={cast.reactions.recasts.map((r) => r.fid)}
-      likooors={cast.reactions.likes.map((l) => l.fid)}
+      parentUrl={cast.parent_url ?? undefined}
+      replies={cast.replies?.count ?? 0}
+      recasts={cast.reactions?.recasts_count ?? 0}
+      likes={cast.reactions?.likes_count ?? 0}
+      recastooors={cast.reactions?.recasts.map((r) => r.fid) ?? []}
+      likooors={cast.reactions?.likes.map((l) => l.fid) ?? []}
       tags={[]}
     />
   );

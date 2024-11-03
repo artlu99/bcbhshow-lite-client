@@ -11,7 +11,7 @@ export interface SassyHashResponse {
   data: SassyHash;
 }
 interface SassyHashRequest {
-  fid: number;
+  privyAuthToken: string;
   castHash: string;
 }
 

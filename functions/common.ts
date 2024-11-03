@@ -13,5 +13,7 @@ export interface Env {
   REACT_APP_DEFAULT_FID: number;
   REACT_APP_PUBLIC_POSTHOG_HOST: string;
   REACT_APP_PUBLIC_POSTHOG_KEY: string;
+  REACT_APP_PRIVY_APP_ID: string;
+  PRIVY_APP_SECRET: string;
   D1: D1Database;
 }

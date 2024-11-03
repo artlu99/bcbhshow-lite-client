@@ -8,7 +8,7 @@ import { BaseFeed } from '@app/components/common/BaseFeed/BaseFeed';
 import { useAppSelector } from '@app/hooks/reduxHooks';
 import { channelByIdQuery, followingByFidQuery } from '@app/queries/queries';
 import { useZustand } from '@app/store/zustand';
-import { useNeynarContext } from '@neynar/react';
+import { usePrivy } from '@privy-io/react-auth';
 import { useQuery } from '@tanstack/react-query';
 import { sift, unique } from 'radash';
 import { useEffect, useMemo, useState } from 'react';
@@ -43,7 +43,7 @@ export const ChannelFeed: React.FC = () => {
   const showOnlySassy = signalToNoiseState.showOnlySassy;
   const showOnlyFarcaptcha = signalToNoiseState.showOnlyFarcaptcha;
 
-  const { user } = useNeynarContext();
+  const { user } = usePrivy();
   const fid = getFidWithFallback(user);
 
   const chQuery = useQuery(channelByIdQuery(activeChannelId));
@@ -59,10 +59,12 @@ export const ChannelFeed: React.FC = () => {
     return (ffQuery.data?.result?.users ?? [])?.map((u) => Number(u.fid));
   }, [ffQuery.isLoading, ffQuery.error, ffQuery.data]);
 
+  const { getAccessToken } = usePrivy();
+
   useEffect(() => {
     setChannelModerators(unique(sift([activeChannel?.leadFid, activeChannel?.moderatorFid])));
     getEnhancedChannelFeed({
-      fid: fid,
+      getAccessToken,
       channel: activeChannel,
       following: memodFfData ?? [],
     })
@@ -74,7 +76,7 @@ export const ChannelFeed: React.FC = () => {
       .finally(() => {
         setLoaded(true);
       });
-  }, [fid, memodChData, memodFfData, activeChannel]);
+  }, [getAccessToken, memodChData, memodFfData, activeChannel]);
 
   useEffect(() => {
     setNumCasts(casts.length);
@@ -95,7 +97,7 @@ export const ChannelFeed: React.FC = () => {
 
   const next = () =>
     getEnhancedChannelFeed({
-      fid: fid,
+      getAccessToken,
       channel: activeChannel,
       pageToken: nextPageToken,
       following: memodFfData ?? [],

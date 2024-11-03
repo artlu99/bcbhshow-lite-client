@@ -1,11 +1,11 @@
 import { getFidWithFallback } from '@app/auth/fids';
 import { ForYouFeed } from '@app/components/apps/forYouFeed/ForYouFeed';
 import { PageTitle } from '@app/components/common/PageTitle/PageTitle';
-import { useNeynarContext } from '@neynar/react';
+import { usePrivy } from '@privy-io/react-auth';
 import { useTranslation } from 'react-i18next';
 
 const ForYouFeedPage: React.FC = () => {
-  const { user } = useNeynarContext();
+  const { user } = usePrivy();
   const fid = getFidWithFallback(user);
 
   const { t } = useTranslation();

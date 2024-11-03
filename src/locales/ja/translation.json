@@ -20,6 +20,8 @@
     "warningDescription": "これはコピーWRITINGの警告通知です。"
   },
   "buttons": {
+    "sign-in-with-privy": "Privyでログイン",
+    "sign-out-with-privy": "ログアウト",
     "decent-bookmarks": "Decentチャンネル",
     "farcaster-channels": "Farcaster Channels チャンネル",
     "signal-to-noise": "信号対雑音比",

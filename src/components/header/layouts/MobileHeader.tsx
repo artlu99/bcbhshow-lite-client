@@ -26,7 +26,7 @@ export const MobileHeader: React.FC<MobileHeaderProps> = ({ toggleSider, isSider
     <>
       <BaseRow justify="space-between" align="middle">
         <BaseCol>
-          <S.SIWNButton />
+          <S.SIWPButton />
         </BaseCol>
 
         <BaseCol>

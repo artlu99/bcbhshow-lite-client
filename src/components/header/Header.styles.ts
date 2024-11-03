@@ -8,9 +8,8 @@ import {
   ZMSettingsButton,
 } from '@app/components/header/components/HeaderButtons/HeaderButtons';
 import { LAYOUT, media } from '@app/styles/themes/constants';
-import { NeynarAuthButton } from '@neynar/react';
-import '@neynar/react/dist/style.css';
 import styled, { css } from 'styled-components';
+import { PrivySignInButton } from './components/HeaderButtons/PrivySignInButton';
 
 export const HeaderActionWrapper = styled.div`
   cursor: pointer;
@@ -119,7 +118,7 @@ export const StNButton = styled(StNSettingsButton)`
   }
 `;
 
-export const SIWNButton = styled(NeynarAuthButton)`
+export const SIWPButton = styled(PrivySignInButton)`
   max-width: 160px;
   max-height: 30px;
 `;

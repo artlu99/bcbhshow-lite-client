@@ -3,7 +3,7 @@ import { getFidWithFallback } from '@app/auth/fids';
 import { BookmarkCard } from '@app/components/apps/bookmarks/BookmarkCard';
 import { BaseEmpty } from '@app/components/common/BaseEmpty/BaseEmpty';
 import { BaseFeed } from '@app/components/common/BaseFeed/BaseFeed';
-import { useNeynarContext } from '@neynar/react';
+import { usePrivy } from '@privy-io/react-auth';
 import { useEffect, useState } from 'react';
 
 interface DecentBookmarkResponse {
@@ -14,7 +14,7 @@ export const Bookmarks: React.FC = () => {
   const [hasMore] = useState<boolean>(false);
   const [loaded, setLoaded] = useState<boolean>(false);
 
-  const { user } = useNeynarContext();
+  const { user } = usePrivy();
   const fid = getFidWithFallback(user);
 
   useEffect(() => {

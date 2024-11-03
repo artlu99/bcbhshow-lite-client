@@ -8,11 +8,13 @@ import { useAppSelector } from '@app/hooks/reduxHooks';
 import { useResponsive } from '@app/hooks/useResponsive';
 import { hubReactionsByFidQuery } from '@app/queries/queries';
 import { BASE_COLORS } from '@app/styles/themes/constants';
-import { useNeynarContext } from '@neynar/react';
+import { usePrivy } from '@privy-io/react-auth';
 import { useQuery } from '@tanstack/react-query';
 import { BarChartBigIcon, LucideHeart, LucideMessageSquare, LucideRepeat2 } from 'lucide-react';
 import { Dispatch, SetStateAction, useMemo, useState } from 'react';
 import * as S from './Cast.styles';
+
+const TEMP_DISABLE_REACTIONS = true;
 
 const hubReactionsToStreamItems = (reactions: HubReactionsResponse | undefined): HubReactionsStreamItem[] => {
   return (reactions?.messages ?? []).map((m) => {
@@ -69,8 +71,9 @@ export const Reactions: React.FC<ReactionsProps> = ({
   const reactionBarMarginSize = isDesktop ? 60 : isTablet ? 40 : isLandscapeMobile ? 50 : 10;
   const reactionIconSize = isDesktop ? 18 : isTablet ? 24 : 24;
 
-  const { user } = useNeynarContext();
-  const fid = getFidWithFallback(user);
+  const { user: privyUser, getAccessToken } = usePrivy();
+  const user = privyUser ? privyUser.farcaster : null;
+  const fid = getFidWithFallback(privyUser);
 
   const flQuery = useQuery(hubReactionsByFidQuery(fid, HubReactionType.LIKE));
   const memodLikes = useMemo(() => {
@@ -85,25 +88,37 @@ export const Reactions: React.FC<ReactionsProps> = ({
   }, [frQuery]);
 
   const handleLike = async (castHash: string) => {
-    if (user?.fid) {
+    const privyAuthToken = await getAccessToken();
+    if (!!user?.fid && !!user?.signerPublicKey && privyAuthToken) {
+      // TODO: reactions via Hubble
+      if (TEMP_DISABLE_REACTIONS) return;
+
       if (isStateAdded(memodLikes ?? [], castHash) || allLikooors.includes(user?.fid ?? -1)) {
         setOptimisticLikes(0);
-        await setReactionOnHash({ signerId: user.signer_uuid, hash: castHash, reactionType: 'unlike' });
+        await setReactionOnHash({ privyAuthToken, target: { fid: user.fid, hash: castHash }, reactionType: 'unlike' });
       } else {
         setOptimisticLikes(1);
-        await setReactionOnHash({ signerId: user.signer_uuid, hash: castHash, reactionType: 'like' });
+        await setReactionOnHash({ privyAuthToken, target: { fid: user.fid, hash: castHash }, reactionType: 'like' });
       }
     }
   };
 
   const handleRecast = async (castHash: string) => {
-    if (user?.fid) {
+    const privyAuthToken = await getAccessToken();
+    if (!!user?.fid && !!user?.signerPublicKey && privyAuthToken) {
+      // TODO: reactions via Hubble
+      if (TEMP_DISABLE_REACTIONS) return;
+
       if (isStateAdded(memodRecasts ?? [], castHash) || allRecastooors.includes(user?.fid ?? -1)) {
         setOptimisticRecasts(0);
-        await setReactionOnHash({ signerId: user.signer_uuid, hash: castHash, reactionType: 'unrecast' });
+        await setReactionOnHash({
+          privyAuthToken,
+          target: { fid: user.fid, hash: castHash },
+          reactionType: 'unrecast',
+        });
       } else {
         setOptimisticRecasts(1);
-        await setReactionOnHash({ signerId: user.signer_uuid, hash: castHash, reactionType: 'recast' });
+        await setReactionOnHash({ privyAuthToken, target: { fid: user.fid, hash: castHash }, reactionType: 'recast' });
       }
     }
   };

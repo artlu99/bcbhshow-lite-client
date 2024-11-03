@@ -20,6 +20,8 @@
     "warningDescription": "This is a warning notice about copywriting."
   },
   "buttons": {
+    "sign-in-with-privy": "Login con Privy",
+    "sign-out-with-privy": "Logout",
     "decent-bookmarks": "Marcadores Decent",
     "farcaster-channels": "Canales de Farcaster",
     "signal-to-noise": "Señal a ruido",

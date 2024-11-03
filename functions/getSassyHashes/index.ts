@@ -1,3 +1,4 @@
+import { PrivyClient } from '@privy-io/server-auth';
 import { Client, fetchExchange, gql } from '@urql/core';
 
 import { Env } from '../common';
@@ -12,9 +13,24 @@ interface SassyHashGraphQLResponse {
   getTextByCastHash: SassyHash;
 }
 interface SassyHashRequest {
-  fid: string;
+  privyAuthToken: string;
   castHash: string;
 }
+
+const getFid = async (privyAuthToken: string, env: Env): Promise<number> => {
+  const privy = new PrivyClient(env.REACT_APP_PRIVY_APP_ID, env.PRIVY_APP_SECRET);
+
+  try {
+    const user = await privy.getUser({ idToken: privyAuthToken });
+    console.log('Privy User:', user);
+
+    const { fid } = user.farcaster;
+    return fid;
+  } catch (error) {
+    console.error(`Token verification failed with error ${error}.`);
+    throw new Error('Failed to fetch Farcaster FID');
+  }
+};
 
 const fetchSassyHashExpensiveApi = async (viewerFid: number, castHash: string, env: Env) => {
   const client = new Client({
@@ -47,9 +63,10 @@ const fetchSassyHashExpensiveApi = async (viewerFid: number, castHash: string, e
 export const onRequestPost: PagesFunction<Env> = async (context) => {
   const { env, request } = context;
   const js = (await request.json()) as SassyHashRequest;
-  const { fid, castHash } = js;
+  const { privyAuthToken, castHash } = js;
 
-  const sassyHashResponses = await fetchSassyHashExpensiveApi(parseInt(fid), castHash, env);
+  const fid = await getFid(privyAuthToken, env);
+  const sassyHashResponses = await fetchSassyHashExpensiveApi(fid, castHash, env);
 
   return new Response(JSON.stringify(sassyHashResponses));
 };

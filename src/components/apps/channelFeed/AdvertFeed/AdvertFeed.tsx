@@ -3,7 +3,7 @@ import { FcanAd, getFcanAd } from '@app/api/fcan.api';
 import { getStrictFid } from '@app/auth/fids';
 import { Advert } from '@app/components/apps/channelFeed/AdvertFeed/Advert';
 import { useResponsive } from '@app/hooks/useResponsive';
-import { useNeynarContext } from '@neynar/react';
+import { usePrivy } from '@privy-io/react-auth';
 import { ReactNode, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as S from './AdvertFeed.styles';
@@ -19,7 +19,7 @@ export const AdvertFeed: React.FC<AdvertFeedProps> = ({ casts, children }) => {
   const { mobileOnly } = useResponsive();
   const { t } = useTranslation();
 
-  const { user } = useNeynarContext();
+  const { user } = usePrivy();
   const fid = getStrictFid(user);
 
   useEffect(() => {

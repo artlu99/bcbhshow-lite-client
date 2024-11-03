@@ -20,6 +20,7 @@ export const getNeynarOpenrankForYouFeed = (forYouFeedRequestPayload: ForYouFeed
 
 interface EnhancedForYouFeedRequest {
   fid: number;
+  getAccessToken: () => Promise<string | null>;
   cursor?: string;
   following: number[];
   allChannels: ChannelObject[];
@@ -27,13 +28,16 @@ interface EnhancedForYouFeedRequest {
 export const getEnhancedForYouFeed = async (
   homeFeedRequestPayload: EnhancedForYouFeedRequest,
 ): Promise<PagedCronFeed> => {
-  const { fid, cursor, following, allChannels } = homeFeedRequestPayload;
+  const { fid, getAccessToken, cursor, following, allChannels } = homeFeedRequestPayload;
 
+  const privyAuthToken = await getAccessToken();
   const forYouFeed = await getNeynarOpenrankForYouFeed({ fid: fid, limit: FORYOU_FEED_PAGESIZE, cursor });
   const seenFids = sift(forYouFeed.casts.map((cast) => cast.author.fid).filter((fid) => fid !== null));
   const seenSassyHashes = unique(sift(forYouFeed.casts.map((cast) => (isSassy(cast.text) ? cast.hash : null))));
   const botOrNotResponse = await getBotOrNot({ fids: seenFids ?? [] });
-  const sassyHashResponses = await Promise.all(seenSassyHashes.map((sh) => getSassyHash({ fid, castHash: sh })));
+  const sassyHashResponses = privyAuthToken
+    ? await Promise.all(seenSassyHashes.map((sh) => getSassyHash({ privyAuthToken, castHash: sh })))
+    : [];
 
   return {
     ...forYouFeed,

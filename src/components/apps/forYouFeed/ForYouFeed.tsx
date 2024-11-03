@@ -7,6 +7,7 @@ import { BaseFeed } from '@app/components/common/BaseFeed/BaseFeed';
 import { useAppSelector } from '@app/hooks/reduxHooks';
 import { allChannelsQuery, followingByFidQuery } from '@app/queries/queries';
 import { useZustand } from '@app/store/zustand';
+import { usePrivy } from '@privy-io/react-auth';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useMemo, useState } from 'react';
 
@@ -46,11 +47,14 @@ export const ForYouFeed: React.FC<ForYouFeedProps> = ({ fid }) => {
     return (ffQuery.data?.result?.users ?? []).map((u) => Number(u.fid));
   }, [ffQuery.isLoading, ffQuery.error, ffQuery.data]);
 
+  const { getAccessToken } = usePrivy();
+
   useEffect(() => {
     setCasts([]);
 
     getEnhancedForYouFeed({
       fid: fid,
+      getAccessToken,
       following: memodFfData ?? [],
       allChannels: memodChannelData ?? [],
     })
@@ -62,7 +66,7 @@ export const ForYouFeed: React.FC<ForYouFeedProps> = ({ fid }) => {
       .finally(() => {
         setLoaded(true);
       });
-  }, [fid, memodChannelData, memodFfData]);
+  }, [fid, getAccessToken, memodChannelData, memodFfData]);
 
   useEffect(() => {
     setNumCasts(casts.length);
@@ -75,6 +79,7 @@ export const ForYouFeed: React.FC<ForYouFeedProps> = ({ fid }) => {
   const next = () =>
     getEnhancedForYouFeed({
       fid: fid,
+      getAccessToken,
       cursor: nextCursor,
       following: memodFfData ?? [],
       allChannels: memodChannelData ?? [],

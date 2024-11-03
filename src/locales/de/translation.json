@@ -20,6 +20,8 @@
     "warningDescription": "Dies ist ein Warnhinweis zum Verfassen von Texten."
   },
   "buttons": {
+    "sign-in-with-privy": "Login mit Privy",
+    "sign-out-with-privy": "Logout",
     "decent-bookmarks": "Dezentrale Lesezeichen",
     "farcaster-channels": "Farcaster-Kanäle",
     "signal-to-noise": "Signal-zu-Rausch",

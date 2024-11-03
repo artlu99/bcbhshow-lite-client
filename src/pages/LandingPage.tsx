@@ -25,14 +25,14 @@ import {
   hubReactionsByFidQuery,
   userFollowingChannelsQuery,
 } from '@app/queries/queries';
-import { useNeynarContext } from '@neynar/react';
+import { usePrivy } from '@privy-io/react-auth';
 import { useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 const LandingPage: React.FC = () => {
   const { t } = useTranslation();
-  const { user } = useNeynarContext();
+  const { user } = usePrivy();
   const fid = getFidWithFallback(user);
 
   const client = useQueryClient();
