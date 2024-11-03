@@ -22,10 +22,7 @@ const getFid = async (privyAuthToken: string, env: Env): Promise<number> => {
 
   try {
     const user = await privy.getUser({ idToken: privyAuthToken });
-    console.log('Privy User:', user);
-
-    const { fid } = user.farcaster;
-    return fid;
+    return user?.farcaster?.fid;
   } catch (error) {
     console.error(`Token verification failed with error ${error}.`);
     throw new Error('Failed to fetch Farcaster FID');
@@ -66,7 +63,8 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   const { privyAuthToken, castHash } = js;
 
   const fid = await getFid(privyAuthToken, env);
-  const sassyHashResponses = await fetchSassyHashExpensiveApi(fid, castHash, env);
+  if (!fid) return new Response(JSON.stringify({ error: 'Failed to fetch Farcaster FID' }), { status: 500 });
 
+  const sassyHashResponses = await fetchSassyHashExpensiveApi(fid, castHash, env);
   return new Response(JSON.stringify(sassyHashResponses));
 };
