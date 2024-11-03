@@ -58,7 +58,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
     const user = await privy.getUser({ idToken });
 
-    const fid = user?.farcaster?.fid;
+    const fid = user?.linkedAccounts?.find((la) => la.type === 'farcaster')?.fid;
     if (fid) {
       const sassyHashResponses = await fetchSassyHashExpensiveApi(fid, castHash, env);
       return new Response(JSON.stringify(sassyHashResponses));
