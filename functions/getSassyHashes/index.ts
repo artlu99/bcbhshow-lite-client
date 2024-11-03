@@ -1,5 +1,6 @@
 import { PrivyClient } from '@privy-io/server-auth';
 import { Client, fetchExchange, gql } from '@urql/core';
+import { parse } from 'cookie';
 
 import { Env } from '../common';
 
@@ -17,23 +18,15 @@ interface SassyHashRequest {
   castHash: string;
 }
 
-const getPrivyIdToken = async (cookies: string | undefined) => {
-  if (!cookies) return null;
-  const privyIdToken = cookies.match(/privy_id_token=(?<privyIdToken>.*)/)?.groups?.privyIdToken;
-  if (!privyIdToken) return null;
-  return privyIdToken;
-};
-
-const getFid = async (privyAuthToken: string, context): Promise<number> => {
+const getFid = async (context, privyAuthToken: string): Promise<number> => {
   const { env, request } = context;
   const privy = new PrivyClient(env.REACT_APP_PRIVY_APP_ID, env.PRIVY_APP_SECRET);
 
-  const cookies = request.headers.get('cookie');
+  const cookie = parse(request.headers.get('Cookie') || '');
+  const idToken = cookie['privy-id-token'] != null ? cookie['privy-id-token'] : undefined;
 
-  const privyIdToken = await getPrivyIdToken(cookies);
-  console.log('privyIdToken:', privyIdToken);
-
-  const user = await privy.getUser({ idToken: privyIdToken });
+  const user = await privy.getUser({ idToken });
+  console.log('privyIdToken:', idToken);
   console.log('user:', user);
 
   try {
@@ -81,7 +74,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   const js = (await request.json()) as SassyHashRequest;
   const { privyAuthToken, castHash } = js;
 
-  const fid = await getFid(privyAuthToken, context);
+  const fid = await getFid(context, privyAuthToken);
   if (!fid) return new Response(JSON.stringify({ error: 'Failed to fetch Farcaster FID' }), { status: 500 });
 
   const sassyHashResponses = await fetchSassyHashExpensiveApi(fid, castHash, env);

@@ -7745,6 +7745,7 @@ __metadata:
     antd-style: ^3.6.2
     axios: ^0.24.0
     axios-mock-adapter: ^1.20.0
+    cookie: ^1.0.1
     country-list: ^2.3.0
     dayjs: ^1.11.0
     echarts: ^5.1.2
@@ -8615,6 +8616,13 @@ __metadata:
   version: 1.2.2
   resolution: "cookie-es@npm:1.2.2"
   checksum: 099050c30c967c89aa72d1d7984e87b3395f3e709cf148d297f436828ebfcc39033f5374d2efdc46d9b5e3eee50b1d59635432c252e57329fea7f09afeb4d055
+  languageName: node
+  linkType: hard
+
+"cookie@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "cookie@npm:1.0.1"
+  checksum: e2ff4879d816ea27dab69651c06d328b1f4214ccefa1023b6ebf85787bc23b3cad777ed51b4e54c01d161c374a05fc86e45e51ee3d9fafb48a836439c56b2458
   languageName: node
   linkType: hard
 
