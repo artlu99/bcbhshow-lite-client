@@ -17,8 +17,24 @@ interface SassyHashRequest {
   castHash: string;
 }
 
-const getFid = async (privyAuthToken: string, env: Env): Promise<number> => {
+const getPrivyIdToken = async (cookies: string | undefined) => {
+  if (!cookies) return null;
+  const privyIdToken = cookies.match(/privy_id_token=(?<privyIdToken>.*)/)?.groups?.privyIdToken;
+  if (!privyIdToken) return null;
+  return privyIdToken;
+};
+
+const getFid = async (privyAuthToken: string, context): Promise<number> => {
+  const { env, request } = context;
   const privy = new PrivyClient(env.REACT_APP_PRIVY_APP_ID, env.PRIVY_APP_SECRET);
+
+  const cookies = request.headers.get('cookie');
+
+  const privyIdToken = await getPrivyIdToken(cookies);
+  console.log('privyIdToken:', privyIdToken);
+
+  const user = await privy.getUser({ idToken: privyIdToken });
+  console.log('user:', user);
 
   try {
     const verifiedClaims = await privy.verifyAuthToken(privyAuthToken);
@@ -65,10 +81,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   const js = (await request.json()) as SassyHashRequest;
   const { privyAuthToken, castHash } = js;
 
-  const cookies: string = request.headers.get('cookie');
-  console.log('cookies:', cookies);
-
-  const fid = await getFid(privyAuthToken, env);
+  const fid = await getFid(privyAuthToken, context);
   if (!fid) return new Response(JSON.stringify({ error: 'Failed to fetch Farcaster FID' }), { status: 500 });
 
   const sassyHashResponses = await fetchSassyHashExpensiveApi(fid, castHash, env);
