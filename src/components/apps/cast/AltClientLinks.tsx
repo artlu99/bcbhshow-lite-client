@@ -1,6 +1,7 @@
 import {
   degencastLink,
   farquestLink,
+  fireflyLink,
   herocastLink,
   recasterLink,
   supercastLink,
@@ -27,6 +28,9 @@ export const AltClientLinks: React.FC<AltClientLinksProps> = ({ castHash, castFi
       </Link>{' '}
       <Link to={supercastLink({ hash: castHash })} target="_blank">
         [supercast]
+      </Link>{' '}
+      <Link to={fireflyLink({ hash: castHash })} target="_blank">
+        [Firefly]
       </Link>
       {maybeFarquestLink && (
         <Link to={maybeFarquestLink} target="_blank">

@@ -43,5 +43,5 @@ export const herocastLink = (props: LinkProps) => {
 
 export const fireflyLink = (props: LinkProps) => {
   const { hash } = props;
-  return `https://firefly.mask.social/${hash}`;
+  return `https://firefly.mask.social/post/farcaster/${hash}`;
 };
