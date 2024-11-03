@@ -47,14 +47,14 @@ export const ForYouFeed: React.FC<ForYouFeedProps> = ({ fid }) => {
     return (ffQuery.data?.result?.users ?? []).map((u) => Number(u.fid));
   }, [ffQuery.isLoading, ffQuery.error, ffQuery.data]);
 
-  const { getAccessToken } = usePrivy();
+  const { authenticated } = usePrivy();
 
   useEffect(() => {
     setCasts([]);
 
     getEnhancedForYouFeed({
       fid: fid,
-      getAccessToken,
+      authenticated,
       following: memodFfData ?? [],
       allChannels: memodChannelData ?? [],
     })
@@ -66,7 +66,7 @@ export const ForYouFeed: React.FC<ForYouFeedProps> = ({ fid }) => {
       .finally(() => {
         setLoaded(true);
       });
-  }, [fid, getAccessToken, memodChannelData, memodFfData]);
+  }, [fid, authenticated, memodChannelData, memodFfData]);
 
   useEffect(() => {
     setNumCasts(casts.length);
@@ -79,7 +79,7 @@ export const ForYouFeed: React.FC<ForYouFeedProps> = ({ fid }) => {
   const next = () =>
     getEnhancedForYouFeed({
       fid: fid,
-      getAccessToken,
+      authenticated,
       cursor: nextCursor,
       following: memodFfData ?? [],
       allChannels: memodChannelData ?? [],

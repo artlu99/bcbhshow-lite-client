@@ -59,12 +59,12 @@ export const ChannelFeed: React.FC = () => {
     return (ffQuery.data?.result?.users ?? [])?.map((u) => Number(u.fid));
   }, [ffQuery.isLoading, ffQuery.error, ffQuery.data]);
 
-  const { getAccessToken } = usePrivy();
+  const { authenticated } = usePrivy();
 
   useEffect(() => {
     setChannelModerators(unique(sift([activeChannel?.leadFid, activeChannel?.moderatorFid])));
     getEnhancedChannelFeed({
-      getAccessToken,
+      authenticated,
       channel: activeChannel,
       following: memodFfData ?? [],
     })
@@ -76,7 +76,7 @@ export const ChannelFeed: React.FC = () => {
       .finally(() => {
         setLoaded(true);
       });
-  }, [getAccessToken, memodChData, memodFfData, activeChannel]);
+  }, [authenticated, memodChData, memodFfData, activeChannel]);
 
   useEffect(() => {
     setNumCasts(casts.length);
@@ -97,7 +97,7 @@ export const ChannelFeed: React.FC = () => {
 
   const next = () =>
     getEnhancedChannelFeed({
-      getAccessToken,
+      authenticated,
       channel: activeChannel,
       pageToken: nextPageToken,
       following: memodFfData ?? [],

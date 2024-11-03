@@ -20,23 +20,22 @@ export interface PagedCronFeed {
 }
 
 interface ChannelFeedRequest {
-  getAccessToken: () => Promise<string | null>;
+  authenticated: boolean;
   channel?: ChannelObject;
   pageToken?: string;
   following: number[];
 }
 
 export const getEnhancedChannelFeed = async (channelFeedRequestPayload: ChannelFeedRequest): Promise<PagedCronFeed> => {
-  const { channel, getAccessToken, pageToken, following } = channelFeedRequestPayload;
+  const { channel, authenticated, pageToken, following } = channelFeedRequestPayload;
   if (!channel) return { casts: [] };
 
-  const privyAuthToken = await getAccessToken();
   const cronFeed = await getCronFeed({ channelId: channel.id, pageSize: CHANNEL_FEED_PAGESIZE, pageToken });
   const seenFids = sift(cronFeed.casts.map((cast) => cast.author.fid).filter((fid) => fid !== null));
   const seenSassyHashes = unique(sift(cronFeed.casts.map((cast) => (isSassy(cast.text) ? cast.hash : null))));
   const botOrNotResponse = await getBotOrNot({ fids: seenFids ?? [] });
-  const sassyHashResponses = privyAuthToken
-    ? await Promise.all(seenSassyHashes.map((sh) => getSassyHash({ privyAuthToken, castHash: sh })))
+  const sassyHashResponses = authenticated
+    ? await Promise.all(seenSassyHashes.map((sh) => getSassyHash({ castHash: sh })))
     : [];
 
   return {

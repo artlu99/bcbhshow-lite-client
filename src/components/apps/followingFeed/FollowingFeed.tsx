@@ -45,14 +45,14 @@ export const FollowingFeed: React.FC<FollowingFeedProps> = ({ fid }) => {
     return (ffQuery.data?.result?.users ?? []).map((u) => Number(u.fid));
   }, [ffQuery.isLoading, ffQuery.error, ffQuery.data]);
 
-  const { getAccessToken } = usePrivy();
+  const { authenticated } = usePrivy();
 
   useEffect(() => {
     setCasts([]);
 
     getEnhancedFollowingFeed({
       fid: fid,
-      getAccessToken,
+      authenticated,
       allChannels: memodChannelData ?? [],
     })
       .then((res) => {
@@ -63,7 +63,7 @@ export const FollowingFeed: React.FC<FollowingFeedProps> = ({ fid }) => {
       .finally(() => {
         setLoaded(true);
       });
-  }, [getAccessToken, fid, memodChannelData, memodFfData]);
+  }, [authenticated, fid, memodChannelData, memodFfData]);
 
   useEffect(() => {
     setNumCasts(casts.length);
@@ -75,7 +75,7 @@ export const FollowingFeed: React.FC<FollowingFeedProps> = ({ fid }) => {
   const next = () =>
     getEnhancedFollowingFeed({
       fid,
-      getAccessToken,
+      authenticated,
       pageToken: nextPageToken,
       allChannels: memodChannelData ?? [],
     }).then((newCasts) => {

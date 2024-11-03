@@ -39,22 +39,21 @@ export const getFollowingFeed = (followingFeedRequestPayload: FollowingFeedReque
 
 interface EnhancedFollowingFeedRequest {
   fid: number;
-  getAccessToken: () => Promise<string | null>;
+  authenticated: boolean;
   pageToken?: string;
   allChannels: ChannelObject[];
 }
 export const getEnhancedFollowingFeed = async (
   homeFeedRequestPayload: EnhancedFollowingFeedRequest,
 ): Promise<PagedCronFeed> => {
-  const { fid, getAccessToken, pageToken, allChannels } = homeFeedRequestPayload;
+  const { fid, authenticated, pageToken, allChannels } = homeFeedRequestPayload;
 
-  const privyAuthToken = await getAccessToken();
   const cronFeed = await getFollowingFeed({ fid: fid, pageSize: FOLLOWING_FEED_PAGESIZE, pageToken });
   const seenFids = sift(cronFeed.casts.map((cast) => cast.author.fid).filter((fid) => fid !== null));
   const seenSassyHashes = unique(sift(cronFeed.casts.map((cast) => (isSassy(cast.text) ? cast.hash : null))));
   const botOrNotResponse = await getBotOrNot({ fids: seenFids ?? [] });
-  const sassyHashResponses = privyAuthToken
-    ? await Promise.all(seenSassyHashes.map((sh) => getSassyHash({ privyAuthToken, castHash: sh })))
+  const sassyHashResponses = authenticated
+    ? await Promise.all(seenSassyHashes.map((sh) => getSassyHash({ castHash: sh })))
     : [];
 
   return {
