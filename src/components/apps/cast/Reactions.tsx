@@ -1,5 +1,4 @@
-import { HubReactionType, HubReactionsResponse, HubReactionsStreamItem } from '@app/api/hubble-http-types';
-import { setReactionOnHash } from '@app/api/reactionOnHash.api';
+import { HubReactionsResponse, HubReactionsStreamItem, HubReactionType } from '@app/api/hubble-http-types';
 import { getFidWithFallback } from '@app/auth/fids';
 import { ReactionsAnalytics } from '@app/components/apps/cast/ReactionsAnalytics';
 import { BaseBadge } from '@app/components/common/BaseBadge/BaseBadge';
@@ -8,13 +7,14 @@ import { useAppSelector } from '@app/hooks/reduxHooks';
 import { useResponsive } from '@app/hooks/useResponsive';
 import { hubReactionsByFidQuery } from '@app/queries/queries';
 import { BASE_COLORS } from '@app/styles/themes/constants';
-import { usePrivy } from '@privy-io/react-auth';
+import { useFarcasterSigner, usePrivy } from '@privy-io/react-auth';
+import { ExternalEd25519Signer, HubRestAPIClient } from '@standard-crypto/farcaster-js';
 import { useQuery } from '@tanstack/react-query';
 import { BarChartBigIcon, LucideHeart, LucideMessageSquare, LucideRepeat2 } from 'lucide-react';
 import { Dispatch, SetStateAction, useMemo, useState } from 'react';
 import * as S from './Cast.styles';
 
-const TEMP_DISABLE_REACTIONS = true;
+const hubUrl = 'https://hub.farcaster.standardcrypto.vc:2281';
 
 const hubReactionsToStreamItems = (reactions: HubReactionsResponse | undefined): HubReactionsStreamItem[] => {
   return (reactions?.messages ?? []).map((m) => {
@@ -35,7 +35,7 @@ const isStateAdded = (stream: HubReactionsStreamItem[], hash: string): boolean =
 };
 
 export interface ReactionsProps {
-  castHash: string;
+  target: { fid: number; hash: string };
   replies: number;
   recasts: number;
   likes: number;
@@ -46,7 +46,7 @@ export interface ReactionsProps {
 }
 
 export const Reactions: React.FC<ReactionsProps> = ({
-  castHash,
+  target,
   replies,
   recasts,
   likes,
@@ -71,9 +71,13 @@ export const Reactions: React.FC<ReactionsProps> = ({
   const reactionBarMarginSize = isDesktop ? 60 : isTablet ? 40 : isLandscapeMobile ? 50 : 10;
   const reactionIconSize = isDesktop ? 18 : isTablet ? 24 : 24;
 
-  const { user: privyUser, getAccessToken } = usePrivy();
+  const { authenticated, user: privyUser } = usePrivy();
   const user = privyUser ? privyUser.farcaster : null;
   const fid = getFidWithFallback(privyUser);
+
+  const { getFarcasterSignerPublicKey, signFarcasterMessage } = useFarcasterSigner();
+  const client = new HubRestAPIClient({ hubUrl });
+  const privySigner = new ExternalEd25519Signer(signFarcasterMessage, getFarcasterSignerPublicKey);
 
   const flQuery = useQuery(hubReactionsByFidQuery(fid, HubReactionType.LIKE));
   const memodLikes = useMemo(() => {
@@ -87,46 +91,34 @@ export const Reactions: React.FC<ReactionsProps> = ({
     return hubReactionsToStreamItems(frQuery?.data);
   }, [frQuery]);
 
-  const handleLike = async (castHash: string) => {
-    const privyAuthToken = await getAccessToken();
-    if (!!user?.fid && !!user?.signerPublicKey && privyAuthToken) {
-      // TODO: reactions via Hubble
-      if (TEMP_DISABLE_REACTIONS) return;
-
-      if (isStateAdded(memodLikes ?? [], castHash) || allLikooors.includes(user?.fid ?? -1)) {
+  const handleLike = async (target: { fid: number; hash: string }) => {
+    if (authenticated && !!user?.fid && !!user?.signerPublicKey) {
+      if (isStateAdded(memodLikes ?? [], target.hash) || allLikooors.includes(user?.fid ?? -1)) {
         setOptimisticLikes(0);
-        await setReactionOnHash({ privyAuthToken, target: { fid: user.fid, hash: castHash }, reactionType: 'unlike' });
+        await client.removeReaction({ type: 'like', target }, user.fid, privySigner);
       } else {
         setOptimisticLikes(1);
-        await setReactionOnHash({ privyAuthToken, target: { fid: user.fid, hash: castHash }, reactionType: 'like' });
+        await client.submitReaction({ type: 'like', target }, user.fid, privySigner);
       }
     }
   };
 
-  const handleRecast = async (castHash: string) => {
-    const privyAuthToken = await getAccessToken();
-    if (!!user?.fid && !!user?.signerPublicKey && privyAuthToken) {
-      // TODO: reactions via Hubble
-      if (TEMP_DISABLE_REACTIONS) return;
-
-      if (isStateAdded(memodRecasts ?? [], castHash) || allRecastooors.includes(user?.fid ?? -1)) {
+  const handleRecast = async (target: { fid: number; hash: string }) => {
+    if (authenticated && !!user?.fid && !!user?.signerPublicKey) {
+      if (isStateAdded(memodRecasts ?? [], target.hash) || allRecastooors.includes(user?.fid ?? -1)) {
         setOptimisticRecasts(0);
-        await setReactionOnHash({
-          privyAuthToken,
-          target: { fid: user.fid, hash: castHash },
-          reactionType: 'unrecast',
-        });
+        await client.removeReaction({ type: 'recast', target }, user.fid, privySigner);
       } else {
         setOptimisticRecasts(1);
-        await setReactionOnHash({ privyAuthToken, target: { fid: user.fid, hash: castHash }, reactionType: 'recast' });
+        await client.submitReaction({ type: 'recast', target }, user.fid, privySigner);
       }
     }
   };
 
   const amLikooor =
-    isStateAdded(memodLikes ?? [], castHash) || optimisticLikes || allLikooors.includes(user?.fid ?? -1);
+    isStateAdded(memodLikes ?? [], target.hash) || optimisticLikes || allLikooors.includes(user?.fid ?? -1);
   const amRecastooor =
-    isStateAdded(memodRecasts ?? [], castHash) || optimisticRecasts || allRecastooors.includes(user?.fid ?? -1);
+    isStateAdded(memodRecasts ?? [], target.hash) || optimisticRecasts || allRecastooors.includes(user?.fid ?? -1);
 
   return showReactions ? (
     <>
@@ -136,11 +128,11 @@ export const Reactions: React.FC<ReactionsProps> = ({
         </BaseBadge>
         <BaseDivider type="vertical" style={{ marginLeft: reactionBarMarginSize }} />
         <BaseBadge count={recasts + optimisticRecasts} color={amRecastooor ? highlightedColor : shadedColor}>
-          <LucideRepeat2 size={reactionIconSize} onClick={() => handleRecast(castHash)} />
+          <LucideRepeat2 size={reactionIconSize} onClick={() => handleRecast(target)} />
         </BaseBadge>
         <BaseDivider type="vertical" style={{ marginLeft: reactionBarMarginSize }} />
         <BaseBadge count={likes + optimisticLikes} color={amLikooor ? highlightedColor : shadedColor}>
-          <LucideHeart size={reactionIconSize} onClick={() => handleLike(castHash)} />
+          <LucideHeart size={reactionIconSize} onClick={() => handleLike(target)} />
         </BaseBadge>
         <BaseDivider type="vertical" style={{ marginLeft: reactionBarMarginSize }} />
         <BarChartBigIcon size={reactionIconSize * 1.2} onClick={() => setAnalyticsOpen(!isAnalyticsOpen)} />
@@ -148,7 +140,7 @@ export const Reactions: React.FC<ReactionsProps> = ({
       </S.Description>
       {isAnalyticsOpen && (
         <ReactionsAnalytics
-          castHash={castHash}
+          castHash={target.hash}
           recasts={recasts}
           likes={likes}
           allLikooors={allLikooors}

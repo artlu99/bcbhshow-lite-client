@@ -24,6 +24,7 @@ import jaJP from 'antd/lib/locale/ja_JP';
 import GlobalStyle from './styles/GlobalStyle';
 
 const appId = import.meta.env.REACT_APP_PRIVY_APP_ID;
+const clientId = import.meta.env.REACT_APP_PRIVY_CLIENT_ID;
 
 const App: React.FC = () => {
   const { language } = useLanguage();
@@ -61,6 +62,7 @@ const App: React.FC = () => {
       <GlobalStyle />
       <PrivyProvider
         appId={appId}
+        clientId={clientId}
         config={{
           loginMethods: ['farcaster'],
           embeddedWallets: { createOnLogin: 'users-without-wallets' },

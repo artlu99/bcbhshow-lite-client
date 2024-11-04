@@ -140,10 +140,14 @@ export const Cast: React.FC<CastProps> = ({
             description
           )}
           {sassyHash?.isDecrypted ? (
-            <div id="sassy-hash-text" className="text-xl">
+            <div id="sassy-hash-text" key={`${castHash}-sassy-hash-text`} className="text-xl">
               {showThisSassyCast
                 ? sassyHash.decodedText
-                : [<a onClick={() => setShowThisSassyCast(true)}>[Sassy Reveal]</a>]}
+                : [
+                    <a onClick={() => setShowThisSassyCast(true)} key={`${castHash}-sassy-reveal`}>
+                      [Sassy Reveal]
+                    </a>,
+                  ]}
             </div>
           ) : null}
         </S.Description>
@@ -160,7 +164,7 @@ export const Cast: React.FC<CastProps> = ({
           <BaseDivider />
           <S.InfoWrapper>
             <Reactions
-              castHash={castHash}
+              target={{ fid, hash: castHash }}
               replies={replies}
               recasts={recasts}
               likes={likes}
@@ -176,7 +180,7 @@ export const Cast: React.FC<CastProps> = ({
       <S.TagsWrapper>
         {tags.map((tag) =>
           linkTo ? (
-            <Link to={`/~/channel/${linkTo}`}>
+            <Link to={`/~/channel/${linkTo}`} key={`${castHash}-${tag.title}-${tag.bgColor}`}>
               <BaseHashTag key={`${castHash}-${tag.title}-${tag.bgColor}`} title={tag.title} bgColor={tag.bgColor} />
             </Link>
           ) : (

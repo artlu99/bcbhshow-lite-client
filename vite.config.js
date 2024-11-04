@@ -1,8 +1,10 @@
+import inject from '@rollup/plugin-inject';
+import react from '@vitejs/plugin-react';
 import path from 'path';
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-import svgr from 'vite-plugin-svgr';
+import { nodePolyfills } from 'vite-plugin-node-polyfills';
 import { VitePWA } from 'vite-plugin-pwa';
+import svgr from 'vite-plugin-svgr';
 
 export default defineConfig(() => {
   return {
@@ -10,8 +12,12 @@ export default defineConfig(() => {
     envPrefix: 'REACT_APP_',
     build: {
       outDir: 'build',
+      rollupOptions: {
+        plugins: [inject({ Buffer: ['buffer/', 'Buffer'] })],
+      },
     },
     plugins: [
+      nodePolyfills(),
       react(),
       // svgr options: https://react-svgr.com/docs/options/
       svgr({ svgrOptions: { icon: true } }),
