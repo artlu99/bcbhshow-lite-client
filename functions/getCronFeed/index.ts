@@ -18,7 +18,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       'x-api_key': neynarApiKey,
     },
   });
-  if (!res.ok) throw new Error('Failed to fetch data');
+  if (!res.ok) throw new Error(res.statusText);
 
   await sendPosthogChannelId(context.env, 'getCronFeed', channelId);
 
