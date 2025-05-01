@@ -21,7 +21,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     method: 'GET',
     headers: {
       accept: 'application/json',
-      api_key: `${neynarApiKey}`,
+      'x-api_key': neynarApiKey,
     },
   });
 

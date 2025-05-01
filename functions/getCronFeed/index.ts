@@ -15,7 +15,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     method: 'GET',
     headers: {
       accept: 'application/json',
-      api_key: `${neynarApiKey}`,
+      'x-api_key': neynarApiKey,
     },
   });
   if (!res.ok) throw new Error('Failed to fetch data');

@@ -11,7 +11,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   const endpoint = `https://api.neynar.com/v2/farcaster/cast?identifier=${hash}&type=hash`;
   const res = await fetch(endpoint, {
     method: 'GET',
-    headers: { accept: 'application/json', api_key: `${neynarApiKey}` },
+    headers: { accept: 'application/json', 'x-api_key': neynarApiKey },
   });
   if (!res.ok) {
     console.error(endpoint, res.status, JSON.stringify(res));
