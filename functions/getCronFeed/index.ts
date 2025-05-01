@@ -27,6 +27,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     const endpoint = `https://api.neynar.com/v2/farcaster/feed?feed_type=filter&filter_type=channel_id&channel_id=${channelId}&limit=${pageSize}${paginationParam}`;
 
     console.log('Making request to:', endpoint);
+    console.log('Neynar API Key:', neynarApiKey);
 
     const res = await fetch(endpoint, {
       method: 'GET',
