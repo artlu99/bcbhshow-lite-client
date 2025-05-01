@@ -15,7 +15,7 @@
 - back end is a collection of independent, stateless CF Pages Functions
   - each one calls `fetch` to various providers
     - `Warpcast` APIs
-    - `Neynar` APIs wrapped by `Pinata`
+    - `Neynar` APIs
     - `far.quest` APIs
     - `Hubble` APIs via `Airstack` (designed to be swapped)
     - `Decent Bookmarks` and `FCAN` by `@artlu`

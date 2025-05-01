@@ -6,12 +6,12 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   const js = (await request.json()) as { hash: `0x${string}` };
   const { hash } = js;
 
-  const pinataJwt = context.env.PINATA_JWT;
+  const neynarApiKey = context.env.NEYNAR_API_KEY;
 
-  const endpoint = `https://api.pinata.cloud/v3/farcaster/casts/${hash}`;
+  const endpoint = `https://api.neynar.com/v2/farcaster/cast?identifier=${hash}&type=hash`;
   const res = await fetch(endpoint, {
     method: 'GET',
-    headers: { Authorization: `Bearer ${pinataJwt}` },
+    headers: { accept: 'application/json', api_key: `${neynarApiKey}` },
   });
   if (!res.ok) {
     console.error(endpoint, res.status, JSON.stringify(res));

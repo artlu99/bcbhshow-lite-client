@@ -7,15 +7,15 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   const js = (await request.json()) as { fid: number; pageSize: number; pageToken?: string };
   const { fid, pageSize, pageToken } = js;
 
-  const pinataJwt = context.env.PINATA_JWT;
+  const neynarApiKey = context.env.NEYNAR_API_KEY;
 
-  const paginationParam = pageToken ? `&pageToken=${pageToken}` : '';
-  const endpoint = `https://api.pinata.cloud/v3/farcaster/casts?fid=${fid}&following=true&pageSize=${pageSize}${paginationParam}`;
+  const paginationParam = pageToken ? `&cursor=${pageToken}` : '';
+  const endpoint = `https://api.neynar.com/v2/farcaster/feed/following?with_recasts=true&fid=${fid}&viewer_fid=${fid}&limit=${pageSize}${paginationParam}`;
   const res = await fetch(endpoint, {
     method: 'GET',
     headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${pinataJwt}`,
+      accept: 'application/json',
+      api_key: `${neynarApiKey}`,
     },
   });
   if (!res.ok) throw new Error('Failed to fetch data');
