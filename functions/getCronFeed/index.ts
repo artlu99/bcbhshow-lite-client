@@ -10,7 +10,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   const neynarApiKey = context.env.NEYNAR_API_KEY;
 
   const paginationParam = pageToken ? `&cursor=${pageToken}` : '';
-  const endpoint = `https://api.neynar.com/v2/farcaster/feed?feed_type=filter&filter_type=channe_id&channel_id=${channelId}&limit=${pageSize}${paginationParam}`;
+  const endpoint = `https://api.neynar.com/v2/farcaster/feed?feed_type=filter&filter_type=channel_id&channel_id=${channelId}&limit=${pageSize}${paginationParam}`;
   const res = await fetch(endpoint, {
     method: 'GET',
     headers: {
