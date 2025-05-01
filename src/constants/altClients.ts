@@ -31,11 +31,6 @@ export const recasterLink = (props: LinkProps) => {
   return `recaster://cast/${hash}`;
 };
 
-export const degencastLink = (props: LinkProps) => {
-  const { hash } = props;
-  return `https://degencast.xyz/casts/${hash.slice(2)}`;
-};
-
 export const herocastLink = (props: LinkProps) => {
   const { hash } = props;
   return `https://app.herocast.xyz/conversation/${hash}`;

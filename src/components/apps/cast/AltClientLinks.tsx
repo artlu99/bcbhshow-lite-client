@@ -44,9 +44,6 @@ export const AltClientLinks: React.FC<AltClientLinksProps> = ({ castHash, castFi
           [Recaster]
         </Link>
       )}{' '}
-      <Link to={degencastLink({ hash: castHash })} target="_blank">
-        [Degencast]
-      </Link>
       {maybeHerocastLink && (
         <Link to={maybeHerocastLink} target="_blank">
           {' '}
