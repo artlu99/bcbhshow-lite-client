@@ -15,7 +15,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     method: 'GET',
     headers: {
       accept: 'application/json',
-      'x-api_key': neynarApiKey,
+      'x-api_key': 'NEYNAR_API_DOCS',
     },
   });
   if (!res.ok) throw new Error(res.statusText);
