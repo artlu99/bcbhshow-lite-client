@@ -3,31 +3,21 @@ import type { FeedObject } from '../shared/feed-types';
 import { sendPosthogChannelId } from '../shared/posthog';
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
+  const { request } = context;
+  const js = (await request.json()) as {
+    channelId: string;
+    pageSize: number;
+    pageToken?: string;
+  };
+  const { channelId, pageSize, pageToken } = js;
+
+  const neynarApiKey = context.env.NEYNAR_API_KEY;
+
   try {
-    const { request } = context;
-    let js;
-    try {
-      const requestText = await request.text();
-      console.log('Raw request body:', requestText);
-      js = JSON.parse(requestText) as {
-        channelId: string;
-        pageSize: number;
-        pageToken?: string;
-      };
-    } catch (parseError) {
-      console.error('Failed to parse request body:', parseError);
-      return new Response('Invalid JSON in request body', { status: 400 });
-    }
-
-    const { channelId, pageSize, pageToken } = js;
-
-    const neynarApiKey = context.env.NEYNAR_API_KEY;
-
     const paginationParam = pageToken ? `&cursor=${pageToken}` : '';
     const endpoint = `https://api.neynar.com/v2/farcaster/feed?feed_type=filter&filter_type=channel_id&channel_id=${channelId}&limit=${pageSize}${paginationParam}`;
 
     console.log('Making request to:', endpoint);
-    console.log('Neynar API Key:', neynarApiKey);
 
     const res = await fetch(endpoint, {
       method: 'GET',
