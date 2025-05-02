@@ -1,6 +1,6 @@
-import styled from 'styled-components';
+import { LAYOUT, media } from '@app/styles/themes/constants';
 import { Link } from 'react-router-dom';
-import { media, LAYOUT } from '@app/styles/themes/constants';
+import styled from 'styled-components';
 
 export const ChannelLogoLink = styled(Link)`
   display: flex;

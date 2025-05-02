@@ -1,10 +1,10 @@
-import { useTranslation } from 'react-i18next';
-import { useResponsive } from '@app/hooks/useResponsive';
-import * as S from './AdvertFeed.styles';
 import { FcanAd } from '@app/api/fcan.api';
-import { Card } from '@app/pages/uiComponentsPages/UIComponentsPage.styles';
 import { useAppDispatch, useAppSelector } from '@app/hooks/reduxHooks';
-import { setShowAds, setHideAds } from '@app/store/slices/showHidesSlice';
+import { useResponsive } from '@app/hooks/useResponsive';
+import { Card } from '@app/pages/uiComponentsPages/UIComponentsPage.styles';
+import { setHideAds, setShowAds } from '@app/store/slices/showHidesSlice';
+import { useTranslation } from 'react-i18next';
+import * as S from './AdvertFeed.styles';
 
 interface Advert {
   fcanAd: FcanAd;

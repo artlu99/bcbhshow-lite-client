@@ -1,12 +1,12 @@
 import { resetCss } from '@app/styles/resetCss';
 import { BREAKPOINTS, FONT_SIZE, FONT_WEIGHT, media } from '@app/styles/themes/constants';
-import { createGlobalStyle } from 'styled-components';
 import {
   antOverrideCssVariables,
   commonThemeVariables,
   darkThemeVariables,
   lightThemeVariables,
 } from '@app/styles/themes/themeVariables';
+import { createGlobalStyle } from 'styled-components';
 
 export default createGlobalStyle`
 

@@ -1,8 +1,8 @@
-import styled from 'styled-components';
+import { BORDER_RADIUS, FONT_SIZE, FONT_WEIGHT } from '@app/styles/themes/constants';
+import { normalizeProp } from '@app/utils/utils';
 import { Select as AntSelect } from 'antd';
 import { Dimension } from 'interfaces/interfaces';
-import { normalizeProp } from '@app/utils/utils';
-import { FONT_WEIGHT, BORDER_RADIUS, FONT_SIZE } from '@app/styles/themes/constants';
+import styled from 'styled-components';
 
 export interface InternalSelectProps {
   $width?: Dimension;

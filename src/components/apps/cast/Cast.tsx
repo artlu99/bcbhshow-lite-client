@@ -102,7 +102,7 @@ export const Cast: React.FC<CastProps> = ({
           {fname && (
             <BaseTooltip title={`FID: ${fid}`} placement={'topLeft'}>
               <S.Author>
-                {showDisplayNames ? displayName ?? fname : null}
+                {showDisplayNames ? (displayName ?? fname) : null}
                 {showUserNames ? (
                   <span>{`@${fname}`}</span>
                 ) : (

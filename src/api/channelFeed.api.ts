@@ -1,7 +1,7 @@
 import { BotOrNotResult, getBotOrNot } from '@app/api/botOrNot.api';
 import { getCronFeed } from '@app/api/cronFeed.api';
 import { CastObject } from '@app/api/feed-types';
-import { getSassyHash, isSassy, SassyHash } from '@app/api/sassyHash.api';
+import { SassyHash, getSassyHash, isSassy } from '@app/api/sassyHash.api';
 import { ChannelObject } from '@app/api/warpcast-types';
 import { IHashTag } from '@app/components/common/BaseHashTag/BaseHashTag';
 import { CHANNEL_FEED_PAGESIZE } from '@app/constants/pinataPagination';

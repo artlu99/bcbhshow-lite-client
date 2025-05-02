@@ -1,5 +1,5 @@
-import styled from 'styled-components';
 import { Pagination as AntdPagination } from 'antd';
+import styled from 'styled-components';
 
 export const Pagination = styled(AntdPagination)`
   .ant-pagination-item-container .ant-pagination-item-ellipsis {

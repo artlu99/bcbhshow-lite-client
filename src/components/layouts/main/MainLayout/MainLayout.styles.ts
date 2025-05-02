@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-import { media } from '@app/styles/themes/constants';
 import { BaseLayout } from '@app/components/common/BaseLayout/BaseLayout';
+import { media } from '@app/styles/themes/constants';
+import styled from 'styled-components';
 
 export const LayoutMaster = styled(BaseLayout)`
   height: 100vh;

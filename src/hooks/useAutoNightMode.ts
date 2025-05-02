@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
-import { setTheme } from '@app/store/slices/themeSlice';
-import { useAppDispatch, useAppSelector } from '@app/hooks/reduxHooks';
 import { Dates } from '@app/constants/Dates';
+import { useAppDispatch, useAppSelector } from '@app/hooks/reduxHooks';
+import { setTheme } from '@app/store/slices/themeSlice';
 import { msToH } from '@app/utils/utils';
+import { useEffect } from 'react';
 
 const getNextTime = (ms: number) => {
   const now = Date.now();

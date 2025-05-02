@@ -1,6 +1,6 @@
-import styled from 'styled-components';
+import { FONT_SIZE, FONT_WEIGHT } from '@app/styles/themes/constants';
 import { Input as AntInput } from 'antd';
-import { FONT_WEIGHT, FONT_SIZE } from '@app/styles/themes/constants';
+import styled from 'styled-components';
 
 export const Input = styled(AntInput)`
   .ant-input-group-addon:first-child,

@@ -1,6 +1,6 @@
-import styled, { css } from 'styled-components';
-import { LAYOUT, media } from '@app/styles/themes/constants';
 import { BaseLayout } from '@app/components/common/BaseLayout/BaseLayout';
+import { LAYOUT, media } from '@app/styles/themes/constants';
+import styled, { css } from 'styled-components';
 
 interface HeaderProps {
   $isTwoColumnsLayout: boolean;

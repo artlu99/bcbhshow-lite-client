@@ -1,6 +1,6 @@
-import styled from 'styled-components';
 import { BaseCard as CommonCard } from '@app/components/common/BaseCard/BaseCard';
 import { BaseCollapse } from '@app/components/common/BaseCollapse/BaseCollapse';
+import styled from 'styled-components';
 
 export const Card = styled(CommonCard)`
   width: 100%;

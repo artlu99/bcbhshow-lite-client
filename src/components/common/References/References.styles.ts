@@ -1,5 +1,5 @@
-import styled from 'styled-components';
 import { media } from '@app/styles/themes/constants';
+import styled from 'styled-components';
 
 export const ReferencesWrapper = styled.div`
   width: 100%;

@@ -1,5 +1,5 @@
-import { httpApiMock } from '@app/api/mocks/http.api.mock';
 import { FcanAd } from '@app/api/fcan.api';
+import { httpApiMock } from '@app/api/mocks/http.api.mock';
 
 export const mockFcanAd: FcanAd = {
   id: 'mock',

@@ -1,5 +1,5 @@
-import { BORDER_RADIUS } from '@app/styles/themes/constants';
 import { BaseButton } from '@app/components/common/BaseButton/BaseButton';
+import { BORDER_RADIUS } from '@app/styles/themes/constants';
 import styled, { css } from 'styled-components';
 
 interface BtnProps {

@@ -1,7 +1,7 @@
-import styled from 'styled-components';
-import { BORDER_RADIUS, FONT_SIZE, FONT_WEIGHT, media } from '@app/styles/themes/constants';
-import { BasePopover } from '@app/components/common/BasePopover/BasePopover';
 import { BaseButton } from '@app/components/common/BaseButton/BaseButton';
+import { BasePopover } from '@app/components/common/BasePopover/BasePopover';
+import { BORDER_RADIUS, FONT_SIZE, FONT_WEIGHT, media } from '@app/styles/themes/constants';
+import styled from 'styled-components';
 
 export const TitleWrapper = styled.div`
   display: flex;

@@ -1,7 +1,7 @@
-import styled from 'styled-components';
+import { BaseTypography } from '@app/components/common/BaseTypography/BaseTypography';
 import { InputNumber } from '@app/components/common/inputs/InputNumber/InputNumber';
 import { FONT_SIZE, FONT_WEIGHT } from '@app/styles/themes/constants';
-import { BaseTypography } from '@app/components/common/BaseTypography/BaseTypography';
+import styled from 'styled-components';
 
 const pathWidth = 22;
 

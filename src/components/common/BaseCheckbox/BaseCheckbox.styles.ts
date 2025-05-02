@@ -1,5 +1,5 @@
-import styled from 'styled-components';
 import { Checkbox as AntdCheckbox } from 'antd';
+import styled from 'styled-components';
 
 const { Group } = AntdCheckbox;
 

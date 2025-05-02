@@ -1,4 +1,4 @@
-import { HubReactionsResponse, HubReactionsStreamItem, HubReactionType } from '@app/api/hubble-http-types';
+import { HubReactionType, HubReactionsResponse, HubReactionsStreamItem } from '@app/api/hubble-http-types';
 import { getFidWithFallback } from '@app/auth/fids';
 import { ReactionsAnalytics } from '@app/components/apps/cast/ReactionsAnalytics';
 import { BaseBadge } from '@app/components/common/BaseBadge/BaseBadge';

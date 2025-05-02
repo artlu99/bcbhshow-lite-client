@@ -1,5 +1,5 @@
 import { ThemeType } from '@app/interfaces/interfaces';
-import { createSlice, createAction, PrepareAction } from '@reduxjs/toolkit';
+import { PrepareAction, createAction, createSlice } from '@reduxjs/toolkit';
 
 interface ThemeState {
   theme: ThemeType;

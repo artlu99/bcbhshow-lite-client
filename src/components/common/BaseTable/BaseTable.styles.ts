@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-import { Table as AntdTable } from 'antd';
 import { FONT_SIZE } from '@app/styles/themes/constants';
+import { Table as AntdTable } from 'antd';
+import styled from 'styled-components';
 
 export const Table = styled(AntdTable)`
   & thead .ant-table-cell {

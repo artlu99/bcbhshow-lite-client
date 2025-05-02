@@ -1,7 +1,7 @@
-import styled from 'styled-components';
-import { Card as AntCard } from 'antd';
-import { normalizeProp } from '@app/utils/utils';
 import { FONT_SIZE, FONT_WEIGHT, media } from '@app/styles/themes/constants';
+import { normalizeProp } from '@app/utils/utils';
+import { Card as AntCard } from 'antd';
+import styled from 'styled-components';
 
 interface CardInternalProps {
   $padding: string | number | [number, number];

@@ -1,5 +1,5 @@
-import styled from 'styled-components';
 import { CustomArrowProps } from 'react-slick';
+import styled from 'styled-components';
 
 export const ArrowWrapper = styled.div.withConfig({
   shouldForwardProp: (prop) => !['currentSlide', 'slideCount'].includes(prop),

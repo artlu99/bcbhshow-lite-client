@@ -1,6 +1,6 @@
+import { addDeferredPrompt } from '@app/store/slices/pwaSlice';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { addDeferredPrompt } from '@app/store/slices/pwaSlice';
 
 export const usePWA = (): void => {
   const dispatch = useDispatch();

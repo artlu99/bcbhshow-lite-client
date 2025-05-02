@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-import { media } from '@app/styles/themes/constants';
 import { BaseTypography } from '@app/components/common/BaseTypography/BaseTypography';
+import { media } from '@app/styles/themes/constants';
+import styled from 'styled-components';
 
 export const BaseFormTitle = styled(BaseTypography.Text)`
   font-weight: 700;

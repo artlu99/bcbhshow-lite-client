@@ -1,5 +1,5 @@
-import { httpApi } from '@app/api/http.api';
 import { FeedObject } from '@app/api/feed-types';
+import { httpApi } from '@app/api/http.api';
 import './mocks/mockornot';
 
 interface CronFeedRequest {

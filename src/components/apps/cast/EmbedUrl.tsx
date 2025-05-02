@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { first } from 'radash';
-import { useQuery } from '@tanstack/react-query';
 import { StevePolymorphicEmbedMetadata } from '@app/api/metadata.api';
 import fallbackPhoto from '@app/assets/photo.svg';
 import { BaseImage } from '@app/components/common/BaseImage/BaseImage';
 import { BasePopover } from '@app/components/common/BasePopover/BasePopover';
 import { useAppSelector } from '@app/hooks/reduxHooks';
 import { metadataQuery } from '@app/queries/queries';
+import { useQuery } from '@tanstack/react-query';
+import { first } from 'radash';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export function EmbedUrl({ url }: { url: string }) {
   const [isEmbedShown, setIsEmbedShown] = useState(false);

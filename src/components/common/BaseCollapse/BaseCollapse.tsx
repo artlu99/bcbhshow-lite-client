@@ -1,4 +1,4 @@
-import { CollapseProps, Collapse as AntdCollapse } from 'antd';
+import { Collapse as AntdCollapse, CollapseProps } from 'antd';
 
 export type BaseCollapseProps = CollapseProps;
 

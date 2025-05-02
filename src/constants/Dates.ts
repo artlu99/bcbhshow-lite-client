@@ -1,7 +1,7 @@
 import dayjs, { Dayjs } from 'dayjs';
-import LocalizedFormat from 'dayjs/plugin/localizedFormat';
-import localeData from 'dayjs/plugin/localeData';
 import isBetween from 'dayjs/plugin/isBetween';
+import localeData from 'dayjs/plugin/localeData';
+import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import 'dayjs/locale/de';
 
 dayjs.extend(LocalizedFormat);

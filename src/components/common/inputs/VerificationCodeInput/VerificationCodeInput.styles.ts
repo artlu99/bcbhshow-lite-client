@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-import VerificationInput from 'react-verification-input';
 import { FONT_SIZE, FONT_WEIGHT, media } from '@app/styles/themes/constants';
+import VerificationInput from 'react-verification-input';
+import styled from 'styled-components';
 
 export const CodeInput = styled(VerificationInput)`
   display: flex;

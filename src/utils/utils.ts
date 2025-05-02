@@ -1,8 +1,8 @@
-import { NotificationType } from '@app/components/common/BaseNotification/BaseNotification';
 import { Priority } from '@app//constants/enums/priorities';
-import { CurrencyTypeEnum, Severity } from '@app/interfaces/interfaces';
 import { BaseBadgeProps } from '@app/components/common/BaseBadge/BaseBadge';
+import { NotificationType } from '@app/components/common/BaseNotification/BaseNotification';
 import { currencies } from '@app/constants/config/currencies';
+import { CurrencyTypeEnum, Severity } from '@app/interfaces/interfaces';
 
 export const camelize = (string: string): string => {
   return string

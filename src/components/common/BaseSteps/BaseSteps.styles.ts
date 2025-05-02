@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-import { Steps as AntdSteps } from 'antd';
 import { FONT_SIZE, FONT_WEIGHT, media } from '@app/styles/themes/constants';
+import { Steps as AntdSteps } from 'antd';
+import styled from 'styled-components';
 
 export const Steps = styled(AntdSteps)`
   font-size: unset;

@@ -1,4 +1,4 @@
-import { createAction, createSlice, PrepareAction } from '@reduxjs/toolkit';
+import { PrepareAction, createAction, createSlice } from '@reduxjs/toolkit';
 
 const DEFAULT_NIGHT_MODE_INTERVAL = [20 * 3600 * 1000, 8 * 3600 * 1000];
 

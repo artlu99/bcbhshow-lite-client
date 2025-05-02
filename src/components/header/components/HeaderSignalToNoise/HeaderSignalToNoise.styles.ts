@@ -1,9 +1,9 @@
-import styled from 'styled-components';
-import { FilterIcon } from '@app/components/common/icons/FilterIcon';
-import { BaseModal } from '@app/components/common/BaseModal/BaseModal';
 import { BaseButton } from '@app/components/common/BaseButton/BaseButton';
+import { BaseModal } from '@app/components/common/BaseModal/BaseModal';
+import { FilterIcon } from '@app/components/common/icons/FilterIcon';
 import { SuffixInput } from '@app/components/common/inputs/SuffixInput/SuffixInput';
 import { BORDER_RADIUS, media } from '@app/styles/themes/constants';
+import styled from 'styled-components';
 
 export const SignalToNoiseIcon = styled(FilterIcon)`
   &.anticon.anticon-filter {
